@@ -1,5 +1,3 @@
-import logo from "@/assets/logo-nogi-vverh.png";
-
 const nav = [
   { href: "#about", label: "О студии" },
   { href: "#directions", label: "Направления" },
