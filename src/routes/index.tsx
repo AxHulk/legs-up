@@ -3,20 +3,20 @@ import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { About } from "@/components/site/About";
 import { Directions } from "@/components/site/Directions";
-import { WhyUs } from "@/components/site/WhyUs";
 import { Team } from "@/components/site/Team";
-import { Pricing } from "@/components/site/Pricing";
+import { Space } from "@/components/site/Space";
 import { Schedule } from "@/components/site/Schedule";
+import { Reviews } from "@/components/site/Reviews";
 import { Contacts } from "@/components/site/Contacts";
 import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "НОГИ ВВЕРХ — студия фитнеса и пилатеса в Балашихе" },
-      { name: "description", content: "Студия пилатеса на реформерах в Балашихе. Профессиональные инструкторы, малые группы, удобное расписание. Первое занятие бесплатно." },
+      { title: "НОГИ ВВЕРХ — студия пилатеса на реформерах в Балашихе" },
+      { name: "description", content: "Студия пилатеса на профессиональных реформерах в Железнодорожном. Малые группы, сертифицированные инструкторы, индивидуальные программы. Первое занятие — бесплатно." },
       { property: "og:title", content: "НОГИ ВВЕРХ — студия фитнеса и пилатеса" },
-      { property: "og:description", content: "Пилатес на реформерах, растяжка в гамаках, йога и функциональный тренинг в Балашихе." },
+      { property: "og:description", content: "Почувствуй гармонию с телом. Пилатес на реформерах, йога, растяжка в гамаках в Балашихе." },
     ],
   }),
   component: Index,
@@ -24,16 +24,16 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground antialiased">
       <Header />
       <main>
         <Hero />
         <About />
         <Directions />
-        <WhyUs />
         <Team />
-        <Pricing />
+        <Space />
         <Schedule />
+        <Reviews />
         <Contacts />
       </main>
       <Footer />

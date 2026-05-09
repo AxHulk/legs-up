@@ -1,57 +1,60 @@
-import { Check, Quote } from "lucide-react";
+import iconSpine from "@/assets/icons/icon_spine.png";
+import iconMuscle from "@/assets/icons/icon_muscle.png";
+import iconFlexibility from "@/assets/icons/icon_flexibility.png";
+import iconBalance from "@/assets/icons/icon_balance.png";
 
-const points = [
-  "Квалифицированные инструкторы",
-  "Группы для начинающих",
-  "Уютная атмосфера",
-  "Скидки для детей и пенсионеров",
+const advantages = [
+  { icon: iconSpine, title: "Здоровая спина", desc: "Бережно укрепляем глубокие мышцы и восстанавливаем осанку." },
+  { icon: iconMuscle, title: "Сила и тонус", desc: "Прорабатываем всё тело — мягко, но глубоко и эффективно." },
+  { icon: iconFlexibility, title: "Гибкость", desc: "Удлиняем мышцы, увеличиваем подвижность суставов." },
+  { icon: iconBalance, title: "Баланс", desc: "Возвращаем телу координацию, лёгкость и внутренний центр." },
 ];
 
 export function About() {
   return (
-    <section id="about" className="py-24 lg:py-32">
-      <div className="mx-auto max-w-[1400px] px-6 lg:px-12 grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-        <div>
-          <span className="eyebrow">О нас</span>
-          <h2 className="mt-6 font-serif text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-foreground">
-            Студия, созданная
-            <br />с <span className="italic-serif">заботой</span> о вас
+    <section id="about" className="relative py-28 lg:py-36 overflow-hidden">
+      <div className="absolute inset-0 pattern-floral opacity-[0.5]" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-sand to-transparent" />
+
+      <div className="relative mx-auto max-w-[1440px] px-6 lg:px-12 grid lg:grid-cols-12 gap-12 lg:gap-20">
+        <div className="lg:col-span-5">
+          <span className="eyebrow">О студии</span>
+          <h2 className="mt-7 text-5xl md:text-6xl lg:text-7xl text-foreground">
+            Пространство
+            <br />
+            <span className="italic-accent">для заботы</span>
+            <br />
+            о себе
           </h2>
-          <p className="mt-8 text-base leading-relaxed text-muted-foreground max-w-lg">
-            Мы приглашаем вас в пространство, где каждая тренировка — это путешествие к лучшей версии себя.
-            Пилатес на реформерах мягко работает с телом, укрепляет глубокие мышцы и восстанавливает осанку.
+          <p className="mt-8 text-base leading-relaxed text-foreground/75 max-w-md">
+            «НОГИ ВВЕРХ» — это студия пилатеса на профессиональных реформерах
+            в Железнодорожном. Мы создаём пространство, где можно расслабиться,
+            почувствовать гармонию со своим телом и подарить себе красивое и
+            здоровое тело.
           </p>
-          <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {points.map((p) => (
-              <li key={p} className="flex items-center gap-3">
-                <span className="size-7 shrink-0 rounded-full bg-secondary flex items-center justify-center">
-                  <Check className="size-4 text-olive" />
-                </span>
-                <span className="text-sm text-foreground/90">{p}</span>
-              </li>
-            ))}
-          </ul>
+          <p className="mt-5 text-base leading-relaxed text-foreground/75 max-w-md">
+            Бережный подход, малые группы, сертифицированные инструкторы —
+            каждая деталь подчинена одной цели: вашему движению вверх.
+          </p>
+
+          <a href="#directions" className="ghost-link mt-10">
+            Узнать о направлениях →
+          </a>
         </div>
 
-        <div className="space-y-5">
-          <div className="relative rounded-3xl bg-secondary p-8 lg:p-10 overflow-hidden">
-            <Quote className="absolute top-6 left-8 size-6 text-olive/60" />
-            <p className="font-serif italic text-2xl lg:text-[28px] leading-snug text-foreground pl-10">
-              Расслабиться, почувствовать гармонию со своим телом и подарить себе красивое и здоровое тело
-            </p>
-            <div className="mt-6 text-xs uppercase tracking-[0.2em] text-walnut pl-10">
-              Философия студии ВВЕРХ
-            </div>
-            <div className="absolute -right-10 -top-10 size-40 rounded-full bg-olive/10" />
-          </div>
-
-          <div className="rounded-3xl bg-olive text-sand p-8 lg:p-10">
-            <div className="font-serif text-4xl">2 этаж</div>
-            <p className="mt-4 text-sm leading-relaxed text-sand/80">
-              ЖК «Счастье», ул. Автозаводская, д. 5
-              <br />Балашиха, мкр. Железнодорожный
-            </p>
-          </div>
+        <div className="lg:col-span-7 grid sm:grid-cols-2 gap-5">
+          {advantages.map((a) => (
+            <article
+              key={a.title}
+              className="group bg-cream border border-border/70 rounded-2xl p-7 transition-all duration-500 hover:border-olive/40 hover:-translate-y-1 hover:shadow-[0_20px_50px_-30px_oklch(0.45_0.08_122/0.5)]"
+            >
+              <div className="size-16 rounded-2xl bg-sand-deep/60 flex items-center justify-center group-hover:bg-olive/10 transition-colors">
+                <img src={a.icon} alt="" className="size-10 object-contain" />
+              </div>
+              <h3 className="mt-6 font-serif text-2xl">{a.title}</h3>
+              <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{a.desc}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
