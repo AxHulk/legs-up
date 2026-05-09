@@ -1,10 +1,21 @@
-import { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import { useGLTF, Stage, PresentationControls } from "@react-three/drei";
+import { Suspense, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useGLTF, Center } from "@react-three/drei";
+import type { Group } from "three";
 
 function Model() {
+  const ref = useRef<Group>(null);
   const { scene } = useGLTF("/models/model.glb");
-  return <primitive object={scene} />;
+  useFrame((_, delta) => {
+    if (ref.current) ref.current.rotation.y += delta * 0.5;
+  });
+  return (
+    <Center>
+      <group ref={ref}>
+        <primitive object={scene} />
+      </group>
+    </Center>
+  );
 }
 
 useGLTF.preload("/models/model.glb");
@@ -12,29 +23,16 @@ useGLTF.preload("/models/model.glb");
 export function RotatingModel() {
   return (
     <Canvas
-      shadows={false}
-      gl={{ alpha: true, antialias: true, preserveDrawingBuffer: false }}
+      gl={{ alpha: true, antialias: true }}
       camera={{ position: [0, 0.2, 3.2], fov: 35 }}
       style={{ background: "transparent" }}
       dpr={[1, 2]}
     >
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[3, 5, 2]} intensity={1.1} />
-      <directionalLight position={[-3, 2, -2]} intensity={0.4} />
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[3, 5, 2]} intensity={1.2} />
+      <directionalLight position={[-3, 2, -2]} intensity={0.5} />
       <Suspense fallback={null}>
-        <PresentationControls
-          global
-          cursor
-          snap
-          speed={1.2}
-          rotation={[0, 0, 0]}
-          polar={[0, 0]}
-          azimuth={[-Math.PI, Math.PI]}
-        >
-          <Stage environment={null} adjustCamera={1.1} intensity={0.4} shadows={false}>
-            <Model />
-          </Stage>
-        </PresentationControls>
+        <Model />
       </Suspense>
     </Canvas>
   );
