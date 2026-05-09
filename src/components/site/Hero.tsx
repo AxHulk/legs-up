@@ -45,34 +45,16 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Floating card */}
-        <div className="mt-20 lg:mt-28 grid lg:grid-cols-12 gap-8 items-end">
-          <div className="lg:col-span-7">
-            <img
-              src={logo}
-              alt=""
-              aria-hidden
-              className="h-16 w-auto opacity-30 [filter:brightness(0)_invert(1)]"
-            />
-          </div>
-          <div className="lg:col-span-5 lg:justify-self-end">
-            <div className="grid grid-cols-3 gap-8 lg:gap-10 bg-sand/10 backdrop-blur-md border border-sand/15 rounded-2xl px-7 py-6">
-              <Stat value="8+" label="направлений" />
-              <Stat value="5" label="инструкторов" />
-              <Stat value="200+" label="клиентов" />
-            </div>
-          </div>
+        {/* Logo mark */}
+        <div className="mt-20 lg:mt-28">
+          <img
+            src={logo}
+            alt=""
+            aria-hidden
+            className="h-16 w-auto opacity-30 [filter:brightness(0)_invert(1)]"
+          />
         </div>
       </div>
     </section>
-  );
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div>
-      <div className="font-serif text-3xl lg:text-4xl text-sand">{value}</div>
-      <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-sand/70">{label}</div>
-    </div>
   );
 }
