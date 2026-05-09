@@ -1,26 +1,42 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Header } from "@/components/site/Header";
+import { Hero } from "@/components/site/Hero";
+import { About } from "@/components/site/About";
+import { Directions } from "@/components/site/Directions";
+import { WhyUs } from "@/components/site/WhyUs";
+import { Team } from "@/components/site/Team";
+import { Pricing } from "@/components/site/Pricing";
+import { Schedule } from "@/components/site/Schedule";
+import { Contacts } from "@/components/site/Contacts";
+import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "НОГИ ВВЕРХ — студия фитнеса и пилатеса в Балашихе" },
+      { name: "description", content: "Студия пилатеса на реформерах в Балашихе. Профессиональные инструкторы, малые группы, удобное расписание. Первое занятие бесплатно." },
+      { property: "og:title", content: "НОГИ ВВЕРХ — студия фитнеса и пилатеса" },
+      { property: "og:description", content: "Пилатес на реформерах, растяжка в гамаках, йога и функциональный тренинг в Балашихе." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background text-foreground">
+      <Header />
+      <main>
+        <Hero />
+        <About />
+        <Directions />
+        <WhyUs />
+        <Team />
+        <Pricing />
+        <Schedule />
+        <Contacts />
+      </main>
+      <Footer />
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
