@@ -56,14 +56,6 @@ export function Directions() {
                     alt={c.title}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
                   />
-                  <div className="absolute top-5 left-5 right-5 flex items-start justify-between">
-                    <div className="size-12 rounded-full bg-sand/95 backdrop-blur flex items-center justify-center">
-                      <img src={c.icon} alt="" className="size-7 object-contain" />
-                    </div>
-                    <div className="bg-sand/95 backdrop-blur text-walnut text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-full">
-                      {c.kicker}
-                    </div>
-                  </div>
                 </div>
               </div>
 
