@@ -57,12 +57,19 @@ export function Space() {
           </figure>
 
           {/* Quote tile */}
-          <div className="col-span-12 mt-4 rounded-3xl bg-olive text-sand p-10 lg:p-14 flex flex-col justify-center">
-            <div className="font-serif italic text-3xl lg:text-4xl leading-tight max-w-3xl">
-              «Расслабиться, почувствовать гармонию со своим телом и подарить себе красивое и здоровое тело»
+          <div className="col-span-12 mt-4 rounded-3xl bg-olive text-sand p-10 lg:p-14 grid lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-8">
+              <div className="font-serif italic text-3xl lg:text-4xl leading-tight">
+                «Расслабиться, почувствовать гармонию со своим телом и подарить себе красивое и здоровое тело»
+              </div>
+              <div className="mt-6 text-[11px] uppercase tracking-[0.25em] text-sand/70">
+                Философия студии «НОГИ ВВЕРХ»
+              </div>
             </div>
-            <div className="mt-6 text-[11px] uppercase tracking-[0.25em] text-sand/70">
-              Философия студии «НОГИ ВВЕРХ»
+            <div className="lg:col-span-4 h-64 lg:h-80">
+              <Suspense fallback={null}>
+                <RotatingModel />
+              </Suspense>
             </div>
           </div>
         </div>
