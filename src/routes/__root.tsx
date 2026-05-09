@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Ноги вверх!" },
+      { name: "description", content: "Студия пилатеса на реформерах \"Ноги вверх\" — место, где вы найдёте баланс, силу и красоту." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Ноги вверх!" },
+      { property: "og:description", content: "Студия пилатеса на реформерах \"Ноги вверх\" — место, где вы найдёте баланс, силу и красоту." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Ноги вверх!" },
+      { name: "twitter:description", content: "Студия пилатеса на реформерах \"Ноги вверх\" — место, где вы найдёте баланс, силу и красоту." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/41ledUTcSsRlUbEtjTOSWkObH7Z2/social-images/social-1778324659711-Студия_2.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/41ledUTcSsRlUbEtjTOSWkObH7Z2/social-images/social-1778324659711-Студия_2.webp" },
     ],
     links: [
       {
