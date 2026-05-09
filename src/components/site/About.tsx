@@ -48,8 +48,8 @@ export function About() {
               key={a.title}
               className="group bg-cream border border-border/70 rounded-2xl p-7 transition-all duration-500 hover:border-olive/40 hover:-translate-y-1 hover:shadow-[0_20px_50px_-30px_oklch(0.45_0.08_122/0.5)]"
             >
-              <div className="size-16 rounded-2xl bg-sand-deep/60 flex items-center justify-center group-hover:bg-olive/10 transition-colors">
-                <img src={a.icon} alt="" className="size-10 object-contain" />
+              <div className="size-32 rounded-2xl bg-sand-deep/60 flex items-center justify-center group-hover:bg-olive/10 transition-colors">
+                <img src={a.icon} alt="" className="size-20 object-contain" />
               </div>
               <h3 className="mt-6 font-serif text-2xl">{a.title}</h3>
               <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{a.desc}</p>
