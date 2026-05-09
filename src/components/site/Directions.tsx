@@ -1,61 +1,85 @@
-import { Activity, Sparkles, Dumbbell, Heart, Flame, Leaf } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import beginners from "@/assets/card_beginners.jpg";
+import advanced from "@/assets/card_advanced.jpg";
+import privateImg from "@/assets/card_private.jpg";
+import iconBeginner from "@/assets/icons/icon_beginner.png";
+import iconAdvanced from "@/assets/icons/icon_advanced.png";
+import iconPersonal from "@/assets/icons/icon_personal.png";
 
-const items = [
-  { icon: Activity, title: "Пилатес на реформерах", desc: "Наше главное направление. Работа на профессиональном оборудовании под руководством сертифицированных инструкторов." },
-  { icon: Sparkles, title: "Растяжка и гамаки", desc: "Растяжка и стретчинг в воздушных гамаках — мягко и эффективно для гибкости тела." },
-  { icon: Dumbbell, title: "Функциональный тренинг", desc: "Комплексные тренировки для развития силы, выносливости и координации движений." },
-  { icon: Heart, title: "Здоровая спина", desc: "Специализированные занятия для профилактики и коррекции проблем с позвоночником." },
-  { icon: Flame, title: "Full Body", desc: "Полноценная тренировка всего тела — сочетание силовых и кардио упражнений." },
-  { icon: Leaf, title: "Хатха йога и гамаки", desc: "Классическая хатха йога и воздушная йога в гамаках — для баланса тела и духа." },
+const cards = [
+  {
+    img: beginners, icon: iconBeginner, kicker: "01 · Старт",
+    title: "Для начинающих",
+    desc: "Мягкое погружение в пилатес: знакомство с реформером, базовые принципы дыхания и контроля тела.",
+  },
+  {
+    img: advanced, icon: iconAdvanced, kicker: "02 · Уровень",
+    title: "Продвинутый",
+    desc: "Интенсивные тренировки для тех, кто ищет глубокую проработку, силу и сложные элементы.",
+  },
+  {
+    img: privateImg, icon: iconPersonal, kicker: "03 · Персонально",
+    title: "Индивидуальные",
+    desc: "Программа под вас: работа со спиной, восстановление, подготовка к спорту или беременности.",
+  },
 ];
 
 export function Directions() {
   return (
-    <section id="directions" className="py-24 lg:py-32">
-      <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+    <section id="directions" className="py-28 lg:py-36 bg-cream">
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 mb-16 lg:mb-20">
           <div>
             <span className="eyebrow">Направления</span>
-            <h2 className="mt-6 font-serif text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+            <h2 className="mt-7 text-5xl md:text-6xl lg:text-7xl">
               Выберите своё
-              <br /><span className="italic-serif">направление</span>
+              <br />
+              <span className="italic-accent">направление</span>
             </h2>
           </div>
-          <a href="#contacts" className="btn-primary self-start lg:self-auto">Записаться</a>
+          <p className="max-w-md text-foreground/70 leading-relaxed">
+            Три формата — от первого знакомства до индивидуальной программы.
+            Подберём занятие под ваш ритм, цели и уровень.
+          </p>
         </div>
 
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {items.map((it, i) => {
-            const Icon = it.icon;
-            const featured = i === 0;
-            return (
-              <article
-                key={it.title}
-                className={`group rounded-3xl p-8 transition-all duration-300 hover:-translate-y-1 ${
-                  featured
-                    ? "bg-olive text-sand"
-                    : "bg-card border border-border hover:border-olive/40"
-                }`}
-              >
-                <div className={`text-xs ${featured ? "text-sand/70" : "text-muted-foreground"}`}>
-                  {String(i + 1).padStart(2, "0")}
+        <div className="grid md:grid-cols-3 gap-7">
+          {cards.map((c) => (
+            <article
+              key={c.title}
+              className="group flex flex-col bg-sand rounded-3xl overflow-hidden border border-border/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_-30px_oklch(0.45_0.08_122/0.4)]"
+            >
+              <div className="relative px-3 pt-3">
+                <div className="relative arch-top overflow-hidden aspect-[4/5]">
+                  <img
+                    src={c.img}
+                    alt={c.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
+                  />
+                  <div className="absolute top-5 left-5 right-5 flex items-start justify-between">
+                    <div className="size-12 rounded-full bg-sand/95 backdrop-blur flex items-center justify-center">
+                      <img src={c.icon} alt="" className="size-7 object-contain" />
+                    </div>
+                    <div className="bg-sand/95 backdrop-blur text-walnut text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-full">
+                      {c.kicker}
+                    </div>
+                  </div>
                 </div>
-                <div className={`mt-6 size-12 rounded-xl flex items-center justify-center ${
-                  featured ? "bg-sand/15" : "bg-secondary"
-                }`}>
-                  <Icon className={`size-6 ${featured ? "text-sand" : "text-olive"}`} />
-                </div>
-                <h3 className={`mt-6 font-serif text-2xl ${featured ? "text-sand" : "text-foreground"}`}>
-                  {it.title}
-                </h3>
-                <p className={`mt-3 text-sm leading-relaxed ${
-                  featured ? "text-sand/80" : "text-muted-foreground"
-                }`}>
-                  {it.desc}
-                </p>
-              </article>
-            );
-          })}
+              </div>
+
+              <div className="p-7 lg:p-8 flex-1 flex flex-col">
+                <h3 className="font-serif text-3xl">{c.title}</h3>
+                <p className="mt-4 text-sm text-foreground/70 leading-relaxed flex-1">{c.desc}</p>
+                <a
+                  href="#contacts"
+                  className="mt-7 inline-flex items-center justify-between text-sm font-medium text-olive border-t border-border/70 pt-5 group-hover:text-olive-deep transition-colors"
+                >
+                  <span>Записаться</span>
+                  <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

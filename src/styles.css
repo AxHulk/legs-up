@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap');
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -35,59 +35,49 @@
   --color-ring: var(--ring);
 
   --color-sand: var(--sand);
+  --color-sand-deep: var(--sand-deep);
+  --color-cream: var(--cream);
   --color-olive: var(--olive);
-  --color-olive-soft: var(--olive-soft);
+  --color-olive-deep: var(--olive-deep);
   --color-walnut: var(--walnut);
-  --color-cocoa: var(--cocoa);
+  --color-walnut-soft: var(--walnut-soft);
 
   --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.875rem;
 
-  /* Brand */
-  --sand: oklch(0.949 0.04 88);            /* #F7ECD5 */
-  --olive: oklch(0.493 0.09 122);          /* #606B2E */
-  --olive-soft: oklch(0.62 0.08 120);
-  --walnut: oklch(0.45 0.06 60);           /* #70543C */
-  --cocoa: oklch(0.22 0.015 60);           /* dark warm bg */
+  --sand: oklch(0.949 0.04 88);          /* #F7ECD5 */
+  --sand-deep: oklch(0.92 0.045 86);
+  --cream: oklch(0.978 0.018 88);
+  --olive: oklch(0.493 0.09 122);        /* #606B2E */
+  --olive-deep: oklch(0.4 0.08 122);
+  --walnut: oklch(0.45 0.06 60);         /* #70543C */
+  --walnut-soft: oklch(0.6 0.045 60);
 
   --background: var(--sand);
   --foreground: oklch(0.28 0.03 60);
 
-  --card: oklch(0.985 0.02 88);
+  --card: var(--cream);
   --card-foreground: var(--foreground);
-  --popover: oklch(0.985 0.02 88);
+  --popover: var(--cream);
   --popover-foreground: var(--foreground);
 
   --primary: var(--olive);
   --primary-foreground: var(--sand);
-
-  --secondary: oklch(0.92 0.03 88);
+  --secondary: var(--sand-deep);
   --secondary-foreground: var(--foreground);
-
-  --muted: oklch(0.92 0.03 88);
-  --muted-foreground: oklch(0.45 0.04 70);
-
+  --muted: var(--sand-deep);
+  --muted-foreground: var(--walnut-soft);
   --accent: var(--walnut);
   --accent-foreground: var(--sand);
-
   --destructive: oklch(0.55 0.2 25);
   --destructive-foreground: var(--sand);
-
-  --border: oklch(0.88 0.04 80);
-  --input: oklch(0.88 0.04 80);
+  --border: oklch(0.86 0.04 80);
+  --input: oklch(0.86 0.04 80);
   --ring: var(--olive);
-}
-
-.dark {
-  --background: var(--cocoa);
-  --foreground: var(--sand);
-  --card: oklch(0.26 0.02 60);
-  --card-foreground: var(--sand);
-  --border: oklch(1 0 0 / 12%);
 }
 
 @layer base {
@@ -97,60 +87,112 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4, .font-serif {
+  h1, h2, h3, h4, h5 {
     font-family: var(--font-serif);
     font-weight: 500;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
   }
-  .italic-serif {
+  ::selection { background: var(--olive); color: var(--sand); }
+}
+
+@layer utilities {
+  .font-serif { font-family: var(--font-serif); }
+  .italic-accent {
     font-family: var(--font-serif);
     font-style: italic;
     font-weight: 500;
-    color: var(--color-olive);
+    color: var(--olive);
   }
   .eyebrow {
     font-family: var(--font-sans);
-    font-size: 0.75rem;
-    letter-spacing: 0.22em;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--color-walnut);
+    color: var(--walnut);
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.85rem;
+    font-weight: 500;
   }
   .eyebrow::before {
     content: "";
-    width: 1.75rem;
+    width: 2.25rem;
     height: 1px;
     background: currentColor;
+    opacity: 0.6;
+  }
+  .eyebrow-light { color: oklch(0.95 0.03 80); }
+  .eyebrow-light::before { background: currentColor; }
+
+  /* Floral pattern overlay */
+  .pattern-floral {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><g fill='none' stroke='%23606B2E' stroke-width='0.6' opacity='0.35'><path d='M40 60c20-25 50-25 60 0M40 60c-10 20 0 50 30 50M40 60c-25-5-35 15-25 35'/><circle cx='40' cy='60' r='3'/><circle cx='100' cy='60' r='2.5'/><circle cx='70' cy='110' r='2.5'/><path d='M170 160c20-25 50-25 60 0M170 160c-10 20 0 50 30 50'/><circle cx='170' cy='160' r='3'/><circle cx='230' cy='160' r='2.5'/><circle cx='200' cy='210' r='2.5'/><path d='M150 30c10 5 15 15 10 25M150 30c-8 6-10 18-2 26'/><circle cx='150' cy='30' r='2'/></g></svg>");
+    background-size: 360px 360px;
+  }
+
+  .arch-top {
+    border-top-left-radius: 9999px;
+    border-top-right-radius: 9999px;
   }
 }
 
 @layer components {
   .btn-primary {
-    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-    padding: 1rem 2rem; border-radius: 9999px;
-    background: var(--color-olive); color: var(--color-sand);
-    font-weight: 500; transition: all .25s ease;
-    box-shadow: 0 8px 24px -12px color-mix(in oklab, var(--olive) 60%, transparent);
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    padding: 1rem 2.25rem; border-radius: 9999px;
+    background: var(--olive); color: var(--sand);
+    font-weight: 500; font-size: 0.9rem;
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 10px 30px -14px color-mix(in oklab, var(--olive) 70%, transparent);
   }
-  .btn-primary:hover { background: color-mix(in oklab, var(--olive) 88%, black); transform: translateY(-1px); }
+  .btn-primary:hover {
+    background: var(--olive-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -16px color-mix(in oklab, var(--olive) 80%, transparent);
+  }
+
+  .btn-outline-light {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    padding: 1rem 2.25rem; border-radius: 9999px;
+    border: 1px solid color-mix(in oklab, var(--sand) 60%, transparent);
+    color: var(--sand); font-weight: 500; font-size: 0.9rem;
+    transition: all .25s ease; backdrop-filter: blur(8px);
+    background: color-mix(in oklab, var(--sand) 8%, transparent);
+  }
+  .btn-outline-light:hover {
+    background: var(--sand); color: var(--olive); border-color: var(--sand);
+  }
 
   .btn-outline {
-    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-    padding: 1rem 2rem; border-radius: 9999px;
-    border: 1px solid var(--olive); color: var(--olive);
-    font-weight: 500; transition: all .25s ease; background: transparent;
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    padding: 1rem 2.25rem; border-radius: 9999px;
+    border: 1px solid var(--olive); color: var(--olive); background: transparent;
+    font-weight: 500; font-size: 0.9rem; transition: all .25s ease;
   }
   .btn-outline:hover { background: var(--olive); color: var(--sand); }
 
-  .btn-ghost-link {
+  .ghost-link {
     display: inline-flex; align-items: center; gap: .5rem;
-    color: var(--walnut); font-weight: 500;
-    border-bottom: 1px solid color-mix(in oklab, var(--walnut) 40%, transparent);
-    padding-bottom: 2px; transition: all .2s ease;
+    color: var(--walnut); font-weight: 500; font-size: 0.9rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--walnut) 35%, transparent);
+    padding-bottom: 3px; transition: all .25s ease;
   }
-  .btn-ghost-link:hover { color: var(--olive); border-color: var(--olive); }
+  .ghost-link:hover { color: var(--olive); border-color: var(--olive); }
+
+  .hero-headline {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
 }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fade-up .9s cubic-bezier(.16,1,.3,1) both; }
