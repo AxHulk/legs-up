@@ -1,7 +1,12 @@
+import { lazy, Suspense } from "react";
 import studio1 from "@/assets/space/studio_1.jpg";
 import studio2 from "@/assets/space/studio_2.jpg";
 import beginners from "@/assets/card_beginners.jpg";
 import privateImg from "@/assets/card_private.jpg";
+
+const RotatingModel = lazy(() =>
+  import("./RotatingModel").then((m) => ({ default: m.RotatingModel })),
+);
 
 export function Space() {
   return (
