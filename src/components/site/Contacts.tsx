@@ -2,8 +2,57 @@ import { useState } from "react";
 import { Phone, MapPin, Clock, Send, MessageCircle } from "lucide-react";
 import iconHeart from "@/assets/icons/icon_heart.png";
 
+// Format an arbitrary digit string into a Russian phone mask:
+// "+7 (XXX) XXX-XX-XX". The input is always normalized so it
+// starts with "7" and is at most 11 digits long.
+function formatRussianPhone(digits: string) {
+  if (!digits) return "";
+  const d = digits;
+  let out = "+7";
+  if (d.length > 1) out += " (" + d.slice(1, 4);
+  if (d.length >= 5) out += ") " + d.slice(4, 7);
+  else if (d.length >= 4) out += ")";
+  if (d.length >= 8) out += "-" + d.slice(7, 9);
+  if (d.length >= 10) out += "-" + d.slice(9, 11);
+  return out;
+}
+
+// Strip everything but digits and normalize so the resulting
+// string represents a Russian number (starts with "7").
+function normalizeDigits(value: string) {
+  let d = value.replace(/\D/g, "");
+  if (!d) return "";
+  if (d.startsWith("8")) d = "7" + d.slice(1);
+  if (!d.startsWith("7")) d = "7" + d;
+  return d.slice(0, 11);
+}
+
 export function Contacts() {
   const [sent, setSent] = useState(false);
+  const [phone, setPhone] = useState("");
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const next = e.target.value;
+    const prevDigits = phone.replace(/\D/g, "");
+    let nextDigits = next.replace(/\D/g, "");
+
+    // If the user deleted a character but the digit count did not
+    // change, they just removed a separator — drop the last digit
+    // so backspace/delete actually shorten the number.
+    if (next.length < phone.length && nextDigits.length === prevDigits.length) {
+      nextDigits = nextDigits.slice(0, -1);
+    }
+
+    setPhone(formatRussianPhone(normalizeDigits(nextDigits)));
+  };
+
+  const handlePhoneFocus = () => {
+    if (!phone) setPhone("+7 ");
+  };
+
+  const handlePhoneBlur = () => {
+    if (phone === "+7" || phone === "+7 ") setPhone("");
+  };
 
   return (
     <section id="contacts" className="py-28 lg:py-36 bg-foreground text-sand relative overflow-hidden">
@@ -70,7 +119,23 @@ export function Contacts() {
 
           <div className="mt-8 space-y-5">
             <Field label="Ваше имя" name="name" placeholder="Как вас зовут?" required />
-            <Field label="Телефон" name="phone" placeholder="+7 (___) ___-__-__" required type="tel" />
+            <div>
+              <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Телефон</label>
+              <input
+                type="tel"
+                name="phone"
+                inputMode="tel"
+                autoComplete="tel"
+                placeholder="+7 (___) ___-__-__"
+                required
+                value={phone}
+                onChange={handlePhoneChange}
+                onFocus={handlePhoneFocus}
+                onBlur={handlePhoneBlur}
+                maxLength={18}
+                className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40"
+              />
+            </div>
             <div>
               <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Направление</label>
               <select className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40">
