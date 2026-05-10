@@ -149,6 +149,12 @@ function AccountAdmin() {
       <section className="mt-10">
         <h2 className="font-serif text-2xl mb-4">Все администраторы</h2>
         <div className="bg-sand rounded-2xl border border-border/60 overflow-hidden">
+          {adminsLoading && <div className="px-5 py-4 text-sm text-foreground/60">Загрузка…</div>}
+          {adminsError && (
+            <div className="px-5 py-4 text-sm text-destructive">
+              {adminsError instanceof Error ? adminsError.message : "Не удалось загрузить администраторов"}
+            </div>
+          )}
           {admins.map((a, i) => (
             <div
               key={a.id}
