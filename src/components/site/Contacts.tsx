@@ -55,7 +55,7 @@ export function Contacts() {
   };
 
   return (
-    <section id="contacts" className="py-28 lg:py-36 bg-foreground text-sand relative overflow-hidden">
+    <section id="contacts" className="scroll-mt-24 py-28 lg:py-36 bg-foreground text-sand relative overflow-hidden">
       <div className="absolute inset-0 pattern-floral opacity-[0.15]" />
 
       <div className="relative mx-auto max-w-[1440px] px-6 lg:px-12 grid lg:grid-cols-2 gap-14 lg:gap-20">
