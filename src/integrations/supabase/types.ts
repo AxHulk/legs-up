@@ -14,7 +14,184 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookings: {
+        Row: {
+          class_id: string | null
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          id: string
+          note: string
+          source: Database["public"]["Enums"]["booking_source"]
+          status: Database["public"]["Enums"]["booking_status"]
+          updated_at: string
+        }
+        Insert: {
+          class_id?: string | null
+          created_at?: string
+          customer_name: string
+          customer_phone?: string
+          id?: string
+          note?: string
+          source?: Database["public"]["Enums"]["booking_source"]
+          status?: Database["public"]["Enums"]["booking_status"]
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string | null
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          id?: string
+          note?: string
+          source?: Database["public"]["Enums"]["booking_source"]
+          status?: Database["public"]["Enums"]["booking_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "schedule_classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      directions: {
+        Row: {
+          created_at: string
+          description: string
+          icon_url: string
+          id: string
+          image_url: string
+          is_published: boolean
+          kicker: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          icon_url?: string
+          id?: string
+          image_url?: string
+          is_published?: boolean
+          kicker?: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          icon_url?: string
+          id?: string
+          image_url?: string
+          is_published?: boolean
+          kicker?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      instructors: {
+        Row: {
+          bio: string
+          created_at: string
+          id: string
+          is_published: boolean
+          name: string
+          photos: string[]
+          role: string
+          short_desc: string
+          sort_order: number
+          updated_at: string
+          years: string
+        }
+        Insert: {
+          bio?: string
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          name: string
+          photos?: string[]
+          role?: string
+          short_desc?: string
+          sort_order?: number
+          updated_at?: string
+          years?: string
+        }
+        Update: {
+          bio?: string
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          name?: string
+          photos?: string[]
+          role?: string
+          short_desc?: string
+          sort_order?: number
+          updated_at?: string
+          years?: string
+        }
+        Relationships: []
+      }
+      schedule_classes: {
+        Row: {
+          booking_url: string
+          class_type: string
+          created_at: string
+          description: string
+          duration_min: number
+          id: string
+          instructor_id: string | null
+          is_published: boolean
+          seats_total: number
+          starts_at: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          booking_url?: string
+          class_type?: string
+          created_at?: string
+          description?: string
+          duration_min?: number
+          id?: string
+          instructor_id?: string | null
+          is_published?: boolean
+          seats_total?: number
+          starts_at: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          booking_url?: string
+          class_type?: string
+          created_at?: string
+          description?: string
+          duration_min?: number
+          id?: string
+          instructor_id?: string | null
+          is_published?: boolean
+          seats_total?: number
+          starts_at?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "schedule_classes_instructor_id_fkey"
+            columns: ["instructor_id"]
+            isOneToOne: false
+            referencedRelation: "instructors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +200,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      booking_source:
+        | "site"
+        | "manual"
+        | "phone"
+        | "instagram"
+        | "whatsapp"
+        | "telegram"
+        | "other"
+      booking_status: "pending" | "confirmed" | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +335,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      booking_source: [
+        "site",
+        "manual",
+        "phone",
+        "instagram",
+        "whatsapp",
+        "telegram",
+        "other",
+      ],
+      booking_status: ["pending", "confirmed", "cancelled"],
+    },
   },
 } as const
