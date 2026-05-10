@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as OfferRouteImport } from './routes/offer'
 import { Route as ConsentRouteImport } from './routes/consent'
 import { Route as IndexRouteImport } from './routes/index'
 
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfferRoute = OfferRouteImport.update({
+  id: '/offer',
+  path: '/offer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConsentRoute = ConsentRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/consent': typeof ConsentRoute
+  '/offer': typeof OfferRoute
   '/privacy': typeof PrivacyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/consent': typeof ConsentRoute
+  '/offer': typeof OfferRoute
   '/privacy': typeof PrivacyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/consent': typeof ConsentRoute
+  '/offer': typeof OfferRoute
   '/privacy': typeof PrivacyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/consent' | '/privacy'
+  fullPaths: '/' | '/consent' | '/offer' | '/privacy'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/consent' | '/privacy'
-  id: '__root__' | '/' | '/consent' | '/privacy'
+  to: '/' | '/consent' | '/offer' | '/privacy'
+  id: '__root__' | '/' | '/consent' | '/offer' | '/privacy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConsentRoute: typeof ConsentRoute
+  OfferRoute: typeof OfferRoute
   PrivacyRoute: typeof PrivacyRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/offer': {
+      id: '/offer'
+      path: '/offer'
+      fullPath: '/offer'
+      preLoaderRoute: typeof OfferRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/consent': {
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConsentRoute: ConsentRoute,
+  OfferRoute: OfferRoute,
   PrivacyRoute: PrivacyRoute,
 }
 export const routeTree = rootRouteImport
