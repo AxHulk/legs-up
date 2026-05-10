@@ -35,7 +35,7 @@ export function Hero() {
             тренировка становится путешествием к лучшей версии себя.
           </p>
 
-          <div className="mt-20 lg:mt-24 flex flex-wrap items-center gap-5">
+          <div className="mt-12 flex flex-wrap items-center gap-5">
             <a href="#contacts" className="btn-primary">
               Попробовать бесплатно <ArrowRight className="size-4" />
             </a>
