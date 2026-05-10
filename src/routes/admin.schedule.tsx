@@ -226,7 +226,12 @@ function ScheduleAdmin() {
                   type="datetime-local"
                   className={inputClass}
                   defaultValue={editing.starts_at ? toLocal(editing.starts_at) : ""}
-                  onChange={(e) => setEditing({ ...editing, starts_local: e.target.value, starts_at: e.target.value })}
+                  onChange={(e) =>
+                    setEditing({
+                      ...editing,
+                      starts_at: e.target.value ? new Date(e.target.value).toISOString() : editing.starts_at,
+                    })
+                  }
                 />
               </Field>
               <Field label="Длительность (минут)">
