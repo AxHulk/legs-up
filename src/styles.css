@@ -163,6 +163,11 @@
     transition: all .25s ease; backdrop-filter: blur(8px);
     background: color-mix(in oklab, var(--sand) 8%, transparent);
   }
+  .btn-outline-light--strong {
+    border-color: var(--sand);
+    background: color-mix(in oklab, var(--sand) 20%, transparent);
+    box-shadow: 0 10px 28px -14px oklch(0.2 0.02 60 / 0.55);
+  }
   .btn-outline-light:hover {
     background: var(--sand); color: var(--olive); border-color: var(--sand);
   }
