@@ -72,8 +72,8 @@ function ScheduleAdmin() {
   });
 
   const save = useMutation({
-    mutationFn: async (row: Partial<Klass> & { starts_local?: string }) => {
-      const starts_at = row.starts_local ? new Date(row.starts_local).toISOString() : row.starts_at;
+    mutationFn: async (row: Partial<Klass>) => {
+      const starts_at = row.starts_at;
       const payload = {
         starts_at: starts_at!,
         duration_min: row.duration_min ?? 60,
