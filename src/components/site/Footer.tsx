@@ -9,13 +9,16 @@ export function Footer() {
           <img src={logo} alt="НОГИ ВВЕРХ" className="h-12 w-auto [filter:brightness(0)_invert(1)] opacity-90" />
         </div>
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 text-xs tracking-wider text-sand/50">
+          <Link to="/offer" className="hover:text-sand transition-colors">
+            Публичная оферта
+          </Link>
           <Link to="/privacy" className="hover:text-sand transition-colors">
             Политика конфиденциальности
           </Link>
           <Link to="/consent" className="hover:text-sand transition-colors">
             Согласие на обработку ПдН
           </Link>
-          <span>© {new Date().getFullYear()} Студия «НОГИ ВВЕРХ» · Все права защищены</span>
+          <span>© {new Date().getFullYear()} Студия «НОГИ ВВЕРХ»</span>
         </div>
       </div>
     </footer>
