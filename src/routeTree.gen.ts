@@ -18,6 +18,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminInstructorsRouteImport } from './routes/admin.instructors'
+import { Route as AdminDirectionsRouteImport } from './routes/admin.directions'
 
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
@@ -64,6 +65,11 @@ const AdminInstructorsRoute = AdminInstructorsRouteImport.update({
   path: '/instructors',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminDirectionsRoute = AdminDirectionsRouteImport.update({
+  id: '/directions',
+  path: '/directions',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/offer': typeof OfferRoute
   '/payments': typeof PaymentsRoute
   '/privacy': typeof PrivacyRoute
+  '/admin/directions': typeof AdminDirectionsRoute
   '/admin/instructors': typeof AdminInstructorsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/': typeof AdminIndexRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/offer': typeof OfferRoute
   '/payments': typeof PaymentsRoute
   '/privacy': typeof PrivacyRoute
+  '/admin/directions': typeof AdminDirectionsRoute
   '/admin/instructors': typeof AdminInstructorsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin': typeof AdminIndexRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/offer': typeof OfferRoute
   '/payments': typeof PaymentsRoute
   '/privacy': typeof PrivacyRoute
+  '/admin/directions': typeof AdminDirectionsRoute
   '/admin/instructors': typeof AdminInstructorsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/': typeof AdminIndexRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/offer'
     | '/payments'
     | '/privacy'
+    | '/admin/directions'
     | '/admin/instructors'
     | '/admin/login'
     | '/admin/'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/offer'
     | '/payments'
     | '/privacy'
+    | '/admin/directions'
     | '/admin/instructors'
     | '/admin/login'
     | '/admin'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/offer'
     | '/payments'
     | '/privacy'
+    | '/admin/directions'
     | '/admin/instructors'
     | '/admin/login'
     | '/admin/'
@@ -207,16 +219,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminInstructorsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/directions': {
+      id: '/admin/directions'
+      path: '/directions'
+      fullPath: '/admin/directions'
+      preLoaderRoute: typeof AdminDirectionsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminDirectionsRoute: typeof AdminDirectionsRoute
   AdminInstructorsRoute: typeof AdminInstructorsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminDirectionsRoute: AdminDirectionsRoute,
   AdminInstructorsRoute: AdminInstructorsRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminIndexRoute: AdminIndexRoute,
