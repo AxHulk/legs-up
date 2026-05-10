@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Trash2, Save, UserPlus } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/admin/account")({ component: AccountAdmin
 
 function AccountAdmin() {
   const qc = useQueryClient();
-  const { username, userId } = useAdminSession();
+  const { session, loading, username, userId } = useAdminSession();
 
   const listFn = useServerFn(listAdmins);
   const createFn = useServerFn(createAdmin);
@@ -25,9 +25,21 @@ function AccountAdmin() {
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
-  const { data: admins = [] } = useQuery({
+  useEffect(() => {
+    if (username) setCredUsername(username);
+  }, [username]);
+
+  const authHeaders = () => {
+    const token = session?.access_token;
+    if (!token) throw new Error("Сессия администратора не найдена. Войдите заново.");
+    return { Authorization: `Bearer ${token}` };
+  };
+
+  const { data: admins = [], isLoading: adminsLoading, error: adminsError } = useQuery({
     queryKey: ["admin-users"],
-    queryFn: () => listFn(),
+    queryFn: () => listFn({ headers: authHeaders() }),
+    enabled: !loading && Boolean(session?.access_token),
+    retry: false,
   });
 
   const updateMine = useMutation({
@@ -36,7 +48,7 @@ function AccountAdmin() {
       if (credUsername && credUsername !== username) payload.username = credUsername;
       if (credPassword) payload.password = credPassword;
       if (Object.keys(payload).length === 0) throw new Error("Нечего обновлять");
-      await updateFn({ data: payload });
+      await updateFn({ data: payload, headers: authHeaders() });
     },
     onSuccess: () => {
       setMsg("Сохранено. Если меняли логин — войдите заново.");
@@ -51,7 +63,8 @@ function AccountAdmin() {
   });
 
   const create = useMutation({
-    mutationFn: () => createFn({ data: { username: newUsername, password: newPassword } }),
+    mutationFn: () =>
+      createFn({ data: { username: newUsername, password: newPassword }, headers: authHeaders() }),
     onSuccess: () => {
       setNewUsername("");
       setNewPassword("");
@@ -60,7 +73,7 @@ function AccountAdmin() {
   });
 
   const remove = useMutation({
-    mutationFn: (id: string) => deleteFn({ data: { id } }),
+    mutationFn: (id: string) => deleteFn({ data: { id }, headers: authHeaders() }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-users"] }),
   });
 
