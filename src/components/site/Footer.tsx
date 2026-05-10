@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import logo from "@/assets/logo-nogi-vverh.png";
 
 export function Footer() {
@@ -7,8 +8,11 @@ export function Footer() {
         <div className="flex items-center gap-4">
           <img src={logo} alt="НОГИ ВВЕРХ" className="h-12 w-auto [filter:brightness(0)_invert(1)] opacity-90" />
         </div>
-        <div className="text-xs tracking-wider text-sand/50">
-          © {new Date().getFullYear()} Студия «НОГИ ВВЕРХ» · Все права защищены
+        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 text-xs tracking-wider text-sand/50">
+          <Link to="/privacy" className="hover:text-sand transition-colors">
+            Политика конфиденциальности
+          </Link>
+          <span>© {new Date().getFullYear()} Студия «НОГИ ВВЕРХ» · Все права защищены</span>
         </div>
       </div>
     </footer>
