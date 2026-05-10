@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -114,6 +115,40 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // Smooth-scroll to a section only when the user actually clicks an in-page
+  // anchor link. On initial page load (e.g. refreshing /#contacts) we strip
+  // the hash so the page does not auto-scroll on its own.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    if (window.location.hash) {
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search,
+      );
+      window.scrollTo(0, 0);
+    }
+
+    const onClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement | null)?.closest(
+        'a[href^="#"], a[href*="/#"]',
+      ) as HTMLAnchorElement | null;
+      if (!target) return;
+      const url = new URL(target.href, window.location.href);
+      if (url.pathname !== window.location.pathname) return;
+      const id = url.hash.slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

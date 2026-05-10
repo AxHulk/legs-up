@@ -82,7 +82,7 @@
 
 @layer base {
   * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  /* scroll-behavior intentionally not smooth on html — it makes hash URLs auto-scroll on page load. Smooth scrolling is handled per-click in JS. */
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
