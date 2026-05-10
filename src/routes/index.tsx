@@ -6,6 +6,7 @@ import { Directions } from "@/components/site/Directions";
 import { Team } from "@/components/site/Team";
 import { Space } from "@/components/site/Space";
 import { Schedule } from "@/components/site/Schedule";
+import { Pricing } from "@/components/site/Pricing";
 import { Reviews } from "@/components/site/Reviews";
 import { Contacts } from "@/components/site/Contacts";
 import { Footer } from "@/components/site/Footer";
@@ -33,6 +34,7 @@ function Index() {
         <Team />
         <Space />
         <Schedule />
+        <Pricing />
         <Reviews />
         <Contacts />
       </main>
