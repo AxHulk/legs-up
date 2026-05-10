@@ -13,7 +13,9 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as OfferRouteImport } from './routes/offer'
 import { Route as ConsentRouteImport } from './routes/consent'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
@@ -35,44 +37,83 @@ const ConsentRoute = ConsentRouteImport.update({
   path: '/consent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/consent': typeof ConsentRoute
   '/offer': typeof OfferRoute
   '/payments': typeof PaymentsRoute
   '/privacy': typeof PrivacyRoute
+  '/admin/login': typeof AdminLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/consent': typeof ConsentRoute
   '/offer': typeof OfferRoute
   '/payments': typeof PaymentsRoute
   '/privacy': typeof PrivacyRoute
+  '/admin/login': typeof AdminLoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/consent': typeof ConsentRoute
   '/offer': typeof OfferRoute
   '/payments': typeof PaymentsRoute
   '/privacy': typeof PrivacyRoute
+  '/admin/login': typeof AdminLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/consent' | '/offer' | '/payments' | '/privacy'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/consent'
+    | '/offer'
+    | '/payments'
+    | '/privacy'
+    | '/admin/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/consent' | '/offer' | '/payments' | '/privacy'
-  id: '__root__' | '/' | '/consent' | '/offer' | '/payments' | '/privacy'
+  to:
+    | '/'
+    | '/admin'
+    | '/consent'
+    | '/offer'
+    | '/payments'
+    | '/privacy'
+    | '/admin/login'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/consent'
+    | '/offer'
+    | '/payments'
+    | '/privacy'
+    | '/admin/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ConsentRoute: typeof ConsentRoute
   OfferRoute: typeof OfferRoute
   PaymentsRoute: typeof PaymentsRoute
@@ -109,6 +150,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -116,11 +164,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminLoginRoute: typeof AdminLoginRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminLoginRoute: AdminLoginRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   ConsentRoute: ConsentRoute,
   OfferRoute: OfferRoute,
   PaymentsRoute: PaymentsRoute,
@@ -129,3 +195,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
