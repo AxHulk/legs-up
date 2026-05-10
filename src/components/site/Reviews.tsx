@@ -28,7 +28,7 @@ export function Reviews() {
           </h2>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-stretch max-w-6xl mx-auto">
           <div className="lg:col-span-5">
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
               <img
@@ -40,7 +40,7 @@ export function Reviews() {
             </div>
           </div>
 
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 flex flex-col">
             <Quote className="size-10 text-olive/50" />
             <p
               key={r.text}
@@ -48,16 +48,16 @@ export function Reviews() {
             >
               {r.text}
             </p>
-            <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
+            <div className="mt-auto pt-8 flex items-center justify-between border-t border-border gap-4">
               <div>
                 <div className="font-serif text-2xl">{r.name}</div>
                 <div className="text-[11px] uppercase tracking-[0.22em] text-walnut mt-1">{r.tag}</div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 shrink-0">
                 <button onClick={prev} className="size-12 rounded-full border border-border flex items-center justify-center hover:bg-olive hover:text-sand hover:border-olive transition-colors" aria-label="Предыдущий">
                   <ChevronLeft className="size-5" />
                 </button>
-                <span className="text-sm tabular-nums text-foreground/60 w-10 text-center">
+                <span className="text-sm tabular-nums text-foreground/60 text-center whitespace-nowrap">
                   {String(i + 1).padStart(2, "0")} / {String(reviews.length).padStart(2, "0")}
                 </span>
                 <button onClick={next} className="size-12 rounded-full border border-border flex items-center justify-center hover:bg-olive hover:text-sand hover:border-olive transition-colors" aria-label="Следующий">
