@@ -32,7 +32,7 @@ export const ensureDefaultAdmin = createServerFn({ method: "POST" }).handler(asy
 });
 
 export const listAdmins = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
+  .middleware([attachSupabaseAuth, requireSupabaseAuth])
   .handler(async () => {
     const { data, error } = await supabaseAdmin.auth.admin.listUsers({ page: 1, perPage: 100 });
     if (error) throw new Error(error.message);
@@ -46,7 +46,7 @@ export const listAdmins = createServerFn({ method: "GET" })
   });
 
 export const createAdmin = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([attachSupabaseAuth, requireSupabaseAuth])
   .inputValidator((data: { username: string; password: string }) =>
     z.object({ username: usernameSchema, password: passwordSchema }).parse(data),
   )
@@ -62,7 +62,7 @@ export const createAdmin = createServerFn({ method: "POST" })
   });
 
 export const updateMyCredentials = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([attachSupabaseAuth, requireSupabaseAuth])
   .inputValidator((data: { username?: string; password?: string }) =>
     z
       .object({
@@ -86,7 +86,7 @@ export const updateMyCredentials = createServerFn({ method: "POST" })
   });
 
 export const deleteAdmin = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([attachSupabaseAuth, requireSupabaseAuth])
   .inputValidator((data: { id: string }) => z.object({ id: z.string().uuid() }).parse(data))
   .handler(async ({ data, context }) => {
     if (data.id === context.userId) throw new Error("Нельзя удалить самого себя");
