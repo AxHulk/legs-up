@@ -12,6 +12,9 @@ export function Footer() {
           <Link to="/privacy" className="hover:text-sand transition-colors">
             Политика конфиденциальности
           </Link>
+          <Link to="/consent" className="hover:text-sand transition-colors">
+            Согласие на обработку ПдН
+          </Link>
           <span>© {new Date().getFullYear()} Студия «НОГИ ВВЕРХ» · Все права защищены</span>
         </div>
       </div>
