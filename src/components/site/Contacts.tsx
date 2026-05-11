@@ -133,7 +133,7 @@ export function Contacts() {
         </div>
 
         <form
-          onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+          onSubmit={handleSubmit}
           className="rounded-3xl bg-sand text-foreground p-8 lg:p-10 self-start"
         >
           <div className="flex items-center gap-4">
@@ -147,7 +147,19 @@ export function Contacts() {
           </div>
 
           <div className="mt-8 space-y-5">
-            <Field label="Ваше имя" name="name" placeholder="Как вас зовут?" required />
+            <div>
+              <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Ваше имя</label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Как вас зовут?"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                maxLength={100}
+                className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40"
+              />
+            </div>
             <div>
               <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Телефон</label>
               <input
@@ -167,8 +179,12 @@ export function Contacts() {
             </div>
             <div>
               <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Направление</label>
-              <select className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40">
-                <option>Выберите направление</option>
+              <select
+                value={direction}
+                onChange={(e) => setDirection(e.target.value)}
+                className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40"
+              >
+                <option value="">Выберите направление</option>
                 <option>Пилатес — для начинающих</option>
                 <option>Пилатес — продвинутый</option>
                 <option>Индивидуальные занятия</option>
@@ -176,11 +192,24 @@ export function Contacts() {
                 <option>Йога / здоровая спина</option>
               </select>
             </div>
-            <Field label="Удобное время" name="time" placeholder="Когда вам удобно?" />
+            <div>
+              <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Удобное время</label>
+              <input
+                type="text"
+                name="time"
+                placeholder="Когда вам удобно?"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                maxLength={200}
+                className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40"
+              />
+            </div>
           </div>
 
-          <button type="submit" className="btn-primary w-full mt-8">
-            {sent ? "Заявка отправлена ✓" : (<>Отправить заявку <Send className="size-4" /></>)}
+          <button type="submit" disabled={submitting || sent} className="btn-primary w-full mt-8 disabled:opacity-70">
+            {submitting ? (<><Loader2 className="size-4 animate-spin" /> Отправляем…</>)
+              : sent ? "Заявка отправлена ✓"
+              : (<>Отправить заявку <Send className="size-4" /></>)}
           </button>
 
           <p className="mt-5 text-xs text-foreground/55 text-center leading-relaxed">
