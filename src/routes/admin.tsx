@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, useRouterState, Link, useNavigate, redirect } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { LogOut, Calendar, Users, Layers, Inbox, UserCog, LayoutDashboard } from "lucide-react";
+import { LogOut, Calendar, Users, Layers, Inbox, UserCog, LayoutDashboard, Settings } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminSession } from "@/hooks/use-admin-session";
 
@@ -17,6 +17,7 @@ const navItems = [
   { to: "/admin/bookings", label: "Брони", icon: Inbox },
   { to: "/admin/instructors", label: "Инструкторы", icon: Users },
   { to: "/admin/directions", label: "Направления", icon: Layers },
+  { to: "/admin/settings", label: "Настройки", icon: Settings },
   { to: "/admin/account", label: "Аккаунт", icon: UserCog },
 ];
 

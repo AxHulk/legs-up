@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Phone, MapPin, Clock, Send, MessageCircle } from "lucide-react";
+import { Phone, MapPin, Clock, Send, MessageCircle, CalendarPlus } from "lucide-react";
 import iconHeart from "@/assets/icons/icon_heart.png";
+import { BookingButton } from "@/components/site/BookingButton";
 
 // Format an arbitrary digit string into a Russian phone mask:
 // "+7 (XXX) XXX-XX-XX". The input is always normalized so it
@@ -94,6 +95,9 @@ export function Contacts() {
           </div>
 
           <div className="mt-10 flex flex-wrap gap-3">
+            <BookingButton className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-sand text-foreground hover:bg-sand/90 transition-colors text-sm">
+              <CalendarPlus className="size-4" /> Онлайн-запись
+            </BookingButton>
             <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-sand/20 hover:bg-sand hover:text-foreground transition-colors text-sm">
               <MessageCircle className="size-4" /> WhatsApp
             </a>

@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { BookingButton } from "@/components/site/BookingButton";
 
 type Direction = {
   id: string;
@@ -8,6 +9,7 @@ type Direction = {
   title: string;
   description: string;
   image_url: string;
+  yclients_url: string;
 };
 
 export function Directions() {
@@ -16,7 +18,7 @@ export function Directions() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("directions")
-        .select("id,kicker,title,description,image_url")
+        .select("id,kicker,title,description,image_url,yclients_url")
         .eq("is_published", true)
         .order("sort_order", { ascending: true });
       if (error) throw error;
@@ -63,13 +65,14 @@ export function Directions() {
                 {c.kicker && <div className="text-[10px] uppercase tracking-[0.22em] text-walnut mb-3">{c.kicker}</div>}
                 <h3 className="font-serif text-3xl">{c.title}</h3>
                 <p className="mt-4 text-sm text-foreground/70 leading-relaxed flex-1">{c.description}</p>
-                <a
-                  href="#contacts"
-                  className="mt-7 inline-flex items-center justify-between text-sm font-medium text-olive border-t border-border/70 pt-5 group-hover:text-olive-deep transition-colors"
+                <BookingButton
+                  url={c.yclients_url}
+                  className="mt-7 inline-flex w-full items-center justify-between text-sm font-medium text-olive border-t border-border/70 pt-5 group-hover:text-olive-deep transition-colors"
+                  ariaLabel={`Записаться на ${c.title}`}
                 >
                   <span>Записаться</span>
                   <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
+                </BookingButton>
               </div>
             </article>
           ))}

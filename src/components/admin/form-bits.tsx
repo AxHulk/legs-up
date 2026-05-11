@@ -135,14 +135,17 @@ export function PhotosInput({
 export function Field({
   label,
   children,
+  hint,
 }: {
   label: string;
   children: React.ReactNode;
+  hint?: string;
 }) {
   return (
     <label className="block">
       <div className="text-xs uppercase tracking-[0.18em] text-walnut mb-2">{label}</div>
       {children}
+      {hint && <div className="text-[11px] text-foreground/55 mt-1.5 leading-relaxed">{hint}</div>}
     </label>
   );
 }

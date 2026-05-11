@@ -15,6 +15,7 @@ type Instructor = {
   short_desc: string;
   bio: string;
   photos: string[];
+  yclients_url: string;
   sort_order: number;
   is_published: boolean;
 };
@@ -26,6 +27,7 @@ const empty = (sort_order: number): Omit<Instructor, "id"> => ({
   short_desc: "",
   bio: "",
   photos: [],
+  yclients_url: "",
   sort_order,
   is_published: true,
 });
@@ -48,32 +50,22 @@ function InstructorsAdmin() {
 
   const save = useMutation({
     mutationFn: async (row: Partial<Instructor>) => {
+      const payload = {
+        name: row.name ?? "",
+        role: row.role ?? "",
+        years: row.years ?? "",
+        short_desc: row.short_desc ?? "",
+        bio: row.bio ?? "",
+        photos: row.photos ?? [],
+        yclients_url: row.yclients_url ?? "",
+        sort_order: row.sort_order ?? 0,
+        is_published: row.is_published ?? true,
+      };
       if (row.id) {
-        const { error } = await supabase
-          .from("instructors")
-          .update({
-            name: row.name ?? "",
-            role: row.role ?? "",
-            years: row.years ?? "",
-            short_desc: row.short_desc ?? "",
-            bio: row.bio ?? "",
-            photos: row.photos ?? [],
-            sort_order: row.sort_order ?? 0,
-            is_published: row.is_published ?? true,
-          })
-          .eq("id", row.id);
+        const { error } = await supabase.from("instructors").update(payload).eq("id", row.id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("instructors").insert({
-          name: row.name ?? "",
-          role: row.role ?? "",
-          years: row.years ?? "",
-          short_desc: row.short_desc ?? "",
-          bio: row.bio ?? "",
-          photos: row.photos ?? [],
-          sort_order: row.sort_order ?? 0,
-          is_published: row.is_published ?? true,
-        });
+        const { error } = await supabase.from("instructors").insert(payload);
         if (error) throw error;
       }
     },
@@ -193,6 +185,18 @@ function InstructorsAdmin() {
               onChange={(v) => setEditing({ ...editing, photos: v })}
               prefix="instructors"
             />
+            <Field
+              label="Ссылка YClients (необязательно)"
+              hint="Если указана, кнопка «Записаться к инструктору» ведёт сюда. Иначе — на общий виджет из «Настроек»."
+            >
+              <input
+                className={inputClass}
+                value={editing.yclients_url ?? ""}
+                onChange={(e) => setEditing({ ...editing, yclients_url: e.target.value })}
+                placeholder="https://n2043963.yclients.com/..."
+                inputMode="url"
+              />
+            </Field>
             <div className="grid grid-cols-2 gap-3">
               <Field label="Порядок сортировки">
                 <input
