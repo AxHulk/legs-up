@@ -32,17 +32,19 @@ function normalizeDigits(value: string) {
 }
 
 export function Contacts() {
+  const submitLead = useServerFn(createBookingLead);
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [direction, setDirection] = useState("");
+  const [time, setTime] = useState("");
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const next = e.target.value;
     const prevDigits = phone.replace(/\D/g, "");
     let nextDigits = next.replace(/\D/g, "");
 
-    // If the user deleted a character but the digit count did not
-    // change, they just removed a separator — drop the last digit
-    // so backspace/delete actually shorten the number.
     if (next.length < phone.length && nextDigits.length === prevDigits.length) {
       nextDigits = nextDigits.slice(0, -1);
     }
@@ -56,6 +58,26 @@ export function Contacts() {
 
   const handlePhoneBlur = () => {
     if (phone === "+7" || phone === "+7 ") setPhone("");
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const digits = phone.replace(/\D/g, "");
+    if (digits.length < 11) {
+      toast.error("Пожалуйста, укажите телефон полностью");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      await submitLead({ data: { name, phone: `+${digits}`, direction, time } });
+      setSent(true);
+      toast.success("Заявка отправлена! Мы свяжемся с вами в течение часа.");
+    } catch (err) {
+      console.error(err);
+      toast.error("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
