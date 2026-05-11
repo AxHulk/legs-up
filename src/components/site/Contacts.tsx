@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Phone, MapPin, Clock, Send, MessageCircle, CalendarPlus, Loader2 } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import iconHeart from "@/assets/icons/icon_heart.png";
-import { BookingButton } from "@/components/site/BookingButton";
+import { BookingButton, BookingDialog, useBookingUrl } from "@/components/site/BookingButton";
 import { createBookingLead } from "@/lib/yclients.functions";
 import { toast } from "sonner";
 
@@ -33,8 +33,10 @@ function normalizeDigits(value: string) {
 
 export function Contacts() {
   const submitLead = useServerFn(createBookingLead);
+  const bookingUrl = useBookingUrl();
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [direction, setDirection] = useState("");
@@ -71,7 +73,9 @@ export function Contacts() {
     try {
       await submitLead({ data: { name, phone: `+${digits}`, direction, time } });
       setSent(true);
-      toast.success("Заявка отправлена! Мы свяжемся с вами в течение часа.");
+      toast.success("Заявка сохранена! Выберите удобное время для записи.");
+      // Open YClients widget so the client picks a service and time slot.
+      setBookingOpen(true);
     } catch (err) {
       console.error(err);
       toast.error("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.");
@@ -206,9 +210,9 @@ export function Contacts() {
             </div>
           </div>
 
-          <button type="submit" disabled={submitting || sent} className="btn-primary w-full mt-8 disabled:opacity-70">
+          <button type="submit" disabled={submitting} className="btn-primary w-full mt-8 disabled:opacity-70">
             {submitting ? (<><Loader2 className="size-4 animate-spin" /> Отправляем…</>)
-              : sent ? "Заявка отправлена ✓"
+              : sent ? (<>Выбрать время заново <CalendarPlus className="size-4" /></>)
               : (<>Отправить заявку <Send className="size-4" /></>)}
           </button>
 
@@ -217,6 +221,7 @@ export function Contacts() {
           </p>
         </form>
       </div>
+      {bookingOpen && <BookingDialog url={bookingUrl} onClose={() => setBookingOpen(false)} />}
     </section>
   );
 }

@@ -9,12 +9,17 @@ const BookingSchema = z.object({
   time: z.string().trim().max(200).optional().default(""),
 });
 
+/**
+ * Saves a booking lead from the site contact form into our DB.
+ *
+ * YClients has no public partner-token-only endpoint for creating leads,
+ * so we store the request locally (admins see it in /admin/bookings) and
+ * the UI then opens the YClients widget for the client to pick a service
+ * and a time slot — that produces a real "запись" on the YClients side.
+ */
 export const createBookingLead = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => BookingSchema.parse(input))
   .handler(async ({ data }) => {
-    const partnerToken = process.env.YCLIENTS_PARTNER_TOKEN;
-    const companyId = process.env.YCLIENTS_COMPANY_ID;
-
     const note = [
       data.direction && `Направление: ${data.direction}`,
       data.time && `Удобное время: ${data.time}`,
@@ -22,7 +27,6 @@ export const createBookingLead = createServerFn({ method: "POST" })
       .filter(Boolean)
       .join("\n");
 
-    // Save locally first — never lose the lead.
     const { error: dbError } = await supabaseAdmin.from("bookings").insert({
       customer_name: data.name,
       customer_phone: data.phone,
@@ -33,44 +37,8 @@ export const createBookingLead = createServerFn({ method: "POST" })
 
     if (dbError) {
       console.error("[booking] DB insert failed:", dbError);
+      throw new Error("Failed to save booking");
     }
 
-    // Push to YClients as an online-record-form submission (creates a "лид").
-    // Endpoint: POST /api/v1/book_code/{company_id} — sends SMS code (used by online forms),
-    // but for lead capture without service/staff we use the form_integration endpoint.
-    let yclientsOk = false;
-    let yclientsError: string | null = null;
-
-    if (partnerToken && companyId) {
-      try {
-        const res = await fetch(
-          `https://api.yclients.com/api/v1/company/${companyId}/leads/`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${partnerToken}`,
-              Accept: "application/vnd.api.v2+json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: data.name,
-              phone: data.phone,
-              comment: note || "Заявка с сайта",
-            }),
-          }
-        );
-
-        if (res.ok) {
-          yclientsOk = true;
-        } else {
-          yclientsError = `YClients ${res.status}: ${await res.text()}`;
-          console.error("[booking] YClients lead failed:", yclientsError);
-        }
-      } catch (err) {
-        yclientsError = err instanceof Error ? err.message : String(err);
-        console.error("[booking] YClients request error:", yclientsError);
-      }
-    }
-
-    return { ok: true, yclientsOk, yclientsError };
+    return { ok: true };
   });
