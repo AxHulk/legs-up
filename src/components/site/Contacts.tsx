@@ -73,7 +73,9 @@ export function Contacts() {
     try {
       await submitLead({ data: { name, phone: `+${digits}`, direction, time } });
       setSent(true);
-      toast.success("Заявка отправлена! Мы свяжемся с вами в течение часа.");
+      toast.success("Заявка сохранена! Выберите удобное время для записи.");
+      // Open YClients widget so the client picks a service and time slot.
+      setBookingOpen(true);
     } catch (err) {
       console.error(err);
       toast.error("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.");
