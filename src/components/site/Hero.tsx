@@ -1,6 +1,7 @@
 import { ArrowRight, MapPin } from "lucide-react";
 import heroBg from "@/assets/hero_bg.jpg";
 import logo from "@/assets/logo-nogi-vverh.png";
+import { BookingButton } from "@/components/site/BookingButton";
 
 export function Hero() {
   return (
@@ -36,9 +37,9 @@ export function Hero() {
           </p>
 
           <div className="mt-12 flex flex-wrap items-center gap-5">
-            <a href="#contacts" className="btn-primary">
+            <BookingButton className="btn-primary">
               Попробовать бесплатно <ArrowRight className="size-4" />
-            </a>
+            </BookingButton>
             <a href="#directions" className="btn-outline-light btn-outline-light--strong">
               Наши направления
             </a>

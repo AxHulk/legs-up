@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo-nogi-vverh.png";
+import { BookingButton } from "@/components/site/BookingButton";
 
 const nav = [
   { href: "#about", label: "О студии" },
@@ -50,9 +51,9 @@ export function Header() {
           ))}
         </nav>
 
-        <a href="#contacts" className="btn-primary !py-2.5 !px-5 text-[13px]">
+        <BookingButton className="btn-primary !py-2.5 !px-5 text-[13px]">
           Записаться
-        </a>
+        </BookingButton>
       </div>
     </header>
   );
