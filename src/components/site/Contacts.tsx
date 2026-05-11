@@ -33,8 +33,10 @@ function normalizeDigits(value: string) {
 
 export function Contacts() {
   const submitLead = useServerFn(createBookingLead);
+  const bookingUrl = useBookingUrl();
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [direction, setDirection] = useState("");
