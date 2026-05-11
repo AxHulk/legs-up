@@ -15,6 +15,7 @@ type Direction = {
   description: string;
   image_url: string;
   icon_url: string;
+  yclients_url: string;
   sort_order: number;
   is_published: boolean;
 };
@@ -40,6 +41,7 @@ function DirectionsAdmin() {
         description: row.description ?? "",
         image_url: row.image_url ?? "",
         icon_url: row.icon_url ?? "",
+        yclients_url: row.yclients_url ?? "",
         sort_order: row.sort_order ?? 0,
         is_published: row.is_published ?? true,
       };
@@ -84,6 +86,7 @@ function DirectionsAdmin() {
               description: "",
               image_url: "",
               icon_url: "",
+              yclients_url: "",
               sort_order: list.length + 1,
               is_published: true,
             })
@@ -171,6 +174,18 @@ function DirectionsAdmin() {
               onChange={(u) => setEditing({ ...editing, icon_url: u })}
               prefix="icons"
             />
+            <Field
+              label="Ссылка YClients (необязательно)"
+              hint="Если указана, кнопка «Записаться» на этой карточке ведёт сюда. Иначе — на общий виджет из «Настроек»."
+            >
+              <input
+                className={inputClass}
+                value={editing.yclients_url ?? ""}
+                onChange={(e) => setEditing({ ...editing, yclients_url: e.target.value })}
+                placeholder="https://n2043963.yclients.com/..."
+                inputMode="url"
+              />
+            </Field>
             <Field label="Видимость">
               <button
                 type="button"
