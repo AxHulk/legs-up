@@ -210,9 +210,9 @@ export function Contacts() {
             </div>
           </div>
 
-          <button type="submit" disabled={submitting || sent} className="btn-primary w-full mt-8 disabled:opacity-70">
+          <button type="submit" disabled={submitting} className="btn-primary w-full mt-8 disabled:opacity-70">
             {submitting ? (<><Loader2 className="size-4 animate-spin" /> Отправляем…</>)
-              : sent ? "Заявка отправлена ✓"
+              : sent ? (<>Выбрать время заново <CalendarPlus className="size-4" /></>)
               : (<>Отправить заявку <Send className="size-4" /></>)}
           </button>
 
@@ -221,6 +221,7 @@ export function Contacts() {
           </p>
         </form>
       </div>
+      {bookingOpen && <BookingDialog url={bookingUrl} onClose={() => setBookingOpen(false)} />}
     </section>
   );
 }
