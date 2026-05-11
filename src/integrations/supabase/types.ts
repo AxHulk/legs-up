@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_settings: {
+        Row: {
+          id: boolean
+          updated_at: string
+          yclients_url: string
+        }
+        Insert: {
+          id?: boolean
+          updated_at?: string
+          yclients_url?: string
+        }
+        Update: {
+          id?: boolean
+          updated_at?: string
+          yclients_url?: string
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           class_id: string | null
@@ -70,6 +88,7 @@ export type Database = {
           sort_order: number
           title: string
           updated_at: string
+          yclients_url: string
         }
         Insert: {
           created_at?: string
@@ -82,6 +101,7 @@ export type Database = {
           sort_order?: number
           title: string
           updated_at?: string
+          yclients_url?: string
         }
         Update: {
           created_at?: string
@@ -94,6 +114,7 @@ export type Database = {
           sort_order?: number
           title?: string
           updated_at?: string
+          yclients_url?: string
         }
         Relationships: []
       }
@@ -109,6 +130,7 @@ export type Database = {
           short_desc: string
           sort_order: number
           updated_at: string
+          yclients_url: string
           years: string
         }
         Insert: {
@@ -122,6 +144,7 @@ export type Database = {
           short_desc?: string
           sort_order?: number
           updated_at?: string
+          yclients_url?: string
           years?: string
         }
         Update: {
@@ -135,6 +158,7 @@ export type Database = {
           short_desc?: string
           sort_order?: number
           updated_at?: string
+          yclients_url?: string
           years?: string
         }
         Relationships: []
