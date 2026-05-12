@@ -1,24 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Save, ExternalLink, Check } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { Save, ExternalLink, Check, RefreshCw, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Field, inputClass } from "@/components/admin/form-bits";
+import { syncYclientsSchedule } from "@/lib/yclients-sync.functions";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/settings")({ component: SettingsAdmin });
 
 function SettingsAdmin() {
   const qc = useQueryClient();
+  const runSync = useServerFn(syncYclientsSchedule);
   const { data } = useQuery({
     queryKey: ["admin-app-settings"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("app_settings")
-        .select("yclients_url")
+        .select("yclients_url, schedule_synced_at, schedule_sync_error")
         .eq("id", true)
         .maybeSingle();
       if (error) throw error;
-      return data ?? { yclients_url: "" };
+      return data ?? { yclients_url: "", schedule_synced_at: null, schedule_sync_error: null };
     },
   });
 
@@ -26,7 +30,7 @@ function SettingsAdmin() {
   const [savedTick, setSavedTick] = useState(false);
 
   useEffect(() => {
-    if (data?.yclients_url !== undefined) setUrl(data.yclients_url);
+    if (data?.yclients_url !== undefined) setUrl(data.yclients_url ?? "");
   }, [data?.yclients_url]);
 
   const save = useMutation({
@@ -44,9 +48,25 @@ function SettingsAdmin() {
     },
   });
 
+  const sync = useMutation({
+    mutationFn: async () => runSync({ data: {} }),
+    onSuccess: (r: { fetched: number; upserted: number }) => {
+      toast.success(`Импортировано ${r.upserted} занятий из YClients`);
+      qc.invalidateQueries({ queryKey: ["admin-app-settings"] });
+      qc.invalidateQueries({ queryKey: ["public-schedule"] });
+      qc.invalidateQueries({ queryKey: ["admin-schedule"] });
+    },
+    onError: (err) => {
+      toast.error(err instanceof Error ? err.message : "Не удалось синхронизировать расписание");
+    },
+  });
+
+  const fmt = (iso?: string | null) =>
+    iso ? new Date(iso).toLocaleString("ru-RU", { dateStyle: "medium", timeStyle: "short" }) : "никогда";
+
   return (
-    <div className="max-w-2xl">
-      <div className="mb-8">
+    <div className="max-w-2xl space-y-8">
+      <div>
         <h1 className="font-serif text-4xl">Настройки</h1>
         <p className="text-foreground/60 text-sm mt-1">
           Общие настройки сайта — применяются ко всем кнопкам «Записаться».
@@ -99,10 +119,42 @@ function SettingsAdmin() {
         </div>
       </div>
 
-      <p className="text-xs text-foreground/55 mt-6 leading-relaxed">
+      <div className="bg-sand rounded-2xl p-6 border border-border/60 space-y-4">
+        <div>
+          <h2 className="font-serif text-2xl">Синхронизация расписания</h2>
+          <p className="text-foreground/60 text-sm mt-1">
+            Раз в 15 минут расписание автоматически подтягивается из YClients
+            (групповые занятия на 3 недели вперёд). Кнопка ниже запускает синхронизацию вручную.
+          </p>
+        </div>
+
+        <div className="text-sm text-foreground/70">
+          Последняя синхронизация: <b>{fmt(data?.schedule_synced_at)}</b>
+        </div>
+
+        {data?.schedule_sync_error && (
+          <div className="flex items-start gap-2 text-xs text-destructive bg-destructive/10 rounded-xl p-3">
+            <AlertTriangle className="size-4 shrink-0 mt-0.5" />
+            <span className="break-words">{data.schedule_sync_error}</span>
+          </div>
+        )}
+
+        <button
+          onClick={() => sync.mutate()}
+          disabled={sync.isPending}
+          className="btn-primary !py-2.5 !px-5 text-[13px] disabled:opacity-50"
+        >
+          <RefreshCw className={`size-4 ${sync.isPending ? "animate-spin" : ""}`} />
+          {sync.isPending ? "Синхронизируем…" : "Синхронизировать сейчас"}
+        </button>
+      </div>
+
+      <p className="text-xs text-foreground/55 leading-relaxed">
         Подсказка: в карточках направлений и инструкторов можно указать{" "}
         <b>свою</b> ссылку YClients (например, на конкретную услугу или сотрудника) — она
-        будет использоваться вместо общей.
+        будет использоваться вместо общей. Имена инструкторов в админке желательно записывать
+        ровно так, как они называются в YClients — тогда занятия автоматически связываются
+        с карточками тренеров.
       </p>
     </div>
   );
