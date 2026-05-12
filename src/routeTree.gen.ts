@@ -23,6 +23,7 @@ import { Route as AdminInstructorsRouteImport } from './routes/admin.instructors
 import { Route as AdminDirectionsRouteImport } from './routes/admin.directions'
 import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
 import { Route as AdminAccountRouteImport } from './routes/admin.account'
+import { Route as ApiPublicHooksSyncYclientsScheduleRouteImport } from './routes/api/public/hooks/sync-yclients-schedule'
 
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
@@ -94,6 +95,12 @@ const AdminAccountRoute = AdminAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicHooksSyncYclientsScheduleRoute =
+  ApiPublicHooksSyncYclientsScheduleRouteImport.update({
+    id: '/api/public/hooks/sync-yclients-schedule',
+    path: '/api/public/hooks/sync-yclients-schedule',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/admin/schedule': typeof AdminScheduleRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/public/hooks/sync-yclients-schedule': typeof ApiPublicHooksSyncYclientsScheduleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -125,6 +133,7 @@ export interface FileRoutesByTo {
   '/admin/schedule': typeof AdminScheduleRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin': typeof AdminIndexRoute
+  '/api/public/hooks/sync-yclients-schedule': typeof ApiPublicHooksSyncYclientsScheduleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -142,6 +151,7 @@ export interface FileRoutesById {
   '/admin/schedule': typeof AdminScheduleRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/public/hooks/sync-yclients-schedule': typeof ApiPublicHooksSyncYclientsScheduleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/admin/schedule'
     | '/admin/settings'
     | '/admin/'
+    | '/api/public/hooks/sync-yclients-schedule'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -175,6 +186,7 @@ export interface FileRouteTypes {
     | '/admin/schedule'
     | '/admin/settings'
     | '/admin'
+    | '/api/public/hooks/sync-yclients-schedule'
   id:
     | '__root__'
     | '/'
@@ -191,6 +203,7 @@ export interface FileRouteTypes {
     | '/admin/schedule'
     | '/admin/settings'
     | '/admin/'
+    | '/api/public/hooks/sync-yclients-schedule'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -200,6 +213,7 @@ export interface RootRouteChildren {
   OfferRoute: typeof OfferRoute
   PaymentsRoute: typeof PaymentsRoute
   PrivacyRoute: typeof PrivacyRoute
+  ApiPublicHooksSyncYclientsScheduleRoute: typeof ApiPublicHooksSyncYclientsScheduleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -302,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAccountRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/hooks/sync-yclients-schedule': {
+      id: '/api/public/hooks/sync-yclients-schedule'
+      path: '/api/public/hooks/sync-yclients-schedule'
+      fullPath: '/api/public/hooks/sync-yclients-schedule'
+      preLoaderRoute: typeof ApiPublicHooksSyncYclientsScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -336,17 +357,9 @@ const rootRouteChildren: RootRouteChildren = {
   OfferRoute: OfferRoute,
   PaymentsRoute: PaymentsRoute,
   PrivacyRoute: PrivacyRoute,
+  ApiPublicHooksSyncYclientsScheduleRoute:
+    ApiPublicHooksSyncYclientsScheduleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
