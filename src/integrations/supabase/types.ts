@@ -17,16 +17,25 @@ export type Database = {
       app_settings: {
         Row: {
           id: boolean
+          schedule_sync_days: number
+          schedule_sync_error: string | null
+          schedule_synced_at: string | null
           updated_at: string
           yclients_url: string
         }
         Insert: {
           id?: boolean
+          schedule_sync_days?: number
+          schedule_sync_error?: string | null
+          schedule_synced_at?: string | null
           updated_at?: string
           yclients_url?: string
         }
         Update: {
           id?: boolean
+          schedule_sync_days?: number
+          schedule_sync_error?: string | null
+          schedule_synced_at?: string | null
           updated_at?: string
           yclients_url?: string
         }
@@ -173,10 +182,15 @@ export type Database = {
           id: string
           instructor_id: string | null
           is_published: boolean
+          seats_free: number | null
           seats_total: number
           starts_at: string
+          synced_at: string | null
           title: string
           updated_at: string
+          yclients_activity_id: number | null
+          yclients_service_id: number | null
+          yclients_staff_id: number | null
         }
         Insert: {
           booking_url?: string
@@ -187,10 +201,15 @@ export type Database = {
           id?: string
           instructor_id?: string | null
           is_published?: boolean
+          seats_free?: number | null
           seats_total?: number
           starts_at: string
+          synced_at?: string | null
           title: string
           updated_at?: string
+          yclients_activity_id?: number | null
+          yclients_service_id?: number | null
+          yclients_staff_id?: number | null
         }
         Update: {
           booking_url?: string
@@ -201,10 +220,15 @@ export type Database = {
           id?: string
           instructor_id?: string | null
           is_published?: boolean
+          seats_free?: number | null
           seats_total?: number
           starts_at?: string
+          synced_at?: string | null
           title?: string
           updated_at?: string
+          yclients_activity_id?: number | null
+          yclients_service_id?: number | null
+          yclients_staff_id?: number | null
         }
         Relationships: [
           {
