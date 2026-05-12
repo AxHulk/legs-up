@@ -49,7 +49,7 @@ function SettingsAdmin() {
   });
 
   const sync = useMutation({
-    mutationFn: async () => runSync({ data: {} }),
+    mutationFn: async () => runSync(),
     onSuccess: (r: { fetched: number; upserted: number }) => {
       toast.success(`Импортировано ${r.upserted} занятий из YClients`);
       qc.invalidateQueries({ queryKey: ["admin-app-settings"] });
