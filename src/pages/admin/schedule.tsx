@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2, Save, Eye, EyeOff, Check, X as XIcon, Inbox } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Field, inputClass } from "@/components/admin/form-bits";
-import { Modal } from "./admin.instructors";
+import { Modal } from "./instructors";
 
 type Klass = {
   id: string;
