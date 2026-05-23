@@ -32,8 +32,8 @@ function normalizeDigits(value: string) {
 }
 
 export function Contacts() {
-  const submitLead = useServerFn(createBookingLead);
   const bookingUrl = useBookingUrl();
+
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -71,7 +71,18 @@ export function Contacts() {
     }
     setSubmitting(true);
     try {
-      await submitLead({ data: { name, phone: `+${digits}`, direction, time } });
+      const note = [direction && `Направление: ${direction}`, time && `Удобное время: ${time}`]
+        .filter(Boolean)
+        .join("\n");
+      const { error } = await supabase.from("bookings").insert({
+        customer_name: name,
+        customer_phone: `+${digits}`,
+        note,
+        source: "site",
+        status: "pending",
+      });
+      if (error) throw error;
+
       setSent(true);
       toast.success("Заявка сохранена! Выберите удобное время для записи.");
       // Open YClients widget so the client picks a service and time slot.
