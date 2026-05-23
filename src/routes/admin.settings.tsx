@@ -1,18 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
 import { Save, ExternalLink, Check, RefreshCw, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Field, inputClass } from "@/components/admin/form-bits";
-import { syncYclientsSchedule } from "@/lib/yclients-sync.functions";
+import { syncYclientsSchedule } from "@/lib/admin-api";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/settings")({ component: SettingsAdmin });
 
 function SettingsAdmin() {
   const qc = useQueryClient();
-  const runSync = useServerFn(syncYclientsSchedule);
+
   const { data } = useQuery({
     queryKey: ["admin-app-settings"],
     queryFn: async () => {
@@ -49,7 +48,7 @@ function SettingsAdmin() {
   });
 
   const sync = useMutation({
-    mutationFn: async () => runSync(),
+    mutationFn: async () => syncYclientsSchedule(),
     onSuccess: (r: { fetched: number; upserted: number }) => {
       toast.success(`Импортировано ${r.upserted} занятий из YClients`);
       qc.invalidateQueries({ queryKey: ["admin-app-settings"] });
