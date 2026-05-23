@@ -1,1 +1,7 @@
 project_id = "okzilhkvrgqxgjrtlbgl"
+
+[functions.admin-auth]
+verify_jwt = false
+
+[functions.sync-yclients-schedule]
+verify_jwt = false
