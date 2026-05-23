@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Phone, MapPin, Clock, Send, MessageCircle, CalendarPlus, Loader2 } from "lucide-react";
-import { useServerFn } from "@tanstack/react-start";
 import iconHeart from "@/assets/icons/icon_heart.png";
 import { BookingButton, BookingDialog, useBookingUrl } from "@/components/site/BookingButton";
-import { createBookingLead } from "@/lib/yclients.functions";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+
 
 // Format an arbitrary digit string into a Russian phone mask:
 // "+7 (XXX) XXX-XX-XX". The input is always normalized so it
