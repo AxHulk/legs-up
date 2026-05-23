@@ -2,7 +2,9 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { usernameToEmail } from "@/lib/admin-auth-client";
-import { ensureDefaultAdmin } from "@/lib/admin-auth.functions";
+
+const ensureDefaultAdmin = () =>
+  supabase.functions.invoke("admin-auth", { body: { op: "ensure_default" } });
 
 export const Route = createFileRoute("/admin/login")({
   head: () => ({ meta: [{ title: "Вход — Админ-панель" }, { name: "robots", content: "noindex" }] }),
@@ -17,9 +19,7 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // bootstrap default admin if none exists
     ensureDefaultAdmin().catch(() => {});
-    // if already signed in, redirect to admin
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) navigate({ to: "/admin" });
     });

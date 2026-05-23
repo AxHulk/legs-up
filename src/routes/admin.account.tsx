@@ -2,21 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Trash2, Save, UserPlus } from "lucide-react";
-import { useServerFn } from "@tanstack/react-start";
 import { Field, inputClass } from "@/components/admin/form-bits";
 import { useAdminSession } from "@/hooks/use-admin-session";
-import { listAdmins, createAdmin, updateMyCredentials, deleteAdmin } from "@/lib/admin-auth.functions";
+import { listAdmins, createAdmin, updateMyCredentials, deleteAdmin } from "@/lib/admin-api";
 
 export const Route = createFileRoute("/admin/account")({ component: AccountAdmin });
 
 function AccountAdmin() {
   const qc = useQueryClient();
   const { session, loading, username, userId } = useAdminSession();
-
-  const listFn = useServerFn(listAdmins);
-  const createFn = useServerFn(createAdmin);
-  const updateFn = useServerFn(updateMyCredentials);
-  const deleteFn = useServerFn(deleteAdmin);
 
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -29,15 +23,9 @@ function AccountAdmin() {
     if (username) setCredUsername(username);
   }, [username]);
 
-  const authHeaders = () => {
-    const token = session?.access_token;
-    if (!token) throw new Error("Сессия администратора не найдена. Войдите заново.");
-    return { Authorization: `Bearer ${token}` };
-  };
-
   const { data: admins = [], isLoading: adminsLoading, error: adminsError } = useQuery({
     queryKey: ["admin-users"],
-    queryFn: () => listFn({ headers: authHeaders() }),
+    queryFn: () => listAdmins(),
     enabled: !loading && Boolean(session?.access_token),
     retry: false,
   });
@@ -48,7 +36,7 @@ function AccountAdmin() {
       if (credUsername && credUsername !== username) payload.username = credUsername;
       if (credPassword) payload.password = credPassword;
       if (Object.keys(payload).length === 0) throw new Error("Нечего обновлять");
-      await updateFn({ data: payload, headers: authHeaders() });
+      await updateMyCredentials(payload);
     },
     onSuccess: () => {
       setMsg("Сохранено. Если меняли логин — войдите заново.");
@@ -63,8 +51,7 @@ function AccountAdmin() {
   });
 
   const create = useMutation({
-    mutationFn: () =>
-      createFn({ data: { username: newUsername, password: newPassword }, headers: authHeaders() }),
+    mutationFn: () => createAdmin(newUsername, newPassword),
     onSuccess: () => {
       setNewUsername("");
       setNewPassword("");
@@ -73,7 +60,7 @@ function AccountAdmin() {
   });
 
   const remove = useMutation({
-    mutationFn: (id: string) => deleteFn({ data: { id }, headers: authHeaders() }),
+    mutationFn: (id: string) => deleteAdmin(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-users"] }),
   });
 
