@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Save, ExternalLink, Check, RefreshCw, AlertTriangle } from "lucide-react";
@@ -6,8 +6,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Field, inputClass } from "@/components/admin/form-bits";
 import { syncYclientsSchedule } from "@/lib/admin-api";
 import { toast } from "sonner";
-
-export const Route = createFileRoute("/admin/settings")({ component: SettingsAdmin });
 
 function SettingsAdmin() {
   const qc = useQueryClient();
@@ -158,3 +156,5 @@ function SettingsAdmin() {
     </div>
   );
 }
+
+export default SettingsAdmin;

@@ -1,17 +1,13 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { usernameToEmail } from "@/lib/admin-auth-client";
 
 const ensureDefaultAdmin = () =>
   supabase.functions.invoke("admin-auth", { body: { op: "ensure_default" } });
 
-export const Route = createFileRoute("/admin/login")({
-  head: () => ({ meta: [{ title: "Вход — Админ-панель" }, { name: "robots", content: "noindex" }] }),
-  component: LoginPage,
-});
-
-function LoginPage() {
+export default function LoginPage() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("Admin");
   const [password, setPassword] = useState("");
@@ -21,7 +17,7 @@ function LoginPage() {
   useEffect(() => {
     ensureDefaultAdmin().catch(() => {});
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/admin" });
+      if (data.session) navigate("/admin", { replace: true });
     });
   }, [navigate]);
 
@@ -36,7 +32,7 @@ function LoginPage() {
         password,
       });
       if (signErr) throw signErr;
-      navigate({ to: "/admin" });
+      navigate("/admin");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ошибка входа");
     } finally {
@@ -46,6 +42,10 @@ function LoginPage() {
 
   return (
     <div className="min-h-screen bg-sand flex items-center justify-center p-6">
+      <Helmet>
+        <title>Вход — Админ-панель</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <div className="w-full max-w-md bg-cream border border-border/60 rounded-3xl p-10 shadow-[0_30px_80px_-30px_oklch(0.45_0.08_122/0.4)]">
         <div className="text-center mb-8">
           <div className="font-serif text-3xl">

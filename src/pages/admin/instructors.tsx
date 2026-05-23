@@ -1,11 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2, Save, X, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Field, ImageInput, PhotosInput, inputClass } from "@/components/admin/form-bits";
-
-export const Route = createFileRoute("/admin/instructors")({ component: InstructorsAdmin });
 
 type Instructor = {
   id: string;
@@ -269,3 +267,5 @@ export function Modal({
     </div>
   );
 }
+
+export default InstructorsAdmin;

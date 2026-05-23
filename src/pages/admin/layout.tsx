@@ -1,15 +1,9 @@
-import { createFileRoute, Outlet, useRouterState, Link, useNavigate, redirect } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { LogOut, Calendar, Users, Layers, Inbox, UserCog, LayoutDashboard, Settings } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminSession } from "@/hooks/use-admin-session";
-
-export const Route = createFileRoute("/admin")({
-  head: () => ({
-    meta: [{ title: "Админ-панель — НОГИ ВВЕРХ" }, { name: "robots", content: "noindex" }],
-  }),
-  component: AdminLayout,
-});
 
 const navItems = [
   { to: "/admin", label: "Сводка", icon: LayoutDashboard, exact: true },
@@ -21,21 +15,20 @@ const navItems = [
   { to: "/admin/account", label: "Аккаунт", icon: UserCog },
 ];
 
-function AdminLayout() {
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const isLogin = pathname === "/admin/login";
+export default function AdminLayout() {
+  const { pathname } = useLocation();
   const { session, loading, username } = useAdminSession();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading || isLogin) return;
-    if (!session) navigate({ to: "/admin/login" });
-  }, [loading, session, isLogin, navigate]);
+    if (loading) return;
+    if (!session) navigate("/admin/login", { replace: true });
+  }, [loading, session, navigate]);
 
-  if (isLogin) return <Outlet />;
   if (loading || !session) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-cream text-foreground/60 text-sm">
+        <Helmet><title>Админ-панель — НОГИ ВВЕРХ</title><meta name="robots" content="noindex" /></Helmet>
         Загрузка…
       </div>
     );
@@ -43,11 +36,15 @@ function AdminLayout() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate({ to: "/admin/login" });
+    navigate("/admin/login");
   };
 
   return (
     <div className="min-h-screen bg-cream text-foreground">
+      <Helmet>
+        <title>Админ-панель — НОГИ ВВЕРХ</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <aside className="fixed inset-y-0 left-0 w-64 bg-sand border-r border-border/60 flex flex-col">
         <div className="px-6 py-6 border-b border-border/60">
           <Link to="/admin" className="font-serif text-2xl">

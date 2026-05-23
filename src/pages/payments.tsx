@@ -1,29 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-
-export const Route = createFileRoute("/payments")({
-  head: () => ({
-    meta: [
-      { title: "Безопасность платежей и политика возврата — НОГИ ВВЕРХ" },
-      {
-        name: "description",
-        content:
-          "Условия оплаты, защита платёжных данных и порядок возврата средств в студии пилатеса «НОГИ ВВЕРХ».",
-      },
-      {
-        property: "og:title",
-        content: "Безопасность платежей и политика возврата — НОГИ ВВЕРХ",
-      },
-      {
-        property: "og:description",
-        content:
-          "Методы оплаты, технология защиты, конфиденциальность и порядок возврата денежных средств.",
-      },
-    ],
-  }),
-  component: PaymentsPage,
-});
 
 function Block({
   eyebrow,
@@ -52,6 +30,12 @@ function Block({
 function PaymentsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
+      <Helmet>
+        <title>Безопасность платежей и политика возврата — НОГИ ВВЕРХ</title>
+        <meta name="description" content="Условия оплаты, защита платёжных данных и порядок возврата средств в студии пилатеса «НОГИ ВВЕРХ»." />
+        <meta property="og:title" content="Безопасность платежей и политика возврата — НОГИ ВВЕРХ" />
+        <meta property="og:description" content="Методы оплаты, технология защиты, конфиденциальность и порядок возврата денежных средств." />
+      </Helmet>
       <Header />
       <main>
         {/* Hero */}
@@ -237,3 +221,5 @@ function PaymentsPage() {
     </div>
   );
 }
+
+export default PaymentsPage;

@@ -1,29 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-
-export const Route = createFileRoute("/consent")({
-  head: () => ({
-    meta: [
-      { title: "Согласие на обработку персональных данных — НОГИ ВВЕРХ" },
-      {
-        name: "description",
-        content:
-          "Условия согласия на обработку персональных данных при использовании сайта студии пилатеса «НОГИ ВВЕРХ».",
-      },
-      {
-        property: "og:title",
-        content: "Согласие на обработку персональных данных — НОГИ ВВЕРХ",
-      },
-      {
-        property: "og:description",
-        content:
-          "Условия, на которых пользователь даёт согласие на обработку персональных данных Оператору.",
-      },
-    ],
-  }),
-  component: ConsentPage,
-});
 
 function Item({
   number,
@@ -50,6 +28,12 @@ function Item({
 function ConsentPage() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
+      <Helmet>
+        <title>Согласие на обработку персональных данных — НОГИ ВВЕРХ</title>
+        <meta name="description" content="Условия согласия на обработку персональных данных при использовании сайта студии пилатеса «НОГИ ВВЕРХ»." />
+        <meta property="og:title" content="Согласие на обработку персональных данных — НОГИ ВВЕРХ" />
+        <meta property="og:description" content="Условия, на которых пользователь даёт согласие на обработку персональных данных Оператору." />
+      </Helmet>
       <Header />
       <main>
         {/* Hero */}
@@ -166,3 +150,5 @@ function ConsentPage() {
     </div>
   );
 }
+
+export default ConsentPage;

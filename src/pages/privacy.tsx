@@ -1,26 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-
-export const Route = createFileRoute("/privacy")({
-  head: () => ({
-    meta: [
-      { title: "Политика конфиденциальности — НОГИ ВВЕРХ" },
-      {
-        name: "description",
-        content:
-          "Политика в отношении обработки персональных данных студии пилатеса «НОГИ ВВЕРХ».",
-      },
-      { property: "og:title", content: "Политика конфиденциальности — НОГИ ВВЕРХ" },
-      {
-        property: "og:description",
-        content:
-          "Порядок и условия обработки персональных данных пользователей сайта nogivverh.ru.",
-      },
-    ],
-  }),
-  component: PrivacyPage,
-});
 
 function Section({
   number,
@@ -47,6 +28,12 @@ function Section({
 function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
+      <Helmet>
+        <title>Политика конфиденциальности — НОГИ ВВЕРХ</title>
+        <meta name="description" content="Политика в отношении обработки персональных данных студии пилатеса «НОГИ ВВЕРХ»." />
+        <meta property="og:title" content="Политика конфиденциальности — НОГИ ВВЕРХ" />
+        <meta property="og:description" content="Порядок и условия обработки персональных данных пользователей сайта nogivverh.ru." />
+      </Helmet>
       <Header />
       <main>
         {/* Hero */}
@@ -320,3 +307,5 @@ function PrivacyPage() {
     </div>
   );
 }
+
+export default PrivacyPage;

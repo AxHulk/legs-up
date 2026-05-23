@@ -1,12 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2, Save, Eye, EyeOff, Check, X as XIcon, Inbox } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Field, inputClass } from "@/components/admin/form-bits";
-import { Modal } from "./admin.instructors";
-
-export const Route = createFileRoute("/admin/schedule")({ component: ScheduleAdmin });
+import { Modal } from "./instructors";
 
 type Klass = {
   id: string;
@@ -499,3 +497,5 @@ function BookingsForClass({ klass, onClose }: { klass: Klass; onClose: () => voi
     </Modal>
   );
 }
+
+export default ScheduleAdmin;

@@ -1,12 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2, Save, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Field, ImageInput, inputClass } from "@/components/admin/form-bits";
-import { Modal } from "./admin.instructors";
-
-export const Route = createFileRoute("/admin/directions")({ component: DirectionsAdmin });
+import { Modal } from "./instructors";
 
 type Direction = {
   id: string;
@@ -217,3 +215,5 @@ function DirectionsAdmin() {
     </div>
   );
 }
+
+export default DirectionsAdmin;

@@ -1,10 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, X as XIcon, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-
-export const Route = createFileRoute("/admin/bookings")({ component: BookingsAdmin });
 
 function BookingsAdmin() {
   const qc = useQueryClient();
@@ -144,3 +142,5 @@ function BookingsAdmin() {
     </div>
   );
 }
+
+export default BookingsAdmin;

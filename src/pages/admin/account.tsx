@@ -1,12 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Trash2, Save, UserPlus } from "lucide-react";
 import { Field, inputClass } from "@/components/admin/form-bits";
 import { useAdminSession } from "@/hooks/use-admin-session";
 import { listAdmins, createAdmin, updateMyCredentials, deleteAdmin } from "@/lib/admin-api";
-
-export const Route = createFileRoute("/admin/account")({ component: AccountAdmin });
 
 function AccountAdmin() {
   const qc = useQueryClient();
@@ -172,3 +170,5 @@ function AccountAdmin() {
     </div>
   );
 }
+
+export default AccountAdmin;
