@@ -164,7 +164,7 @@ function OvalPortrait({
             style={{
               objectPosition,
               transform: scale !== 1 ? `scale(${scale})` : undefined,
-              transformOrigin: "center top",
+              transformOrigin: scale < 1 ? "center center" : "center top",
             }}
           />
         ) : (
