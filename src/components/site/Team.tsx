@@ -140,29 +140,18 @@ function OvalPortrait({
   tinted?: boolean;
 }) {
   return (
-    <div className="relative mx-auto w-full max-w-[240px] aspect-[4/5]">
-      {/* Outer thin ring */}
-      <div className="absolute inset-0 rounded-[50%] border border-olive/30" aria-hidden />
-      {/* Inner photo container clipped to oval */}
-      <div className="absolute inset-[6px] rounded-[50%] overflow-hidden border-[1.5px] border-olive bg-sand transition-transform duration-700 ease-out group-hover:-translate-y-1.5 shadow-[0_22px_50px_-30px_oklch(0.45_0.08_122/0.45)]">
+    <div className="relative mx-auto w-full max-w-[260px] aspect-[4/5]">
+      <div className="absolute inset-0 rounded-2xl overflow-hidden border border-olive/40 bg-sand transition-transform duration-700 ease-out group-hover:-translate-y-1.5 shadow-[0_22px_50px_-30px_oklch(0.45_0.08_122/0.45)]">
         {photo ? (
           <img
             src={photo}
             alt={name}
-            className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
-              tinted
-                ? "saturate-[0.6] sepia-[0.12] group-hover:saturate-100 group-hover:sepia-0"
-                : ""
-            }`}
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
-
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-walnut text-xs">
             фото
           </div>
-        )}
-        {tinted && (
-          <div className="absolute inset-0 bg-olive/10 mix-blend-multiply transition-opacity duration-700 group-hover:opacity-0" />
         )}
       </div>
     </div>
