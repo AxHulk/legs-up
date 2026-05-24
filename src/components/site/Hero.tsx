@@ -10,7 +10,7 @@ const chips = [
 ];
 
 // Вертикальная позиция заголовка в hero: меньше число — выше, больше — ниже.
-const HERO_HEADLINE_TOP = "44vh";
+const HERO_HEADLINE_TOP = "38vh";
 
 export function Hero() {
   return (
