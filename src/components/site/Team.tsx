@@ -102,13 +102,29 @@ export function Team() {
   );
 }
 
+// Индивидуальная подгонка кадрирования по конкретным фото инструкторов,
+// чтобы лица были на одном уровне и головы не обрезались.
+const PHOTO_FRAMING: Record<string, { scale?: number; objectPosition?: string }> = {
+  "Валентина Рудич": { scale: 1.35, objectPosition: "50% 8%" },
+  "Мария Козлова": { scale: 1.3, objectPosition: "50% 10%" },
+  "Наталья Клочкова": { scale: 1.25, objectPosition: "50% 12%" },
+  "Наталья Чеботарева": { scale: 1, objectPosition: "50% 10%" },
+  "Мария Эрькина": { scale: 1, objectPosition: "50% 8%" },
+};
+
 function InstructorCard({ m, onOpen }: { m: Instructor; onOpen: () => void }) {
+  const framing = PHOTO_FRAMING[m.name] ?? {};
   return (
     <button
       onClick={onOpen}
       className="group text-left flex flex-col items-center focus:outline-none"
     >
-      <OvalPortrait photo={m.photos?.[0]} name={m.name} />
+      <OvalPortrait
+        photo={m.photos?.[0]}
+        name={m.name}
+        scale={framing.scale}
+        objectPosition={framing.objectPosition}
+      />
       <div className="mt-6 text-center px-2 flex flex-col items-center w-full">
         <h3 className="font-serif text-[22px] leading-tight whitespace-nowrap flex items-start justify-center">
           {m.name}
@@ -125,19 +141,17 @@ function InstructorCard({ m, onOpen }: { m: Instructor; onOpen: () => void }) {
   );
 }
 
-/**
- * Studio logobook-inspired oval portrait frame.
- * Double thin olive outline, full uncropped photo with subtle warm tint
- * that returns to full color and lifts gently on hover.
- */
 function OvalPortrait({
   photo,
   name,
-  tinted = true,
+  scale = 1,
+  objectPosition = "50% 10%",
 }: {
   photo?: string;
   name: string;
   tinted?: boolean;
+  scale?: number;
+  objectPosition?: string;
 }) {
   return (
     <div className="relative mx-auto w-full max-w-[260px] aspect-[4/5]">
@@ -146,7 +160,12 @@ function OvalPortrait({
           <img
             src={photo}
             alt={name}
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{
+              objectPosition,
+              transform: scale !== 1 ? `scale(${scale})` : undefined,
+              transformOrigin: "center top",
+            }}
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-walnut text-xs">
