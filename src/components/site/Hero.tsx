@@ -32,26 +32,18 @@ export function Hero() {
         }}
       />
 
-      {/* Top-right tagline — moved off the head */}
-      <div className="absolute top-6 right-6 lg:top-8 lg:right-12 z-10 hidden md:flex items-center gap-3 text-sand/85">
-        <span className="h-px w-8 bg-sand/60" />
-        <span className="text-[10px] tracking-[0.4em] uppercase font-medium">
-          Студия пилатеса · Балашиха
-        </span>
-      </div>
-
       {/* Centered editorial content */}
-      <div className="relative z-10 flex-1 flex flex-col items-center px-6 lg:px-12 pt-28 lg:pt-32 pb-16">
+      <div className="relative z-10 flex-1 flex flex-col items-center px-6 lg:px-12 pt-[42vh] pb-16">
         <div className="text-center max-w-4xl animate-fade-up [text-shadow:0_2px_30px_oklch(0.2_0.02_60/0.5)]">
-          {/* Headline — sized to fit on the dark reformer bar */}
-          <h1 className="hero-headline text-sand text-3xl sm:text-4xl md:text-5xl lg:text-[64px] leading-[1.05]">
+          {/* Headline — sits on the dark reformer bar */}
+          <h1 className="hero-headline text-sand text-3xl sm:text-4xl md:text-5xl lg:text-[56px] leading-[1.05]">
             Искусство работы
             <br />
             <span className="italic font-light">с&nbsp;телом</span>
           </h1>
 
           {/* Chips — pushed lower */}
-          <div className="mt-[40vh] sm:mt-[44vh] flex flex-wrap items-center justify-center gap-2.5">
+          <div className="mt-[26vh] flex flex-wrap items-center justify-center gap-2.5">
             {chips.map((c) => (
               <span
                 key={c}
@@ -85,6 +77,10 @@ export function Hero() {
           <div className="flex items-center gap-2.5 text-[11px] tracking-[0.25em] uppercase">
             <MapPin className="size-3.5" />
             ЖК «Счастье» · Железнодорожный
+          </div>
+          <div className="hidden md:flex items-center gap-3 text-[10px] tracking-[0.4em] uppercase text-sand/70">
+            <span className="h-px w-8 bg-sand/50" />
+            Студия пилатеса · Балашиха
           </div>
           <a
             href="#about"
