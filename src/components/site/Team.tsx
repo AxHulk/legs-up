@@ -110,7 +110,7 @@ function InstructorCard({ m, onOpen }: { m: Instructor; onOpen: () => void }) {
     >
       <OvalPortrait photo={m.photos?.[0]} name={m.name} />
       <div className="mt-6 text-center px-2 flex flex-col items-center w-full">
-        <h3 className="font-serif text-[22px] leading-tight min-h-[2.6em] flex items-start justify-center">
+        <h3 className="font-serif text-[22px] leading-tight whitespace-nowrap flex items-start justify-center">
           {m.name}
         </h3>
         <span className="mt-2 block size-1 rounded-full bg-olive/50" />
