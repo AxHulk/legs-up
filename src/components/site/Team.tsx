@@ -74,7 +74,12 @@ export function Team() {
             <div className="grid md:grid-cols-2 gap-0">
               <div className="p-6 md:p-10 flex items-center justify-center bg-sand/40">
                 <div className="w-full max-w-sm">
-                  <OvalPortrait photo={active.photos[0]} name={active.name} tinted={false} />
+                  <OvalPortrait
+                    photo={active.photos[1] ?? active.photos[0]}
+                    name={active.name}
+                    scale={(PHOTO_FRAMING[active.name] ?? {}).scale}
+                    objectPosition={(PHOTO_FRAMING[active.name] ?? {}).objectPosition}
+                  />
                 </div>
               </div>
               <div className="p-6 md:p-10 flex flex-col justify-center">
@@ -113,7 +118,6 @@ const PHOTO_FRAMING: Record<string, { scale?: number; objectPosition?: string }>
 };
 
 function InstructorCard({ m, onOpen }: { m: Instructor; onOpen: () => void }) {
-  const framing = PHOTO_FRAMING[m.name] ?? {};
   return (
     <button
       onClick={onOpen}
@@ -122,8 +126,7 @@ function InstructorCard({ m, onOpen }: { m: Instructor; onOpen: () => void }) {
       <OvalPortrait
         photo={m.photos?.[0]}
         name={m.name}
-        scale={framing.scale}
-        objectPosition={framing.objectPosition}
+        objectPosition="50% 50%"
       />
       <div className="mt-6 text-center px-2 flex flex-col items-center w-full">
         <h3 className="font-serif text-[22px] leading-tight whitespace-nowrap flex items-start justify-center">
