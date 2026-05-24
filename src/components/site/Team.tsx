@@ -147,12 +147,13 @@ function OvalPortrait({
           <img
             src={photo}
             alt={name}
-            className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ${
+            className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
               tinted
-                ? "saturate-[0.6] sepia-[0.12] scale-[1.02] group-hover:saturate-100 group-hover:sepia-0 group-hover:scale-[1.05]"
+                ? "saturate-[0.6] sepia-[0.12] group-hover:saturate-100 group-hover:sepia-0"
                 : ""
             }`}
           />
+
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-walnut text-xs">
             фото
