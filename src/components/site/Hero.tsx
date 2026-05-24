@@ -9,6 +9,9 @@ const chips = [
   "Индивидуальный подход",
 ];
 
+// Вертикальная позиция заголовка в hero: меньше число — выше, больше — ниже.
+const HERO_HEADLINE_TOP = "44vh";
+
 export function Hero() {
   return (
     <section id="top" className="relative min-h-screen flex flex-col overflow-hidden bg-walnut">
@@ -33,17 +36,20 @@ export function Hero() {
       />
 
       {/* Centered editorial content */}
-      <div className="relative z-10 flex-1 flex flex-col items-center px-6 lg:px-12 pt-[42vh] pb-16">
+      <div className="relative z-10 flex-1 flex flex-col items-center px-6 lg:px-12 pb-16">
         <div className="text-center max-w-4xl animate-fade-up [text-shadow:0_2px_30px_oklch(0.2_0.02_60/0.5)]">
-          {/* Headline — sits on the dark reformer bar */}
-          <h1 className="hero-headline text-sand text-3xl sm:text-4xl md:text-5xl lg:text-[56px] leading-[1.05]">
+          {/* Headline — position controlled by HERO_HEADLINE_TOP above */}
+          <h1
+            className="hero-headline absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(92vw,760px)] text-sand text-3xl sm:text-4xl md:text-5xl lg:text-[46px] leading-[0.98]"
+            style={{ top: HERO_HEADLINE_TOP }}
+          >
             Искусство работы
             <br />
             <span className="italic font-light">с&nbsp;телом</span>
           </h1>
 
           {/* Chips — pushed lower */}
-          <div className="mt-[26vh] flex flex-wrap items-center justify-center gap-2.5">
+          <div className="mt-[72vh] flex flex-wrap items-center justify-center gap-2.5">
             {chips.map((c) => (
               <span
                 key={c}
