@@ -30,7 +30,7 @@ function Index() {
         <Space />
         <Schedule />
         <Pricing />
-        <Reviews />
+        {/* <Reviews /> */}
         <Contacts />
       </main>
       <Footer />
