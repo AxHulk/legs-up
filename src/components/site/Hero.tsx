@@ -84,10 +84,6 @@ export function Hero() {
             <MapPin className="size-3.5" />
             ЖК «Счастье» · Железнодорожный
           </div>
-          <div className="hidden md:flex items-center gap-3 text-[10px] tracking-[0.4em] uppercase text-sand/70">
-            <span className="h-px w-8 bg-sand/50" />
-            Студия пилатеса · Балашиха
-          </div>
           <a
             href="#about"
             className="hidden md:inline-flex flex-col items-center gap-2 text-[10px] tracking-[0.35em] uppercase hover:text-sand transition-colors"
