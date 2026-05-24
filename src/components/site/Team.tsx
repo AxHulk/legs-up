@@ -105,9 +105,9 @@ export function Team() {
 // Индивидуальная подгонка кадрирования по конкретным фото инструкторов,
 // чтобы лица были на одном уровне и головы не обрезались.
 const PHOTO_FRAMING: Record<string, { scale?: number; objectPosition?: string }> = {
-  "Валентина Рудич": { scale: 1.35, objectPosition: "50% 8%" },
-  "Мария Козлова": { scale: 1.3, objectPosition: "50% 10%" },
-  "Наталья Клочкова": { scale: 1.25, objectPosition: "50% 12%" },
+  "Валентина Рудич": { scale: 0.82, objectPosition: "50% 20%" },
+  "Мария Козлова": { scale: 0.85, objectPosition: "50% 20%" },
+  "Наталья Клочкова": { scale: 0.88, objectPosition: "50% 20%" },
   "Наталья Чеботарева": { scale: 1, objectPosition: "50% 10%" },
   "Мария Эрькина": { scale: 1, objectPosition: "50% 8%" },
 };
@@ -164,7 +164,7 @@ function OvalPortrait({
             style={{
               objectPosition,
               transform: scale !== 1 ? `scale(${scale})` : undefined,
-              transformOrigin: "center top",
+              transformOrigin: scale < 1 ? "center center" : "center top",
             }}
           />
         ) : (
