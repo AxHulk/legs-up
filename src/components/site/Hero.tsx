@@ -32,30 +32,26 @@ export function Hero() {
         }}
       />
 
-      {/* Centered editorial content */}
-      <div className="relative z-10 flex-1 flex items-center justify-center px-6 lg:px-12 pt-32 pb-24">
-        <div className="text-center max-w-5xl animate-fade-up [text-shadow:0_2px_30px_oklch(0.2_0.02_60/0.5)]">
-          <div className="inline-flex items-center gap-3 text-sand/85">
-            <span className="h-px w-10 bg-sand/60" />
-            <span className="text-[10px] tracking-[0.4em] uppercase font-medium">
-              Студия пилатеса · Балашиха
-            </span>
-            <span className="h-px w-10 bg-sand/60" />
-          </div>
+      {/* Top-right tagline — moved off the head */}
+      <div className="absolute top-6 right-6 lg:top-8 lg:right-12 z-10 hidden md:flex items-center gap-3 text-sand/85">
+        <span className="h-px w-8 bg-sand/60" />
+        <span className="text-[10px] tracking-[0.4em] uppercase font-medium">
+          Студия пилатеса · Балашиха
+        </span>
+      </div>
 
-          <h1 className="hero-headline mt-10 text-sand text-5xl sm:text-6xl md:text-7xl lg:text-[120px]">
+      {/* Centered editorial content */}
+      <div className="relative z-10 flex-1 flex flex-col items-center px-6 lg:px-12 pt-28 lg:pt-32 pb-16">
+        <div className="text-center max-w-4xl animate-fade-up [text-shadow:0_2px_30px_oklch(0.2_0.02_60/0.5)]">
+          {/* Headline — sized to fit on the dark reformer bar */}
+          <h1 className="hero-headline text-sand text-3xl sm:text-4xl md:text-5xl lg:text-[64px] leading-[1.05]">
             Искусство работы
             <br />
             <span className="italic font-light">с&nbsp;телом</span>
           </h1>
 
-          <p className="mt-10 max-w-xl mx-auto text-base lg:text-lg leading-relaxed text-sand/90 font-light">
-            Пилатес на реформерах, йога и растяжка в&nbsp;гамаках —
-            пространство, где тело становится формой, а&nbsp;движение — практикой.
-          </p>
-
-          {/* Chips */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-2.5">
+          {/* Chips — pushed lower */}
+          <div className="mt-[40vh] sm:mt-[44vh] flex flex-wrap items-center justify-center gap-2.5">
             {chips.map((c) => (
               <span
                 key={c}
@@ -66,15 +62,15 @@ export function Hero() {
             ))}
           </div>
 
-          {/* Circular CTA — the focal accent, à la UFORM */}
-          <div className="mt-14 flex flex-col items-center gap-5">
+          {/* Circular CTA */}
+          <div className="mt-8 flex flex-col items-center gap-4">
             <BookingButton
               ariaLabel="Записаться на занятие"
-              className="group relative size-36 lg:size-44 rounded-full bg-cream text-foreground flex items-center justify-center font-serif italic text-2xl lg:text-3xl shadow-[0_30px_80px_-20px_oklch(0.2_0.02_60/0.6)] hover:bg-sand transition-all hover:scale-[1.03]"
+              className="group relative size-32 lg:size-36 rounded-full bg-cream text-foreground flex items-center justify-center font-serif italic text-2xl lg:text-3xl shadow-[0_30px_80px_-20px_oklch(0.2_0.02_60/0.6)] hover:bg-sand transition-all hover:scale-[1.03]"
             >
               <span className="absolute inset-2 rounded-full border border-walnut/20" />
               Запись
-              <ArrowRight className="absolute bottom-7 size-4 opacity-60 group-hover:translate-x-0.5 transition-transform" />
+              <ArrowRight className="absolute bottom-6 size-4 opacity-60 group-hover:translate-x-0.5 transition-transform" />
             </BookingButton>
             <span className="text-[11px] tracking-[0.3em] uppercase text-sand/70">
               Первое занятие — бесплатно
