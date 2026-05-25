@@ -62,25 +62,23 @@ export function Contacts() {
         hour: "2-digit", minute: "2-digit",
       });
 
-      const { data: inserted, error } = await supabase
-        .from("bookings")
-        .insert({
-          customer_name: name,
-          customer_phone: formattedPhone,
-          note: question ? `Вопрос: ${question}` : "",
-          source: "site",
-          status: "pending",
-        })
-        .select("id")
-        .single();
+      const leadId = crypto.randomUUID();
+      const { error } = await supabase.from("bookings").insert({
+        id: leadId,
+        customer_name: name,
+        customer_phone: formattedPhone,
+        note: question ? `Вопрос: ${question}` : "",
+        source: "site",
+        status: "pending",
+      });
       if (error) throw error;
 
-      // Fire-and-forget уведомление администратору — не блокируем UX, если шлюз тормозит
+      // Fire-and-forget уведомление администратору
       supabase.functions
         .invoke("send-transactional-email", {
           body: {
             templateName: "new-lead-notification",
-            idempotencyKey: `lead-${inserted?.id ?? crypto.randomUUID()}`,
+            idempotencyKey: `lead-${leadId}`,
             templateData: { name, phone: formattedPhone, question, submittedAt },
           },
         })
