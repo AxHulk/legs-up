@@ -82,7 +82,7 @@ export function Hero() {
         <div className="mx-auto max-w-[1440px] flex items-end justify-between gap-6 text-sand/80">
           <div className="flex items-center gap-2.5 text-[11px] tracking-[0.25em] uppercase">
             <MapPin className="size-3.5" />
-            ЖК «Счастье» · Железнодорожный
+            студия фитнеса и пилатеса на реформерах "НОГИ ВВЕРХ"
           </div>
           <a
             href="#about"
