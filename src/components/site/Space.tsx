@@ -4,7 +4,6 @@ import slide1 from "@/assets/space/slide-1.jpg";
 import slide2 from "@/assets/space/slide-2.jpg";
 import slide3 from "@/assets/space/slide-3.jpg";
 import slide4 from "@/assets/space/slide-4.jpg";
-import slide5 from "@/assets/space/slide-5.jpg";
 import slide6 from "@/assets/space/slide-6.jpg";
 
 const slides = [
@@ -12,7 +11,6 @@ const slides = [
   { src: slide2, alt: "Растяжка на TRX в зеркальном зале" },
   { src: slide3, alt: "Прогиб в пилатесе под неоновой вывеской НОГИ ВВЕРХ" },
   { src: slide4, alt: "Индивидуальное занятие пилатесом с мячом" },
-  { src: slide5, alt: "Групповое занятие на реформерах" },
   { src: slide6, alt: "Йога в воздушных гамаках" },
 ];
 
