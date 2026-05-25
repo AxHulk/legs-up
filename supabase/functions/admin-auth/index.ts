@@ -27,7 +27,16 @@ function isValidUsername(u: unknown): u is string {
   return typeof u === "string" && /^[a-zA-Z0-9_.-]{2,40}$/.test(u);
 }
 function isValidPassword(p: unknown): p is string {
-  return typeof p === "string" && p.length >= 4 && p.length <= 128;
+  return typeof p === "string" && p.length >= 12 && p.length <= 128;
+}
+
+function generateStrongPassword(len = 24): string {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%^&*";
+  const bytes = new Uint8Array(len);
+  crypto.getRandomValues(bytes);
+  let out = "";
+  for (const b of bytes) out += alphabet[b % alphabet.length];
+  return out;
 }
 
 Deno.serve(async (req) => {
