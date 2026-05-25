@@ -9,13 +9,9 @@ export function useBookingUrl(override?: string | null) {
   const { data } = useQuery({
     queryKey: ["app-settings"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("app_settings")
-        .select("yclients_url")
-        .eq("id", true)
-        .maybeSingle();
+      const { data, error } = await supabase.rpc("get_public_yclients_url");
       if (error) throw error;
-      return data?.yclients_url || DEFAULT_YCLIENTS_URL;
+      return (data as string | null) || DEFAULT_YCLIENTS_URL;
     },
     staleTime: 5 * 60_000,
   });
