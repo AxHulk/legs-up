@@ -18,7 +18,7 @@ export function useBookingUrl(override?: string | null) {
   return (override && override.trim()) || data || DEFAULT_YCLIENTS_URL;
 }
 
-export function BookingDialog({ url, onClose }: { url: string; onClose: () => void }) {
+export function BookingDialog({ url, onClose, title = "Онлайн-запись" }: { url: string; onClose: () => void; title?: string }) {
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
