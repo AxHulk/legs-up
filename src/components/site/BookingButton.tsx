@@ -37,7 +37,7 @@ export function BookingDialog({ url, onClose, title = "Онлайн-запись
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-5 py-3 border-b border-border/60 bg-sand">
-          <div className="text-[11px] uppercase tracking-[0.22em] text-walnut">Онлайн-запись</div>
+          <div className="text-[11px] uppercase tracking-[0.22em] text-walnut">{title}</div>
           <div className="flex items-center gap-2">
             <a
               href={url}
