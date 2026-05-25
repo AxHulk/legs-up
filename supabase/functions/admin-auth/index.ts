@@ -65,15 +65,22 @@ Deno.serve(async (req) => {
       const { data, error } = await admin.auth.admin.listUsers({ page: 1, perPage: 1 });
       if (error) throw new Error(error.message);
       if (data.users.length > 0) return json({ created: false });
+      const generatedPassword = generateStrongPassword(24);
       const { error: createErr } = await admin.auth.admin.createUser({
         email: usernameToEmail("Admin"),
-        password: "Password",
+        password: generatedPassword,
         email_confirm: true,
         user_metadata: { username: "Admin" },
       });
       if (createErr) throw new Error(createErr.message);
-      return json({ created: true });
+      // Print only to server logs — the only place an operator with log access
+      // can retrieve the one-time bootstrap password. Never returned in the response.
+      console.log(
+        `[admin-auth] Bootstrap admin created. username="Admin" password="${generatedPassword}" — change immediately.`,
+      );
+      return json({ created: true, message: "Bootstrap admin created. Check server logs for the one-time password." });
     }
+
 
     // --- all other actions require valid admin JWT ---
     const authHeader = req.headers.get("authorization") || "";
