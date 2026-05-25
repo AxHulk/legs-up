@@ -71,7 +71,7 @@ export function Hero() {
               <ArrowRight className="absolute bottom-6 size-4 opacity-60 group-hover:translate-x-0.5 transition-transform" />
             </BookingButton>
             <span className="text-[11px] tracking-[0.3em] uppercase text-sand/70">
-              Первое занятие — бесплатно
+              Растяжĸа и йога в гамаĸах
             </span>
           </div>
         </div>
