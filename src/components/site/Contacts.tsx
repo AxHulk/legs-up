@@ -96,7 +96,7 @@ export function Contacts() {
         <div className="mt-14 grid md:grid-cols-2 gap-5 lg:gap-6">
           <button
             type="button"
-            onClick={() => setBookingOpen(true)}
+            onClick={() => setModal("booking")}
             className="group relative overflow-hidden rounded-3xl bg-sand text-foreground p-8 lg:p-10 text-left transition-all hover:-translate-y-1 hover:shadow-2xl"
           >
             <div className="absolute -right-10 -bottom-10 size-48 rounded-full bg-olive/15 blur-2xl transition-opacity opacity-0 group-hover:opacity-100" />
@@ -117,7 +117,7 @@ export function Contacts() {
 
           <button
             type="button"
-            onClick={() => setBookingOpen(true)}
+            onClick={() => setModal("subscriptions")}
             className="group relative overflow-hidden rounded-3xl bg-olive text-sand p-8 lg:p-10 text-left transition-all hover:-translate-y-1 hover:shadow-2xl"
           >
             <div className="absolute -right-10 -bottom-10 size-48 rounded-full bg-sand/15 blur-2xl transition-opacity opacity-0 group-hover:opacity-100" />
@@ -290,7 +290,13 @@ export function Contacts() {
         </div>
       </div>
 
-      {bookingOpen && <BookingDialog url={bookingUrl} onClose={() => setBookingOpen(false)} />}
+      {modal && (
+        <BookingDialog
+          url={modal === "subscriptions" ? SUBSCRIPTIONS_URL : bookingUrl}
+          title={modal === "subscriptions" ? "Покупка абонемента" : "Онлайн-запись"}
+          onClose={() => setModal(null)}
+        />
+      )}
     </section>
   );
 }
