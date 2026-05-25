@@ -56,14 +56,36 @@ export function Contacts() {
     }
     setSubmitting(true);
     try {
-      const { error } = await supabase.from("bookings").insert({
-        customer_name: name,
-        customer_phone: `+${digits}`,
-        note: question ? `Вопрос: ${question}` : "",
-        source: "site",
-        status: "pending",
+      const formattedPhone = `+${digits}`;
+      const submittedAt = new Date().toLocaleString("ru-RU", {
+        day: "2-digit", month: "2-digit", year: "numeric",
+        hour: "2-digit", minute: "2-digit",
       });
+
+      const { data: inserted, error } = await supabase
+        .from("bookings")
+        .insert({
+          customer_name: name,
+          customer_phone: formattedPhone,
+          note: question ? `Вопрос: ${question}` : "",
+          source: "site",
+          status: "pending",
+        })
+        .select("id")
+        .single();
       if (error) throw error;
+
+      // Fire-and-forget уведомление администратору — не блокируем UX, если шлюз тормозит
+      supabase.functions
+        .invoke("send-transactional-email", {
+          body: {
+            templateName: "new-lead-notification",
+            idempotencyKey: `lead-${inserted?.id ?? crypto.randomUUID()}`,
+            templateData: { name, phone: formattedPhone, question, submittedAt },
+          },
+        })
+        .catch((e) => console.warn("notification email failed", e));
+
       setSent(true);
       setName(""); setPhone(""); setQuestion("");
       toast.success("Спасибо! Мы свяжемся с вами в ближайшее время.");

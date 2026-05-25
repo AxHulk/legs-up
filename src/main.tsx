@@ -13,6 +13,7 @@ import OfferPage from "./pages/offer";
 import PaymentsPage from "./pages/payments";
 import PrivacyPage from "./pages/privacy";
 import NotFoundPage from "./pages/not-found";
+import UnsubscribePage from "./pages/unsubscribe";
 
 import AdminLayout from "./pages/admin/layout";
 import AdminLogin from "./pages/admin/login";
@@ -66,6 +67,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="/offer" element={<OfferPage />} />
             <Route path="/payments" element={<PaymentsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/unsubscribe" element={<UnsubscribePage />} />
 
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>
