@@ -245,7 +245,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_public_yclients_url: { Args: never; Returns: string }
     }
     Enums: {
       booking_source:
