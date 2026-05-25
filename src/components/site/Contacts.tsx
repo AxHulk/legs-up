@@ -1,14 +1,9 @@
 import { useState } from "react";
-import { Phone, MapPin, Clock, Send, MessageCircle, CalendarPlus, Loader2 } from "lucide-react";
-import iconHeart from "@/assets/icons/icon_heart.png";
-import { BookingButton, BookingDialog, useBookingUrl } from "@/components/site/BookingButton";
+import { Phone, MapPin, Clock, Send, MessageCircle, Loader2, ExternalLink } from "lucide-react";
+import { useBookingUrl } from "@/components/site/BookingButton";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-
-// Format an arbitrary digit string into a Russian phone mask:
-// "+7 (XXX) XXX-XX-XX". The input is always normalized so it
-// starts with "7" and is at most 11 digits long.
 function formatRussianPhone(digits: string) {
   if (!digits) return "";
   const d = digits;
@@ -21,8 +16,6 @@ function formatRussianPhone(digits: string) {
   return out;
 }
 
-// Strip everything but digits and normalize so the resulting
-// string represents a Russian number (starts with "7").
 function normalizeDigits(value: string) {
   let d = value.replace(/\D/g, "");
   if (!d) return "";
@@ -34,33 +27,23 @@ function normalizeDigits(value: string) {
 export function Contacts() {
   const bookingUrl = useBookingUrl();
 
-  const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [bookingOpen, setBookingOpen] = useState(false);
+  const [sent, setSent] = useState(false);
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
-  const [direction, setDirection] = useState("");
-  const [time, setTime] = useState("");
+  const [question, setQuestion] = useState("");
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const next = e.target.value;
     const prevDigits = phone.replace(/\D/g, "");
     let nextDigits = next.replace(/\D/g, "");
-
     if (next.length < phone.length && nextDigits.length === prevDigits.length) {
       nextDigits = nextDigits.slice(0, -1);
     }
-
     setPhone(formatRussianPhone(normalizeDigits(nextDigits)));
   };
-
-  const handlePhoneFocus = () => {
-    if (!phone) setPhone("+7 ");
-  };
-
-  const handlePhoneBlur = () => {
-    if (phone === "+7" || phone === "+7 ") setPhone("");
-  };
+  const handlePhoneFocus = () => { if (!phone) setPhone("+7 "); };
+  const handlePhoneBlur = () => { if (phone === "+7" || phone === "+7 ") setPhone(""); };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -71,22 +54,19 @@ export function Contacts() {
     }
     setSubmitting(true);
     try {
-      const note = [direction && `Направление: ${direction}`, time && `Удобное время: ${time}`]
-        .filter(Boolean)
-        .join("\n");
       const { error } = await supabase.from("bookings").insert({
         customer_name: name,
         customer_phone: `+${digits}`,
-        note,
+        note: question ? `Вопрос: ${question}` : "",
         source: "site",
         status: "pending",
       });
       if (error) throw error;
-
       setSent(true);
-      toast.success("Заявка сохранена! Выберите удобное время для записи.");
-      // Open YClients widget so the client picks a service and time slot.
-      setBookingOpen(true);
+      setName("");
+      setPhone("");
+      setQuestion("");
+      toast.success("Спасибо! Мы свяжемся с вами в ближайшее время.");
     } catch (err) {
       console.error(err);
       toast.error("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.");
@@ -96,158 +76,167 @@ export function Contacts() {
   };
 
   return (
-    <section id="contacts" className="scroll-mt-24 py-28 lg:py-36 bg-foreground text-sand relative overflow-hidden">
-      <div className="absolute inset-0 pattern-floral opacity-[0.15]" />
+    <section id="contacts" className="scroll-mt-24 py-24 lg:py-32 bg-foreground text-sand relative overflow-hidden">
+      <div className="absolute inset-0 pattern-floral opacity-[0.12]" />
 
-      <div className="relative mx-auto max-w-[1440px] px-6 lg:px-12 grid lg:grid-cols-2 gap-14 lg:gap-20">
-        <div>
-          <span className="eyebrow eyebrow-light">Контакты</span>
-          <h2 className="mt-7 text-5xl md:text-6xl lg:text-7xl text-sand">
+      <div className="relative mx-auto max-w-[1440px] px-6 lg:px-12">
+        <div className="max-w-2xl">
+          <span className="eyebrow eyebrow-light">Контакты и запись</span>
+          <h2 className="mt-6 text-5xl md:text-6xl lg:text-7xl text-sand">
             Запишитесь
             <br />
             <span className="italic font-light text-sand/90">прямо сейчас</span>
           </h2>
-          <p className="mt-7 max-w-md text-sand/75 leading-relaxed">
-            Первое занятие — бесплатно. Оставьте заявку, и мы свяжемся с вами
-            в течение часа, чтобы подобрать удобное время.
+          <p className="mt-6 text-sand/75 leading-relaxed">
+            Выберите занятие или абонемент в виджете ниже — запись и оплата проходят онлайн.
+            Запись на индивидуальные тренировки производится через администратора и форму на сайте.
           </p>
-
-          <div className="mt-12 space-y-7">
-            {[
-              { icon: <Phone className="size-5" />, label: "Телефон", value: "+7 (915) 027-85-83", href: "tel:+79150278583" },
-              { icon: <MapPin className="size-5" />, label: "Адрес", value: "ЖК «Счастье», ул. Автозаводская, 5\nБалашиха, мкр. Железнодорожный, 2 этаж" },
-              { icon: <Clock className="size-5" />, label: "Режим работы", value: "Пн–Пт: 08:00 — 21:00\nСб–Вс: 09:00 — 18:00" },
-            ].map((it) => (
-              <div key={it.label} className="flex items-start gap-5">
-                <span className="size-12 shrink-0 rounded-2xl bg-sand/10 border border-sand/15 flex items-center justify-center text-sand">
-                  {it.icon}
-                </span>
-                <div>
-                  <div className="text-[10px] uppercase tracking-[0.25em] text-sand/60">{it.label}</div>
-                  {it.href ? (
-                    <a href={it.href} className="mt-1 block whitespace-pre-line text-sand hover:text-sand/80 transition-colors">{it.value}</a>
-                  ) : (
-                    <div className="mt-1 whitespace-pre-line text-sand/90">{it.value}</div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 flex flex-wrap gap-3">
-            <BookingButton className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-sand text-foreground hover:bg-sand/90 transition-colors text-sm">
-              <CalendarPlus className="size-4" /> Онлайн-запись
-            </BookingButton>
-            <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-sand/20 hover:bg-sand hover:text-foreground transition-colors text-sm">
-              <MessageCircle className="size-4" /> WhatsApp
-            </a>
-            <a href="#" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-sand/20 hover:bg-sand hover:text-foreground transition-colors text-sm">
-              <MessageCircle className="size-4" /> Telegram
-            </a>
-          </div>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="rounded-3xl bg-sand text-foreground p-8 lg:p-10 self-start"
-        >
-          <div className="flex items-center gap-4">
-            <div className="size-14 rounded-2xl bg-olive/10 flex items-center justify-center">
-              <img src={iconHeart} alt="" className="size-9 object-contain" />
+        {/* YClients widget */}
+        <div className="mt-12 rounded-3xl overflow-hidden border border-sand/15 bg-cream shadow-2xl">
+          <div className="flex items-center justify-between px-5 py-3 bg-sand text-foreground border-b border-border/60">
+            <div className="text-[11px] uppercase tracking-[0.22em] text-walnut">
+              Онлайн-запись и абонементы
             </div>
-            <div>
-              <h3 className="font-serif text-3xl">Записаться на занятие</h3>
-              <p className="text-sm text-foreground/60 mt-1">Первое пробное — бесплатно</p>
-            </div>
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs px-3 py-1.5 rounded-full border border-border hover:border-olive hover:text-olive transition-colors flex items-center gap-1.5"
+            >
+              <ExternalLink className="size-3.5" /> Открыть в новой вкладке
+            </a>
           </div>
+          <iframe
+            src={bookingUrl}
+            title="Онлайн-запись YClients"
+            className="w-full border-0 bg-cream"
+            style={{ height: "min(80vh, 900px)" }}
+            allow="payment; clipboard-write; geolocation"
+          />
+        </div>
 
-          <div className="mt-8 space-y-5">
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Ваше имя</label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Как вас зовут?"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                maxLength={100}
-                className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40"
-              />
+        {/* Info + form */}
+        <div className="mt-16 grid lg:grid-cols-2 gap-12 lg:gap-20">
+          <div>
+            <h3 className="font-serif text-3xl md:text-4xl text-sand">Как нас найти</h3>
+            <div className="mt-8 space-y-7">
+              {[
+                {
+                  icon: <MapPin className="size-5" />,
+                  label: "Адрес",
+                  value: "Балашиха, мкр. Железнодорожный,\nул. Автозаводская, д. 5",
+                },
+                {
+                  icon: <Clock className="size-5" />,
+                  label: "Режим работы",
+                  value: "Ежедневно с 09:00 до 21:00\nБез выходных",
+                },
+                {
+                  icon: <Phone className="size-5" />,
+                  label: "Телефон",
+                  value: "+7 (915) 027-85-83",
+                  href: "tel:+79150278583",
+                },
+              ].map((it) => (
+                <div key={it.label} className="flex items-start gap-5">
+                  <span className="size-12 shrink-0 rounded-2xl bg-sand/10 border border-sand/15 flex items-center justify-center text-sand">
+                    {it.icon}
+                  </span>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.25em] text-sand/60">{it.label}</div>
+                    {it.href ? (
+                      <a href={it.href} className="mt-1 block whitespace-pre-line text-sand hover:text-sand/80 transition-colors">{it.value}</a>
+                    ) : (
+                      <div className="mt-1 whitespace-pre-line text-sand/90">{it.value}</div>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Телефон</label>
-              <input
-                type="tel"
-                name="phone"
-                inputMode="tel"
-                autoComplete="tel"
-                placeholder="+7 (___) ___-__-__"
-                required
-                value={phone}
-                onChange={handlePhoneChange}
-                onFocus={handlePhoneFocus}
-                onBlur={handlePhoneBlur}
-                maxLength={18}
-                className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Направление</label>
-              <select
-                value={direction}
-                onChange={(e) => setDirection(e.target.value)}
-                className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40"
+
+            <div className="mt-10 flex flex-wrap gap-3">
+              <a
+                href="https://wa.me/79150278583"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-sand/20 hover:bg-sand hover:text-foreground transition-colors text-sm"
               >
-                <option value="">Выберите направление</option>
-                <option>Пилатес — для начинающих</option>
-                <option>Пилатес — продвинутый</option>
-                <option>Индивидуальные занятия</option>
-                <option>Растяжка / гамаки</option>
-                <option>Йога / здоровая спина</option>
-              </select>
-            </div>
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Удобное время</label>
-              <input
-                type="text"
-                name="time"
-                placeholder="Когда вам удобно?"
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                maxLength={200}
-                className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40"
-              />
+                <MessageCircle className="size-4" /> WhatsApp
+              </a>
+              <a
+                href="https://t.me/+79150278583"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-sand/20 hover:bg-sand hover:text-foreground transition-colors text-sm"
+              >
+                <MessageCircle className="size-4" /> Telegram
+              </a>
             </div>
           </div>
 
-          <button type="submit" disabled={submitting} className="btn-primary w-full mt-8 disabled:opacity-70">
-            {submitting ? (<><Loader2 className="size-4 animate-spin" /> Отправляем…</>)
-              : sent ? (<>Выбрать время заново <CalendarPlus className="size-4" /></>)
-              : (<>Отправить заявку <Send className="size-4" /></>)}
-          </button>
+          <form onSubmit={handleSubmit} className="rounded-3xl bg-sand text-foreground p-8 lg:p-10 self-start">
+            <h3 className="font-serif text-3xl">Остались вопросы?</h3>
+            <p className="mt-3 text-sm text-foreground/65 leading-relaxed">
+              Оставьте заявку, и мы свяжемся с вами, чтобы проконсультировать
+              и подобрать удобное время и формат занятий.
+            </p>
 
-          <p className="mt-5 text-xs text-foreground/55 text-center leading-relaxed">
-            Нажимая «Отправить», вы соглашаетесь с обработкой персональных данных
-          </p>
-        </form>
+            <div className="mt-7 space-y-5">
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Ваше имя</label>
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={100}
+                  placeholder="Как вас зовут?"
+                  className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Телефон</label>
+                <input
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  required
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  onFocus={handlePhoneFocus}
+                  onBlur={handlePhoneBlur}
+                  maxLength={18}
+                  placeholder="+7 (___) ___-__-__"
+                  className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">Вопрос (необязательно)</label>
+                <textarea
+                  value={question}
+                  onChange={(e) => setQuestion(e.target.value)}
+                  maxLength={500}
+                  rows={3}
+                  placeholder="Что вас интересует?"
+                  className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40 resize-none"
+                />
+              </div>
+            </div>
+
+            <button type="submit" disabled={submitting} className="btn-primary w-full mt-7 disabled:opacity-70">
+              {submitting ? (<><Loader2 className="size-4 animate-spin" /> Отправляем…</>)
+                : sent ? (<>Заявка отправлена</>)
+                : (<>Отправить заявку <Send className="size-4" /></>)}
+            </button>
+
+            <p className="mt-5 text-xs text-foreground/55 text-center leading-relaxed">
+              Нажимая «Отправить», вы соглашаетесь с обработкой персональных данных
+            </p>
+          </form>
+        </div>
       </div>
-      {bookingOpen && <BookingDialog url={bookingUrl} onClose={() => setBookingOpen(false)} />}
     </section>
-  );
-}
-
-function Field({ label, name, placeholder, required, type = "text" }: { label: string; name: string; placeholder: string; required?: boolean; type?: string }) {
-  return (
-    <div>
-      <label className="text-[10px] uppercase tracking-[0.25em] text-walnut">{label}</label>
-      <input
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        required={required}
-        className="mt-2 w-full bg-cream border border-border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-olive/40 placeholder:text-foreground/40"
-      />
-    </div>
   );
 }
