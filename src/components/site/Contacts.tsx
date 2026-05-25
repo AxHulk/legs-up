@@ -56,14 +56,34 @@ export function Contacts() {
     }
     setSubmitting(true);
     try {
+      const formattedPhone = `+${digits}`;
+      const submittedAt = new Date().toLocaleString("ru-RU", {
+        day: "2-digit", month: "2-digit", year: "numeric",
+        hour: "2-digit", minute: "2-digit",
+      });
+
+      const leadId = crypto.randomUUID();
       const { error } = await supabase.from("bookings").insert({
+        id: leadId,
         customer_name: name,
-        customer_phone: `+${digits}`,
+        customer_phone: formattedPhone,
         note: question ? `Вопрос: ${question}` : "",
         source: "site",
         status: "pending",
       });
       if (error) throw error;
+
+      // Fire-and-forget уведомление администратору
+      supabase.functions
+        .invoke("send-transactional-email", {
+          body: {
+            templateName: "new-lead-notification",
+            idempotencyKey: `lead-${leadId}`,
+            templateData: { name, phone: formattedPhone, question, submittedAt },
+          },
+        })
+        .catch((e) => console.warn("notification email failed", e));
+
       setSent(true);
       setName(""); setPhone(""); setQuestion("");
       toast.success("Спасибо! Мы свяжемся с вами в ближайшее время.");
