@@ -5,7 +5,7 @@ import { BookingButton } from "@/components/site/BookingButton";
 const chips = [
   "Пилатес на реформерах",
   "Малые группы",
-  "Йога в гамаках",
+  "Растяжка и йога в гамаках",
   "Индивидуальные программы",
 ];
 
@@ -71,7 +71,7 @@ export function Hero() {
               <ArrowRight className="absolute bottom-6 size-4 opacity-60 group-hover:translate-x-0.5 transition-transform" />
             </BookingButton>
             <span className="text-[11px] tracking-[0.3em] uppercase text-sand/70">
-              Растяжĸа и йога в гамаĸах
+              студия фитнеса и пилатеса на реформерах "НОГИ ВВЕРХ"
             </span>
           </div>
         </div>
@@ -82,7 +82,7 @@ export function Hero() {
         <div className="mx-auto max-w-[1440px] flex items-end justify-between gap-6 text-sand/80">
           <div className="flex items-center gap-2.5 text-[11px] tracking-[0.25em] uppercase">
             <MapPin className="size-3.5" />
-            студия фитнеса и пилатеса на реформерах "НОГИ ВВЕРХ"
+            Балашиха, мкр. Железнодорожный, ул. Автозаводская, д. 5
           </div>
           <a
             href="#about"
