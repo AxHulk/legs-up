@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Phone, MapPin, Clock, Send, MessageCircle, Loader2, ExternalLink } from "lucide-react";
-import { useBookingUrl } from "@/components/site/BookingButton";
+import { Phone, MapPin, Clock, Send, Loader2, ArrowUpRight, CalendarPlus, Ticket, MessageCircle } from "lucide-react";
+import { BookingDialog, useBookingUrl } from "@/components/site/BookingButton";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -26,6 +26,7 @@ function normalizeDigits(value: string) {
 
 export function Contacts() {
   const bookingUrl = useBookingUrl();
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
@@ -63,9 +64,7 @@ export function Contacts() {
       });
       if (error) throw error;
       setSent(true);
-      setName("");
-      setPhone("");
-      setQuestion("");
+      setName(""); setPhone(""); setQuestion("");
       toast.success("Спасибо! Мы свяжемся с вами в ближайшее время.");
     } catch (err) {
       console.error(err);
@@ -77,9 +76,12 @@ export function Contacts() {
 
   return (
     <section id="contacts" className="scroll-mt-24 py-24 lg:py-32 bg-foreground text-sand relative overflow-hidden">
-      <div className="absolute inset-0 pattern-floral opacity-[0.12]" />
+      <div className="absolute inset-0 pattern-floral opacity-[0.10]" />
+      <div className="absolute -top-40 -right-40 size-[480px] rounded-full bg-olive/20 blur-3xl" />
+      <div className="absolute -bottom-40 -left-40 size-[480px] rounded-full bg-sand/10 blur-3xl" />
 
-      <div className="relative mx-auto max-w-[1440px] px-6 lg:px-12">
+      <div className="relative mx-auto max-w-[1280px] px-6 lg:px-12">
+        {/* Header */}
         <div className="max-w-2xl">
           <span className="eyebrow eyebrow-light">Контакты и запись</span>
           <h2 className="mt-6 text-5xl md:text-6xl lg:text-7xl text-sand">
@@ -87,41 +89,74 @@ export function Contacts() {
             <br />
             <span className="italic font-light text-sand/90">прямо сейчас</span>
           </h2>
-          <p className="mt-6 text-sand/75 leading-relaxed">
-            Выберите занятие или абонемент в виджете ниже — запись и оплата проходят онлайн.
-            Запись на индивидуальные тренировки производится через администратора и форму на сайте.
-          </p>
         </div>
 
-        {/* YClients widget */}
-        <div className="mt-12 rounded-3xl overflow-hidden border border-sand/15 bg-cream shadow-2xl">
-          <div className="flex items-center justify-between px-5 py-3 bg-sand text-foreground border-b border-border/60">
-            <div className="text-[11px] uppercase tracking-[0.22em] text-walnut">
-              Онлайн-запись и абонементы
+        {/* Two big CTA cards — open YClients widget in modal */}
+        <div className="mt-14 grid md:grid-cols-2 gap-5 lg:gap-6">
+          <button
+            type="button"
+            onClick={() => setBookingOpen(true)}
+            className="group relative overflow-hidden rounded-3xl bg-sand text-foreground p-8 lg:p-10 text-left transition-all hover:-translate-y-1 hover:shadow-2xl"
+          >
+            <div className="absolute -right-10 -bottom-10 size-48 rounded-full bg-olive/15 blur-2xl transition-opacity opacity-0 group-hover:opacity-100" />
+            <div className="relative flex items-start justify-between gap-6">
+              <div className="size-14 rounded-2xl bg-olive/15 text-olive flex items-center justify-center">
+                <CalendarPlus className="size-7" />
+              </div>
+              <ArrowUpRight className="size-6 text-walnut transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </div>
-            <a
-              href={bookingUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs px-3 py-1.5 rounded-full border border-border hover:border-olive hover:text-olive transition-colors flex items-center gap-1.5"
-            >
-              <ExternalLink className="size-3.5" /> Открыть в новой вкладке
-            </a>
-          </div>
-          <iframe
-            src={bookingUrl}
-            title="Онлайн-запись YClients"
-            className="w-full border-0 bg-cream"
-            style={{ height: "min(80vh, 900px)" }}
-            allow="payment; clipboard-write; geolocation"
-          />
+            <h3 className="relative mt-8 font-serif text-3xl lg:text-4xl">Записаться<br />на занятие</h3>
+            <p className="relative mt-3 text-sm text-foreground/65 leading-relaxed max-w-sm">
+              Выберите направление, инструктора и удобное время — мгновенное подтверждение онлайн.
+            </p>
+            <div className="relative mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-walnut">
+              <span className="size-1.5 rounded-full bg-olive animate-pulse" /> Запись через YClients
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setBookingOpen(true)}
+            className="group relative overflow-hidden rounded-3xl bg-olive text-sand p-8 lg:p-10 text-left transition-all hover:-translate-y-1 hover:shadow-2xl"
+          >
+            <div className="absolute -right-10 -bottom-10 size-48 rounded-full bg-sand/15 blur-2xl transition-opacity opacity-0 group-hover:opacity-100" />
+            <div className="relative flex items-start justify-between gap-6">
+              <div className="size-14 rounded-2xl bg-sand/15 text-sand flex items-center justify-center">
+                <Ticket className="size-7" />
+              </div>
+              <ArrowUpRight className="size-6 text-sand/80 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </div>
+            <h3 className="relative mt-8 font-serif text-3xl lg:text-4xl">Купить<br />абонемент</h3>
+            <p className="relative mt-3 text-sm text-sand/80 leading-relaxed max-w-sm">
+              Пакеты занятий и индивидуальные программы — оплата картой онлайн, без визита в студию.
+            </p>
+            <div className="relative mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-sand/70">
+              <span className="size-1.5 rounded-full bg-sand animate-pulse" /> Оплата через YClients
+            </div>
+          </button>
         </div>
+
+        <p className="mt-6 text-sm text-sand/55 max-w-3xl leading-relaxed">
+          Запись на индивидуальные тренировки производится через администратора и форму ниже.
+        </p>
 
         {/* Info + form */}
-        <div className="mt-16 grid lg:grid-cols-2 gap-12 lg:gap-20">
-          <div>
-            <h3 className="font-serif text-3xl md:text-4xl text-sand">Как нас найти</h3>
-            <div className="mt-8 space-y-7">
+        <div className="mt-16 grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14">
+          {/* Studio card */}
+          <div className="relative rounded-3xl bg-sand/[0.04] border border-sand/10 p-8 lg:p-10 backdrop-blur-sm">
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-3xl text-sand">Студия</h3>
+              <a
+                href="https://yandex.ru/maps/?text=Балашиха%20Автозаводская%205"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[11px] uppercase tracking-[0.22em] text-sand/60 hover:text-sand inline-flex items-center gap-1.5 transition-colors"
+              >
+                Маршрут <ArrowUpRight className="size-3.5" />
+              </a>
+            </div>
+
+            <div className="mt-8 space-y-6">
               {[
                 {
                   icon: <MapPin className="size-5" />,
@@ -131,7 +166,7 @@ export function Contacts() {
                 {
                   icon: <Clock className="size-5" />,
                   label: "Режим работы",
-                  value: "Ежедневно с 09:00 до 21:00\nБез выходных",
+                  value: "Ежедневно с 09:00 до 21:00 · без выходных",
                 },
                 {
                   icon: <Phone className="size-5" />,
@@ -141,11 +176,11 @@ export function Contacts() {
                 },
               ].map((it) => (
                 <div key={it.label} className="flex items-start gap-5">
-                  <span className="size-12 shrink-0 rounded-2xl bg-sand/10 border border-sand/15 flex items-center justify-center text-sand">
+                  <span className="size-11 shrink-0 rounded-2xl bg-sand/10 border border-sand/10 flex items-center justify-center text-sand">
                     {it.icon}
                   </span>
-                  <div>
-                    <div className="text-[10px] uppercase tracking-[0.25em] text-sand/60">{it.label}</div>
+                  <div className="pt-1">
+                    <div className="text-[10px] uppercase tracking-[0.25em] text-sand/55">{it.label}</div>
                     {it.href ? (
                       <a href={it.href} className="mt-1 block whitespace-pre-line text-sand hover:text-sand/80 transition-colors">{it.value}</a>
                     ) : (
@@ -156,12 +191,12 @@ export function Contacts() {
               ))}
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 pt-8 border-t border-sand/10 flex flex-wrap gap-3">
               <a
                 href="https://wa.me/79150278583"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-sand/20 hover:bg-sand hover:text-foreground transition-colors text-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sand/15 hover:bg-sand hover:text-foreground transition-colors text-sm"
               >
                 <MessageCircle className="size-4" /> WhatsApp
               </a>
@@ -169,18 +204,34 @@ export function Contacts() {
                 href="https://t.me/+79150278583"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-sand/20 hover:bg-sand hover:text-foreground transition-colors text-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sand/15 hover:bg-sand hover:text-foreground transition-colors text-sm"
               >
                 <MessageCircle className="size-4" /> Telegram
               </a>
             </div>
+
+            {/* Map embed */}
+            <a
+              href="https://yandex.ru/maps/?text=Балашиха%20Автозаводская%205"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-8 block rounded-2xl overflow-hidden border border-sand/10 group relative"
+            >
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?text=Балашиха%20Автозаводская%205&z=16"
+                className="w-full h-56 border-0 grayscale-[0.4] contrast-90 brightness-95 group-hover:grayscale-0 transition-all"
+                title="Карта"
+                loading="lazy"
+              />
+            </a>
           </div>
 
+          {/* Question form */}
           <form onSubmit={handleSubmit} className="rounded-3xl bg-sand text-foreground p-8 lg:p-10 self-start">
-            <h3 className="font-serif text-3xl">Остались вопросы?</h3>
+            <h3 className="font-serif text-3xl lg:text-4xl">Остались вопросы?</h3>
             <p className="mt-3 text-sm text-foreground/65 leading-relaxed">
-              Оставьте заявку, и мы свяжемся с вами, чтобы проконсультировать
-              и подобрать удобное время и формат занятий.
+              Оставьте заявку — мы свяжемся с вами, проконсультируем и подберём
+              удобное время и формат занятий.
             </p>
 
             <div className="mt-7 space-y-5">
@@ -237,6 +288,8 @@ export function Contacts() {
           </form>
         </div>
       </div>
+
+      {bookingOpen && <BookingDialog url={bookingUrl} onClose={() => setBookingOpen(false)} />}
     </section>
   );
 }
