@@ -1,12 +1,20 @@
-import { lazy, Suspense } from "react";
-import groupClass from "@/assets/space/group-class.jpg";
-import hammock from "@/assets/space/hammock.jpg";
-import neon from "@/assets/space/neon.jpg";
-import arches from "@/assets/space/arches.jpg";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { BookingButton } from "./BookingButton";
+import slide1 from "@/assets/space/slide-1.jpg";
+import slide2 from "@/assets/space/slide-2.jpg";
+import slide3 from "@/assets/space/slide-3.jpg";
+import slide4 from "@/assets/space/slide-4.jpg";
+import slide5 from "@/assets/space/slide-5.jpg";
+import slide6 from "@/assets/space/slide-6.jpg";
 
-const RotatingModel = lazy(() =>
-  import("./RotatingModel").then((m) => ({ default: m.RotatingModel })),
-);
+const slides = [
+  { src: slide1, alt: "Тренировка с роллом на коврике" },
+  { src: slide2, alt: "Растяжка на TRX в зеркальном зале" },
+  { src: slide3, alt: "Прогиб в пилатесе под неоновой вывеской НОГИ ВВЕРХ" },
+  { src: slide4, alt: "Индивидуальное занятие пилатесом с мячом" },
+  { src: slide5, alt: "Групповое занятие на реформерах" },
+  { src: slide6, alt: "Йога в воздушных гамаках" },
+];
 
 export function Space() {
   return (
@@ -21,8 +29,7 @@ export function Space() {
             </h2>
           </div>
           <p className="lg:col-span-5 text-foreground/70 leading-relaxed self-end">
-            Зеркальные арки с тёплой подсветкой, оливковые реформеры, неоновая
-            вывеска, паркет ёлочкой и уютные зоны отдыха.
+            Два зала с большими зеркалами и кондиционерами. Один зал выделен для занятий пилатесом на реформерах, второй зал оснащён всем необходимым оборудованием для проведения групповых занятий. Много тёплого света для релаксации и погружения в атмосферу гармонии с телом.
           </p>
         </div>
 
@@ -41,47 +48,35 @@ export function Space() {
           <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-foreground/5 rounded-3xl" />
         </figure>
 
-        {/* Mosaic — supporting photos */}
-        <div className="grid grid-cols-12 gap-4 lg:gap-6">
-          <figure className="col-span-12 md:col-span-7 rotate-[-0.6deg]">
-            <div className="relative aspect-[16/10] rounded-3xl overflow-hidden shadow-[0_30px_80px_-40px_oklch(0.3_0.04_60/0.45)]">
-              <img src={arches} alt="Зеркальные арки с тёплой подсветкой и реформеры" className="absolute inset-0 w-full h-full object-cover" />
-            </div>
-          </figure>
+        {/* Horizontal photo slider */}
+        <Carousel opts={{ align: "start", loop: true }} className="mb-8">
+          <CarouselContent className="-ml-4">
+            {slides.map((s, i) => (
+              <CarouselItem key={i} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                <figure className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-[0_30px_80px_-40px_oklch(0.3_0.04_60/0.45)]">
+                  <img src={s.src} alt={s.alt} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                </figure>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex" />
+          <CarouselNext className="hidden md:flex" />
+        </Carousel>
 
-          <figure className="col-span-12 md:col-span-5 md:mt-10 rotate-[1deg]">
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-[0_30px_80px_-40px_oklch(0.3_0.04_60/0.45)]">
-              <img src={hammock} alt="Йога в гамаках в студии" className="absolute inset-0 w-full h-full object-cover" />
+        {/* Message tile */}
+        <div className="rounded-3xl bg-olive text-sand p-10 lg:p-14 grid lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-8">
+            <div className="font-serif italic text-3xl lg:text-4xl leading-tight">
+              Тело мечты стало ближе!
             </div>
-          </figure>
-
-          <figure className="col-span-12 md:col-span-5 md:-mt-6 rotate-[1.2deg]">
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-[0_30px_80px_-40px_oklch(0.3_0.04_60/0.45)]">
-              <img src={neon} alt="Неоновая вывеска НОГИ ВВЕРХ и растяжка" className="absolute inset-0 w-full h-full object-cover" />
-            </div>
-          </figure>
-
-          <figure className="col-span-12 md:col-span-7 rotate-[-0.8deg]">
-            <div className="relative aspect-[16/10] rounded-3xl overflow-hidden shadow-[0_30px_80px_-40px_oklch(0.3_0.04_60/0.45)]">
-              <img src={groupClass} alt="Групповое занятие пилатес на реформерах" className="absolute inset-0 w-full h-full object-cover" />
-            </div>
-          </figure>
-
-          {/* Quote tile */}
-          <div className="col-span-12 mt-4 rounded-3xl bg-olive text-sand p-10 lg:p-14 grid lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8">
-              <div className="font-serif italic text-3xl lg:text-4xl leading-tight">
-                «Расслабиться, почувствовать гармонию со своим телом и подарить себе красивое и здоровое тело»
-              </div>
-              <div className="mt-6 text-[11px] uppercase tracking-[0.25em] text-sand/70">
-                Философия студии «НОГИ ВВЕРХ»
-              </div>
-            </div>
-            <div className="lg:col-span-4 h-64 lg:h-80">
-              <Suspense fallback={null}>
-                <RotatingModel />
-              </Suspense>
-            </div>
+            <p className="mt-6 text-sand/85 leading-relaxed text-lg">
+              «Ноги вверх» — это студия рядом с домом. Больше не надо тратить время на дорогу, очереди в раздевалках, а главное — не нужно покупать абонемент, чтобы просто войти в зал! Достаточно оплатить только те тренировки, которые вас интересуют.
+            </p>
+          </div>
+          <div className="lg:col-span-4 flex lg:justify-end">
+            <BookingButton className="inline-flex items-center justify-center rounded-full bg-sand text-olive px-8 py-4 text-sm uppercase tracking-[0.2em] font-medium hover:bg-sand/90 transition-colors">
+              Записаться
+            </BookingButton>
           </div>
         </div>
       </div>
