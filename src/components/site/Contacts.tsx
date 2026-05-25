@@ -26,7 +26,8 @@ function normalizeDigits(value: string) {
 
 export function Contacts() {
   const bookingUrl = useBookingUrl();
-  const [bookingOpen, setBookingOpen] = useState(false);
+  const [modal, setModal] = useState<null | "booking" | "subscriptions">(null);
+  const SUBSCRIPTIONS_URL = "https://o18441.yclients.com/subscriptions";
 
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
