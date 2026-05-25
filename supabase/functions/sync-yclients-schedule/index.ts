@@ -125,12 +125,41 @@ async function runSync(admin: ReturnType<typeof createClient>, daysAhead = 21) {
   return { ok: true, fetched: all.length, upserted, synced_at: now };
 }
 
+const ADMIN_DOMAIN = "admin.local";
+// Shared sentinel passed by pg_cron via x-cron-secret. Not a high-value secret —
+// only used to distinguish the internal cron caller from arbitrary public requests.
+const CRON_SECRET = "lovable-internal-cron-yclients-sync-v1";
+
+async function isAuthorized(req: Request, supabaseUrl: string): Promise<boolean> {
+  // 1. Internal cron path
+  if (req.headers.get("x-cron-secret") === CRON_SECRET) return true;
+
+  // 2. Admin JWT path
+  const authHeader = req.headers.get("authorization") || "";
+  const token = authHeader.replace(/^Bearer\s+/i, "");
+  if (!token) return false;
+
+  const ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+  const userClient = createClient(supabaseUrl, ANON_KEY, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const { data, error } = await userClient.auth.getUser(token);
+  if (error || !data.user) return false;
+  return (data.user.email ?? "").endsWith(`@${ADMIN_DOMAIN}`);
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
   const SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+
+  if (!(await isAuthorized(req, SUPABASE_URL))) {
+    return json({ error: "Unauthorized" }, 401);
+  }
+
   const admin = createClient(SUPABASE_URL, SERVICE_ROLE, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
@@ -147,3 +176,4 @@ Deno.serve(async (req) => {
     return json({ ok: false, error: msg }, 500);
   }
 });
+
