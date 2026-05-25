@@ -4,7 +4,7 @@ import planPopular from "@/assets/plan-popular.png";
 import planUnlimited from "@/assets/plan-unlimited.png";
 
 const plans = [
-  { src: planTrial, alt: "Пробный — первое занятие бесплатно" },
+  { src: planTrial, alt: "Пробный абонемент" },
   { src: planPopular, alt: "Популярный — групповой абонемент на 8 занятий" },
   { src: planUnlimited, alt: "Безлимит — месяц без ограничений" },
 ];
