@@ -16,7 +16,9 @@ export function Footer() {
           <img
             src={logo}
             alt="НОГИ ВВЕРХ"
-            className="h-12 w-auto [filter:brightness(0)_invert(1)] opacity-90"
+            width={240}
+            height={48}
+            className="h-10 md:h-12 w-auto max-w-[180px] md:max-w-none object-contain [filter:brightness(0)_invert(1)] opacity-90"
           />
           <nav className="flex flex-wrap gap-x-6 gap-y-2 text-xs tracking-wider text-sand/60">
             {legalLinks.map((link) => (
