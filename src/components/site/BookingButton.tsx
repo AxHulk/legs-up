@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { X, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,7 +28,9 @@ export function BookingDialog({ url, onClose, title = "Онлайн-запись
     };
   }, []);
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <div
       className="fixed inset-0 z-[60] bg-foreground/75 backdrop-blur-sm flex items-stretch sm:items-center justify-center sm:p-6"
       onClick={onClose}
@@ -64,7 +67,8 @@ export function BookingDialog({ url, onClose, title = "Онлайн-запись
           allow="payment; clipboard-write"
         />
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
