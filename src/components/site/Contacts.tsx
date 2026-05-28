@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Phone, MapPin, Clock, Send, Loader2, ArrowUpRight, CalendarPlus, Ticket, MessageCircle } from "lucide-react";
+import { Phone, MapPin, Clock, Send, Loader2, ArrowUpRight, CalendarPlus, Ticket } from "lucide-react";
 import { BookingDialog, useBookingUrl } from "@/components/site/BookingButton";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import whatsappIcon from "@/assets/messenger-whatsapp.png";
+import telegramIcon from "@/assets/messenger-telegram.png";
+import maxIcon from "@/assets/messenger-max.png";
 
 function formatRussianPhone(digits: string) {
   if (!digits) return "";
@@ -213,22 +216,22 @@ export function Contacts() {
             </div>
 
             <div className="mt-10 pt-8 border-t border-sand/10 flex flex-wrap gap-3">
-              <a
-                href="https://wa.me/79150278583"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sand/15 hover:bg-sand hover:text-foreground transition-colors text-sm"
-              >
-                <MessageCircle className="size-4" /> WhatsApp
-              </a>
-              <a
-                href="https://t.me/+79150278583"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-sand/15 hover:bg-sand hover:text-foreground transition-colors text-sm"
-              >
-                <MessageCircle className="size-4" /> Telegram
-              </a>
+              {[
+                { href: "https://wa.me/79150278583", label: "WhatsApp", icon: whatsappIcon },
+                { href: "https://t.me/+79150278583", label: "Telegram", icon: telegramIcon },
+                { href: "https://max.ru/+79150278583", label: "MAX", icon: maxIcon },
+              ].map((m) => (
+                <a
+                  key={m.label}
+                  href={m.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full border border-sand/15 hover:bg-sand hover:text-foreground transition-colors text-sm"
+                >
+                  <img src={m.icon} alt={m.label} className="size-7 object-contain" loading="lazy" />
+                  {m.label}
+                </a>
+              ))}
             </div>
 
             {/* Map embed */}
