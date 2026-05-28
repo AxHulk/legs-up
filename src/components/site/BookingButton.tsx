@@ -28,6 +28,16 @@ export function BookingDialog({ url, onClose, title = "Онлайн-запись
     };
   }, []);
 
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
   return (
     <div
       className="fixed inset-0 z-[60] bg-foreground/75 backdrop-blur-sm flex items-stretch sm:items-center justify-center sm:p-6"
