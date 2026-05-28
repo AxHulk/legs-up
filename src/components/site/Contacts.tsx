@@ -217,7 +217,7 @@ export function Contacts() {
 
             <div className="mt-10 pt-8 border-t border-sand/10 flex flex-wrap gap-3">
               {[
-                { href: "https://wa.me/79150278583", label: "WhatsApp", icon: whatsappIcon },
+                { href: "https://web.whatsapp.com/send?phone=79150278583", label: "WhatsApp", icon: whatsappIcon },
                 { href: "https://t.me/+79150278583", label: "Telegram", icon: telegramIcon },
                 { href: "https://max.ru/+79150278583", label: "MAX", icon: maxIcon },
               ].map((m) => (
