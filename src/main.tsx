@@ -10,7 +10,6 @@ import "./styles.css";
 import IndexPage from "./pages/index";
 import ConsentPage from "./pages/consent";
 import OfferPage from "./pages/offer";
-import PaymentsPage from "./pages/payments";
 import PrivacyPage from "./pages/privacy";
 import NotFoundPage from "./pages/not-found";
 import UnsubscribePage from "./pages/unsubscribe";
@@ -65,7 +64,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<IndexPage />} />
             <Route path="/consent" element={<ConsentPage />} />
             <Route path="/offer" element={<OfferPage />} />
-            <Route path="/payments" element={<PaymentsPage />} />
+            <Route path="/payments" element={<Navigate to="/offer" replace />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/unsubscribe" element={<UnsubscribePage />} />
 
