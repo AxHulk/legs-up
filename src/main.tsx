@@ -64,7 +64,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<IndexPage />} />
             <Route path="/consent" element={<ConsentPage />} />
             <Route path="/offer" element={<OfferPage />} />
-            <Route path="/payments" element={<PaymentsPage />} />
+            <Route path="/payments" element={<Navigate to="/offer" replace />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/unsubscribe" element={<UnsubscribePage />} />
 
