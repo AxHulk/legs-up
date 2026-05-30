@@ -10,7 +10,6 @@ import "./styles.css";
 import IndexPage from "./pages/index";
 import ConsentPage from "./pages/consent";
 import OfferPage from "./pages/offer";
-import PaymentsPage from "./pages/payments";
 import PrivacyPage from "./pages/privacy";
 import NotFoundPage from "./pages/not-found";
 import UnsubscribePage from "./pages/unsubscribe";
