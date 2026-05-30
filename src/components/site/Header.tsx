@@ -12,6 +12,9 @@ const nav = [
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const isHome = typeof window !== "undefined" && window.location.pathname === "/";
+  const prefix = isHome ? "" : "/";
+  const logoHref = isHome ? "#top" : "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -27,7 +30,7 @@ export function Header() {
       }`}
     >
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12 flex items-center justify-between gap-6">
-        <a href="#top" className="flex items-center gap-3 shrink-0">
+        <a href={logoHref} className="flex items-center gap-3 shrink-0">
           <img
             src={logo}
             alt="НОГИ ВВЕРХ"
@@ -41,7 +44,7 @@ export function Header() {
           {nav.map((n) => (
             <a
               key={n.href}
-              href={n.href}
+              href={`${prefix}${n.href}`}
               className={`text-[13px] tracking-wide transition-colors ${
                 scrolled ? "text-foreground/85 hover:text-olive" : "text-sand/90 hover:text-sand"
               }`}
@@ -50,6 +53,7 @@ export function Header() {
             </a>
           ))}
         </nav>
+
 
         <BookingButton className="btn-primary !py-2.5 !px-5 text-[13px]">
           Записаться
