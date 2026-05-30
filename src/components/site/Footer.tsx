@@ -5,7 +5,6 @@ const legalLinks = [
   { to: "/offer" as const, label: "Публичная оферта" },
   { to: "/privacy" as const, label: "Политика конфиденциальности" },
   { to: "/consent" as const, label: "Согласие на обработку ПдН" },
-  { to: "/payments" as const, label: "Платежи и возврат" },
 ];
 
 export function Footer() {
