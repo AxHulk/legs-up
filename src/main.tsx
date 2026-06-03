@@ -13,6 +13,9 @@ import OfferPage from "./pages/offer";
 import PrivacyPage from "./pages/privacy";
 import NotFoundPage from "./pages/not-found";
 import UnsubscribePage from "./pages/unsubscribe";
+import PilatesReformerPage from "./pages/pilates-reformer";
+import AeroYogaPage from "./pages/aero-yoga";
+import ZdorovayaSpinaPage from "./pages/zdorovaya-spina";
 
 import AdminLayout from "./pages/admin/layout";
 import AdminLogin from "./pages/admin/login";
@@ -66,6 +69,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="/offer" element={<OfferPage />} />
             <Route path="/payments" element={<Navigate to="/offer" replace />} />
             <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/pilates-reformer" element={<PilatesReformerPage />} />
+            <Route path="/aero-yoga" element={<AeroYogaPage />} />
+            <Route path="/zdorovaya-spina" element={<ZdorovayaSpinaPage />} />
             <Route path="/unsubscribe" element={<UnsubscribePage />} />
 
             <Route path="/admin/login" element={<AdminLogin />} />
