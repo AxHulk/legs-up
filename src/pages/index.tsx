@@ -11,15 +11,18 @@ import { Pricing } from "@/components/site/Pricing";
 import { Reviews } from "@/components/site/Reviews";
 import { Contacts } from "@/components/site/Contacts";
 import { Footer } from "@/components/site/Footer";
+import { Faq } from "@/components/site/Faq";
 
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <Helmet>
-        <title>НОГИ ВВЕРХ — студия пилатеса на реформерах в Балашихе</title>
-        <meta name="description" content="Студия пилатеса на профессиональных реформерах в Железнодорожном. Малые группы, сертифицированные инструкторы, индивидуальные программы." />
-        <meta property="og:title" content="НОГИ ВВЕРХ — студия фитнеса и пилатеса" />
-        <meta property="og:description" content="Почувствуй гармонию с телом. Пилатес на реформерах, йога, растяжка в гамаках в Балашихе." />
+        <title>Студия пилатеса на реформерах в Балашихе — НОГИ ВВЕРХ</title>
+        <meta name="description" content="Студия пилатеса на профессиональных реформерах в Балашихе и Железнодорожном. Мини-группы, индивидуальные занятия, аэройога, тренировки для спины. Ул. Автозаводская, 5." />
+        <link rel="canonical" href="https://legs-up.lovable.app/" />
+        <meta property="og:title" content="НОГИ ВВЕРХ — пилатес на реформерах в Балашихе" />
+        <meta property="og:description" content="Пилатес на реформерах, аэройога и тренировки для здоровой спины в Железнодорожном. Мини-группы и индивидуальные программы." />
+        <meta property="og:url" content="https://legs-up.lovable.app/" />
       </Helmet>
       <Header />
       <main>
@@ -31,6 +34,7 @@ function Index() {
         <Schedule />
         {/* <Pricing /> */}
         {/* <Reviews /> */}
+        <Faq />
         <Contacts />
       </main>
       <Footer />
