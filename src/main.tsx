@@ -16,6 +16,7 @@ import UnsubscribePage from "./pages/unsubscribe";
 import PilatesReformerPage from "./pages/pilates-reformer";
 import AeroYogaPage from "./pages/aero-yoga";
 import ZdorovayaSpinaPage from "./pages/zdorovaya-spina";
+import CenyPage from "./pages/ceny";
 
 import AdminLayout from "./pages/admin/layout";
 import AdminLogin from "./pages/admin/login";
