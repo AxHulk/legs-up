@@ -73,6 +73,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="/pilates-reformer" element={<PilatesReformerPage />} />
             <Route path="/aero-yoga" element={<AeroYogaPage />} />
             <Route path="/zdorovaya-spina" element={<ZdorovayaSpinaPage />} />
+            <Route path="/ceny" element={<CenyPage />} />
             <Route path="/unsubscribe" element={<UnsubscribePage />} />
 
             <Route path="/admin/login" element={<AdminLogin />} />
