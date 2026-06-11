@@ -4,7 +4,11 @@ import { Helmet } from "react-helmet-async";
 export default function NotFoundPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <Helmet><title>404 — Страница не найдена</title></Helmet>
+      <Helmet>
+        <title>404 — Страница не найдена</title>
+        <meta name="robots" content="noindex, follow" />
+        <meta name="prerender-status-code" content="404" />
+      </Helmet>
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Страница не найдена</h2>
