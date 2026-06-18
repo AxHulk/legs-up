@@ -16,7 +16,7 @@ type Instructor = {
 export function Team() {
   const [active, setActive] = useState<Instructor | null>(null);
 
-  const { data: team = [] } = useQuery({
+  const { data: team = [], isLoading, isError } = useQuery({
     queryKey: ["public-instructors"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -27,9 +27,12 @@ export function Team() {
       if (error) throw error;
       return (data ?? []) as Instructor[];
     },
+    retry: 2,
+    staleTime: 5 * 60_000,
   });
 
-  if (team.length === 0) return null;
+  const hasData = team.length > 0;
+  if (!isLoading && !isError && !hasData) return null;
 
   return (
     <section id="team" className="py-28 lg:py-36">
@@ -47,11 +50,27 @@ export function Team() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-14 md:gap-x-8">
-          {team.map((m) => (
-            <InstructorCard key={m.id} m={m} onOpen={() => setActive(m)} />
-          ))}
-        </div>
+        {hasData ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-14 md:gap-x-8">
+            {team.map((m) => (
+              <InstructorCard key={m.id} m={m} onOpen={() => setActive(m)} />
+            ))}
+          </div>
+        ) : isError ? (
+          <p className="text-foreground/60 text-sm">
+            Список инструкторов временно недоступен. Пожалуйста, обновите страницу.
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-14 md:gap-x-8">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="flex flex-col items-center">
+                <div className="relative mx-auto w-full max-w-[260px] aspect-[4/5] rounded-2xl bg-sand/60 animate-pulse" />
+                <div className="mt-6 h-4 w-32 rounded bg-sand/60 animate-pulse" />
+                <div className="mt-3 h-2 w-24 rounded bg-sand/40 animate-pulse" />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {active && (
