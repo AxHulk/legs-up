@@ -103,52 +103,69 @@ export function Schedule() {
           </div>
         </div>
 
-        <div className="rounded-3xl bg-cream border border-border/60 overflow-hidden">
-          {list.map((s, i) => {
-            const d = new Date(s.starts_at);
-            const day = d.toLocaleDateString("ru-RU", { weekday: "short" }).toUpperCase().slice(0, 2);
-            const date = String(d.getDate());
-            const time = d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
-            const coach = (s as unknown as { instructors: { name: string } | null }).instructors?.name ?? "";
-            const free = s.seats_free;
-            const soldOut = typeof free === "number" && free <= 0;
-            return (
-              <div
-                key={s.id}
-                className={`grid grid-cols-12 gap-4 items-center px-5 lg:px-8 py-5 ${
-                  i !== list.length - 1 ? "border-b border-border/60" : ""
-                } hover:bg-sand/60 transition-colors`}
-              >
-                <div className="col-span-3 lg:col-span-2 flex items-baseline gap-3">
-                  <span className="font-serif text-3xl text-olive">{date}</span>
-                  <span className="text-[11px] uppercase tracking-[0.2em] text-walnut">{day}</span>
-                </div>
-                <div className="col-span-3 lg:col-span-2 font-serif text-xl">{time}</div>
-                <div className="col-span-12 lg:col-span-4 order-last lg:order-none mt-2 lg:mt-0">
-                  <div className="font-medium">{s.title}</div>
-                  <div className="text-xs text-foreground/60 mt-0.5">
-                    {coach}
-                    {typeof free === "number" && !soldOut && (
-                      <span className="ml-2 text-walnut">· свободно {free}</span>
-                    )}
+        {hasData ? (
+          <div className="rounded-3xl bg-cream border border-border/60 overflow-hidden">
+            {list.map((s, i) => {
+              const d = new Date(s.starts_at);
+              const day = d.toLocaleDateString("ru-RU", { weekday: "short" }).toUpperCase().slice(0, 2);
+              const date = String(d.getDate());
+              const time = d.toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+              const coach = (s as unknown as { instructors: { name: string } | null }).instructors?.name ?? "";
+              const free = s.seats_free;
+              const soldOut = typeof free === "number" && free <= 0;
+              return (
+                <div
+                  key={s.id}
+                  className={`grid grid-cols-12 gap-4 items-center px-5 lg:px-8 py-5 ${
+                    i !== list.length - 1 ? "border-b border-border/60" : ""
+                  } hover:bg-sand/60 transition-colors`}
+                >
+                  <div className="col-span-3 lg:col-span-2 flex items-baseline gap-3">
+                    <span className="font-serif text-3xl text-olive">{date}</span>
+                    <span className="text-[11px] uppercase tracking-[0.2em] text-walnut">{day}</span>
+                  </div>
+                  <div className="col-span-3 lg:col-span-2 font-serif text-xl">{time}</div>
+                  <div className="col-span-12 lg:col-span-4 order-last lg:order-none mt-2 lg:mt-0">
+                    <div className="font-medium">{s.title}</div>
+                    <div className="text-xs text-foreground/60 mt-0.5">
+                      {coach}
+                      {typeof free === "number" && !soldOut && (
+                        <span className="ml-2 text-walnut">· свободно {free}</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-span-4 lg:col-span-2 hidden lg:block">
+                    <span className="text-[11px] uppercase tracking-[0.2em] text-walnut">{s.class_type}</span>
+                  </div>
+                  <div className="col-span-6 lg:col-span-2 flex justify-end">
+                    <button
+                      onClick={() => openFor(s as Klass)}
+                      disabled={soldOut}
+                      className="text-xs px-4 py-2 rounded-full bg-olive/10 text-olive hover:bg-olive hover:text-sand transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-olive/10 disabled:hover:text-olive"
+                    >
+                      {soldOut ? "Мест нет" : "Записаться"}
+                    </button>
                   </div>
                 </div>
-                <div className="col-span-4 lg:col-span-2 hidden lg:block">
-                  <span className="text-[11px] uppercase tracking-[0.2em] text-walnut">{s.class_type}</span>
-                </div>
-                <div className="col-span-6 lg:col-span-2 flex justify-end">
-                  <button
-                    onClick={() => openFor(s as Klass)}
-                    disabled={soldOut}
-                    className="text-xs px-4 py-2 rounded-full bg-olive/10 text-olive hover:bg-olive hover:text-sand transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-olive/10 disabled:hover:text-olive"
-                  >
-                    {soldOut ? "Мест нет" : "Записаться"}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        ) : isLoading ? (
+          <div className="rounded-3xl bg-cream border border-border/60 overflow-hidden">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-20 ${i !== 4 ? "border-b border-border/60" : ""} bg-sand/40 animate-pulse`}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-3xl bg-cream border border-border/60 px-6 py-12 text-center text-foreground/60 text-sm">
+            {isError
+              ? "Расписание временно недоступно. Пожалуйста, обновите страницу."
+              : "Ближайшие занятия скоро появятся — следите за обновлениями или запишитесь напрямую через кнопку «Записаться»."}
+          </div>
+        )}
       </div>
 
       {bookingUrl && <BookingDialog url={bookingUrl} onClose={() => setBookingUrl(null)} />}
