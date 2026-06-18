@@ -22,7 +22,7 @@ export function Schedule() {
   const [bookingUrl, setBookingUrl] = useState<string | null>(null);
   const baseUrl = useBookingUrl();
 
-  const { data: classes = [] } = useQuery({
+  const { data: classes = [], isLoading, isError } = useQuery({
     queryKey: ["public-schedule"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -38,6 +38,8 @@ export function Schedule() {
       return data ?? [];
     },
     refetchInterval: 5 * 60_000,
+    retry: 2,
+    staleTime: 60_000,
   });
 
   const filters = useMemo(() => {
@@ -51,7 +53,10 @@ export function Schedule() {
     [classes, active],
   );
 
-  if (classes.length === 0) return null;
+  const hasData = classes.length > 0;
+  // Раньше тут возвращали null при пустом расписании — из-за этого секция
+  // мигала и иногда «пропадала» на главной. Теперь всегда показываем
+  // заголовок и якорь #schedule, а внутри либо данные, либо скелетон/сообщение.
 
   const openFor = (k: Klass) => {
     if (k.booking_url) {
