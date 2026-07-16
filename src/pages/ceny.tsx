@@ -46,7 +46,7 @@ function PriceTable({
   );
 }
 
-const URL = "https://legs-up.lovable.app/ceny";
+const URL = "https://nogivverh.ru/ceny";
 
 const singleRows: (string | React.ReactNode)[][] = [
   ["Пилатес на реформере — индивидуально", "60 мин", <strong>3 000 ₽</strong>],
@@ -95,7 +95,7 @@ export default function CenyPage() {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Главная", item: "https://legs-up.lovable.app/" },
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://nogivverh.ru/" },
             { "@type": "ListItem", position: 2, name: "Цены", item: URL },
           ],
         })}</script>

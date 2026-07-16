@@ -19,7 +19,7 @@ type Props = {
 export function SeoLanding({
   title, description, canonicalPath, eyebrow, h1, lead, sections, related,
 }: Props) {
-  const url = `https://legs-up.lovable.app${canonicalPath}`;
+  const url = `https://nogivverh.ru${canonicalPath}`;
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <Helmet>
@@ -34,7 +34,7 @@ export function SeoLanding({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Главная", item: "https://legs-up.lovable.app/" },
+            { "@type": "ListItem", position: 1, name: "Главная", item: "https://nogivverh.ru/" },
             { "@type": "ListItem", position: 2, name: typeof h1 === "string" ? h1 : title, item: url },
           ],
         })}</script>
