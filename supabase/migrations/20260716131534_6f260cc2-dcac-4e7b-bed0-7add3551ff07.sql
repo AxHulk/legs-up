@@ -1,0 +1,1 @@
+CREATE POLICY "Public read for admin-uploads" ON storage.objects FOR SELECT TO anon, authenticated USING (bucket_id = 'admin-uploads');
