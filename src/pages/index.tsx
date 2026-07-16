@@ -19,10 +19,10 @@ function Index() {
       <Helmet>
         <title>Студия пилатеса на реформерах в Балашихе — НОГИ ВВЕРХ</title>
         <meta name="description" content="Студия пилатеса на профессиональных реформерах в Балашихе и Железнодорожном. Мини-группы, индивидуальные занятия, аэройога, тренировки для спины. Ул. Автозаводская, 5." />
-        <link rel="canonical" href="https://legs-up.lovable.app/" />
+        <link rel="canonical" href="https://nogivverh.ru/" />
         <meta property="og:title" content="НОГИ ВВЕРХ — пилатес на реформерах в Балашихе" />
         <meta property="og:description" content="Пилатес на реформерах, аэройога и тренировки для здоровой спины в Железнодорожном. Мини-группы и индивидуальные программы." />
-        <meta property="og:url" content="https://legs-up.lovable.app/" />
+        <meta property="og:url" content="https://nogivverh.ru/" />
       </Helmet>
       <Header />
       <main>
