@@ -187,7 +187,7 @@ function OvalPortrait({
   objectPosition?: string;
 }) {
   return (
-    <div className="relative mx-auto w-full max-w-[260px] aspect-[4/5]">
+    <div className="relative mx-auto w-full max-w-[320px] aspect-[4/5]">
       <div className="absolute inset-0 rounded-2xl overflow-hidden border border-olive/40 bg-sand transition-transform duration-700 ease-out group-hover:-translate-y-1.5 shadow-[0_22px_50px_-30px_oklch(0.45_0.08_122/0.45)]">
         {photo ? (
           <img
