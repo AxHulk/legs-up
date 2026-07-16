@@ -51,20 +51,29 @@ export function Team() {
         </div>
 
         {hasData ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-14 md:gap-x-8">
-            {team.map((m) => (
-              <InstructorCard key={m.id} m={m} onOpen={() => setActive(m)} />
-            ))}
+          <div className="space-y-14 md:space-y-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-14 md:gap-x-10">
+              {team.slice(0, 4).map((m) => (
+                <InstructorCard key={m.id} m={m} onOpen={() => setActive(m)} />
+              ))}
+            </div>
+            {team.length > 4 && (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-14 md:gap-x-10 lg:max-w-[75%] lg:mx-auto">
+                {team.slice(4, 7).map((m) => (
+                  <InstructorCard key={m.id} m={m} onOpen={() => setActive(m)} />
+                ))}
+              </div>
+            )}
           </div>
         ) : isError ? (
           <p className="text-foreground/60 text-sm">
             Список инструкторов временно недоступен. Пожалуйста, обновите страницу.
           </p>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-14 md:gap-x-8">
-            {Array.from({ length: 5 }).map((_, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-14 md:gap-x-10">
+            {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="flex flex-col items-center">
-                <div className="relative mx-auto w-full max-w-[260px] aspect-[4/5] rounded-2xl bg-sand/60 animate-pulse" />
+                <div className="relative mx-auto w-full max-w-[320px] aspect-[4/5] rounded-2xl bg-sand/60 animate-pulse" />
                 <div className="mt-6 h-4 w-32 rounded bg-sand/60 animate-pulse" />
                 <div className="mt-3 h-2 w-24 rounded bg-sand/40 animate-pulse" />
               </div>
@@ -130,10 +139,12 @@ export function Team() {
 // чтобы лица были на одном уровне и головы не обрезались.
 const PHOTO_FRAMING: Record<string, { scale?: number; objectPosition?: string }> = {
   "Валентина Рудич": { scale: 1.35, objectPosition: "50% 8%" },
-  "Мария Козлова": { scale: 1.3, objectPosition: "50% 10%" },
-  "Наталья Клочкова": { scale: 1.25, objectPosition: "50% 12%" },
-  "Наталья Чеботарева": { scale: 1, objectPosition: "50% 10%" },
-  "Мария Эрькина": { scale: 1, objectPosition: "50% 8%" },
+  "Мария Козлова": { scale: 1, objectPosition: "50% 15%" },
+  "Наталья Чеботарева": { scale: 1, objectPosition: "50% 15%" },
+  "Мария Эрькина": { scale: 1, objectPosition: "50% 15%" },
+  "Лилия Романова": { scale: 1, objectPosition: "50% 15%" },
+  "Елизавета Кечина": { scale: 1, objectPosition: "50% 15%" },
+  "Анастасия Петрова": { scale: 1, objectPosition: "50% 15%" },
 };
 
 function InstructorCard({ m, onOpen }: { m: Instructor; onOpen: () => void }) {
