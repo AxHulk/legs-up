@@ -38,6 +38,9 @@ export function Contacts() {
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [question, setQuestion] = useState("");
+  const [agreePersonalData, setAgreePersonalData] = useState(false);
+  const [agreeMarketing, setAgreeMarketing] = useState(false);
+  const [agreeOffer, setAgreeOffer] = useState(false);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const next = e.target.value;
