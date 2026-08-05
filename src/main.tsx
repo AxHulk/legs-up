@@ -66,6 +66,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <SmoothScrollSetup />
           <Toaster position="top-center" richColors />
+          <CookieBanner />
           <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="/consent" element={<ConsentPage />} />
