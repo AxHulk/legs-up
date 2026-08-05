@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import whatsappIcon from "@/assets/messenger-whatsapp.png";
 import telegramIcon from "@/assets/messenger-telegram.png";
 import maxIcon from "@/assets/messenger-max.png";
+import { LEGAL_DOCS } from "@/lib/legal-docs";
 
 function formatRussianPhone(digits: string) {
   if (!digits) return "";
@@ -37,6 +38,9 @@ export function Contacts() {
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [question, setQuestion] = useState("");
+  const [agreePersonalData, setAgreePersonalData] = useState(false);
+  const [agreeMarketing, setAgreeMarketing] = useState(false);
+  const [agreeOffer, setAgreeOffer] = useState(false);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const next = e.target.value;
@@ -89,6 +93,7 @@ export function Contacts() {
 
       setSent(true);
       setName(""); setPhone(""); setQuestion("");
+      setAgreePersonalData(false); setAgreeMarketing(false); setAgreeOffer(false);
       toast.success("Спасибо! Мы свяжемся с вами в ближайшее время.");
     } catch (err) {
       console.error(err);
@@ -300,15 +305,64 @@ export function Contacts() {
               </div>
             </div>
 
+            <div className="mt-6 space-y-3.5">
+              <label className="flex gap-3 items-start text-xs leading-relaxed text-foreground/70 cursor-pointer">
+                <input
+                  type="checkbox"
+                  required
+                  checked={agreePersonalData}
+                  onChange={(e) => setAgreePersonalData(e.target.checked)}
+                  className="mt-0.5 size-4 shrink-0 accent-[var(--olive)]"
+                />
+                <span>
+                  Я ознакомился с условиями{" "}
+                  <a href={LEGAL_DOCS.privacyPolicy} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
+                    Политики обработки персональных данных
+                  </a>{" "}
+                  и даю свое согласие на обработку.
+                </span>
+              </label>
+
+              <label className="flex gap-3 items-start text-xs leading-relaxed text-foreground/70 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={agreeMarketing}
+                  onChange={(e) => setAgreeMarketing(e.target.checked)}
+                  className="mt-0.5 size-4 shrink-0 accent-[var(--olive)]"
+                />
+                <span>
+                  Я даю{" "}
+                  <a href={LEGAL_DOCS.marketingConsent} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
+                    согласие
+                  </a>{" "}
+                  на получение рекламной рассылки.
+                </span>
+              </label>
+
+              <label className="flex gap-3 items-start text-xs leading-relaxed text-foreground/70 cursor-pointer">
+                <input
+                  type="checkbox"
+                  required
+                  checked={agreeOffer}
+                  onChange={(e) => setAgreeOffer(e.target.checked)}
+                  className="mt-0.5 size-4 shrink-0 accent-[var(--olive)]"
+                />
+                <span>
+                  Я ознакомился(ась) и принимаю условия{" "}
+                  <a href={LEGAL_DOCS.offer} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
+                    Публичной оферты
+                  </a>
+                  .
+                </span>
+              </label>
+            </div>
+
             <button type="submit" disabled={submitting} className="btn-primary w-full mt-7 disabled:opacity-70">
               {submitting ? (<><Loader2 className="size-4 animate-spin" /> Отправляем…</>)
                 : sent ? (<>Заявка отправлена</>)
                 : (<>Отправить заявку <Send className="size-4" /></>)}
             </button>
 
-            <p className="mt-5 text-xs text-foreground/55 text-center leading-relaxed">
-              Нажимая «Отправить», вы соглашаетесь с обработкой персональных данных
-            </p>
           </form>
         </div>
       </div>

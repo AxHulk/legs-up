@@ -14,6 +14,8 @@ import PrivacyPage from "./pages/privacy";
 import NotFoundPage from "./pages/not-found";
 import UnsubscribePage from "./pages/unsubscribe";
 import PilatesReformerPage from "./pages/pilates-reformer";
+import { CookieBanner } from "./components/site/CookieBanner";
+
 import AeroYogaPage from "./pages/aero-yoga";
 import ZdorovayaSpinaPage from "./pages/zdorovaya-spina";
 import CenyPage from "./pages/ceny";
@@ -64,6 +66,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <SmoothScrollSetup />
           <Toaster position="top-center" richColors />
+          <CookieBanner />
           <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="/consent" element={<ConsentPage />} />
