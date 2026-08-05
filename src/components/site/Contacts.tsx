@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import whatsappIcon from "@/assets/messenger-whatsapp.png";
 import telegramIcon from "@/assets/messenger-telegram.png";
 import maxIcon from "@/assets/messenger-max.png";
+import { LEGAL_DOCS } from "@/lib/legal-docs";
 
 function formatRussianPhone(digits: string) {
   if (!digits) return "";
