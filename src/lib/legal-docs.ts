@@ -3,7 +3,7 @@ export const LEGAL_DOCS = {
   personalDataConsent: "/docs/soglasie-na-obrabotku-personalnyh-dannyh.pdf",
   cookiesConsent: "/docs/soglasie-na-cookies.pdf",
   marketingConsent: "/docs/soglasie-na-reklamnuyu-rassylku.pdf",
-  offer: "/offer",
+  offer: "/docs/oferta.pdf",
 } as const;
 
 export const LEGAL_LINKS = [
