@@ -93,6 +93,7 @@ export function Contacts() {
 
       setSent(true);
       setName(""); setPhone(""); setQuestion("");
+      setAgreePersonalData(false); setAgreeMarketing(false); setAgreeOffer(false);
       toast.success("Спасибо! Мы свяжемся с вами в ближайшее время.");
     } catch (err) {
       console.error(err);
