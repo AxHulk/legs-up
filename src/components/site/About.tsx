@@ -4,7 +4,7 @@ import iconFlexibility from "@/assets/icons/icon_flexibility.png";
 import iconBalance from "@/assets/icons/icon_balance.png";
 
 const advantages = [
-  { icon: iconSpine, title: "Здоровая спина", desc: "Бережно укрепляем глубокие мышцы и восстанавливаем осанку." },
+  { icon: iconSpine, title: "Красивая осанка", desc: "Бережно укрепляем глубокие мышцы и восстанавливаем осанку." },
   { icon: iconMuscle, title: "Сила и тонус", desc: "Прорабатываем всё тело — мягко, но глубоко и эффективно." },
   { icon: iconFlexibility, title: "Гибкость", desc: "Удлиняем мышцы, увеличиваем подвижность суставов." },
   { icon: iconBalance, title: "Баланс", desc: "Возвращаем телу координацию, лёгкость и внутренний центр." },
