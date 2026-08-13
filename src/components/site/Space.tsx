@@ -7,9 +7,9 @@ import slide4 from "@/assets/space/slide-4.jpg";
 import slide6 from "@/assets/space/slide-6.jpg";
 
 const slides = [
-  { src: slide1, alt: "Тренировка с роллом на коврике" },
-  { src: slide2, alt: "Растяжка на TRX в зеркальном зале" },
-  { src: slide3, alt: "Прогиб в пилатесе под неоновой вывеской НОГИ ВВЕРХ" },
+  { src: slide1, alt: "Занятие в студии НОГИ ВВЕРХ" },
+  { src: slide2, alt: "Тренировка на TRX в зеркальном зале" },
+  { src: slide3, alt: "Упражнение с мячом на коврике" },
   { src: slide4, alt: "Индивидуальное занятие пилатесом с мячом" },
   { src: slide6, alt: "Йога в воздушных гамаках" },
 ];
