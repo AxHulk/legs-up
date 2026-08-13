@@ -40,8 +40,16 @@ export function Footer() {
             </ul>
           </nav>
         </div>
-        <div className="mt-8 pt-6 border-t border-sand/10 text-xs tracking-wider text-sand/40 text-center md:text-right">
-          © {new Date().getFullYear()} Студия «НОГИ ВВЕРХ» · Все права защищены
+        <div className="mt-8 pt-6 border-t border-sand/10 text-xs tracking-wider text-sand/40">
+          <div className="text-center md:text-right">
+            © {new Date().getFullYear()} Студия «НОГИ ВВЕРХ» · Все права защищены
+          </div>
+          <div className="mt-3 text-center md:text-right leading-relaxed">
+            Индивидуальный предприниматель Калугина Жанна Юрьевна
+            <br className="hidden sm:block" />
+            <span className="sm:mx-2">·</span>ОГРНИП 326774600190361
+            <span className="mx-2">·</span>ИНН 771596747700
+          </div>
         </div>
       </div>
     </footer>
