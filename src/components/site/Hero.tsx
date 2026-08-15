@@ -1,6 +1,8 @@
 import { ArrowRight, MapPin, ChevronDown } from "lucide-react";
 import heroBody from "@/assets/hero_body.jpg";
+import heroBodyMobile from "@/assets/hero_body_mobile.jpg";
 import { BookingButton } from "@/components/site/BookingButton";
+
 
 const chips = [
   "Пилатес на реформерах",
