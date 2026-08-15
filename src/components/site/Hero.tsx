@@ -56,8 +56,8 @@ export function Hero() {
             <span className="italic font-light">с&nbsp;телом</span>
           </h1>
 
-          {/* Chips — pushed lower */}
-          <div className="mt-[72vh] flex flex-wrap items-center justify-center gap-2.5">
+          {/* Chips — pushed lower (desktop only) */}
+          <div className="mt-[72vh] hidden md:flex flex-wrap items-center justify-center gap-2.5">
             {chips.map((c) => (
               <span
                 key={c}
@@ -68,8 +68,9 @@ export function Hero() {
             ))}
           </div>
 
-          {/* Circular CTA */}
-          <div className="mt-8 flex flex-col items-center gap-4">
+          {/* Circular CTA (desktop only) */}
+          <div className="mt-8 hidden md:flex flex-col items-center gap-4">
+
             <BookingButton
               ariaLabel="Записаться на занятие"
               className="group relative size-32 lg:size-36 rounded-full bg-cream text-foreground flex items-center justify-center font-serif italic text-2xl lg:text-3xl shadow-[0_30px_80px_-20px_oklch(0.2_0.02_60/0.6)] hover:bg-sand transition-all hover:scale-[1.03]"
