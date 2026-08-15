@@ -19,10 +19,16 @@ export function Hero() {
     <section id="top" className="relative min-h-screen flex flex-col overflow-hidden bg-walnut">
       {/* Body photo — warm, alive, the real subject */}
       <img
+        src={heroBodyMobile}
+        alt="Пилатес на реформере — работа с телом в студии НОГИ ВВЕРХ"
+        className="absolute inset-0 w-full h-full object-cover object-center md:hidden"
+      />
+      <img
         src={heroBody}
         alt="Пилатес на реформере — работа с телом в студии НОГИ ВВЕРХ"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
       />
+
       {/* Soft vignette only — keep the warmth of the skin and the studio */}
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/35 via-transparent to-foreground/75" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,oklch(0.2_0.02_60/0.45)_100%)]" />
