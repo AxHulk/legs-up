@@ -1,15 +1,7 @@
-import { ArrowRight, MapPin, ChevronDown } from "lucide-react";
+import { MapPin, ChevronDown } from "lucide-react";
 import heroBody from "@/assets/hero_body.jpg";
 import heroBodyMobile from "@/assets/hero_body_mobile.jpg";
-import { BookingButton } from "@/components/site/BookingButton";
 
-
-const chips = [
-  "Пилатес на реформерах",
-  "Малые группы",
-  "Растяжка и йога в гамаках",
-  "Индивидуальные программы",
-];
 
 // Вертикальная позиция заголовка в hero: меньше число — выше, больше — ниже.
 const HERO_HEADLINE_TOP = "36vh";
