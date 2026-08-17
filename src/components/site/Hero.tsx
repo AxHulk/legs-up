@@ -1,15 +1,7 @@
-import { ArrowRight, MapPin, ChevronDown } from "lucide-react";
+import { MapPin, ChevronDown } from "lucide-react";
 import heroBody from "@/assets/hero_body.jpg";
 import heroBodyMobile from "@/assets/hero_body_mobile.jpg";
-import { BookingButton } from "@/components/site/BookingButton";
 
-
-const chips = [
-  "Пилатес на реформерах",
-  "Малые группы",
-  "Растяжка и йога в гамаках",
-  "Индивидуальные программы",
-];
 
 // Вертикальная позиция заголовка в hero: меньше число — выше, больше — ниже.
 const HERO_HEADLINE_TOP = "36vh";
@@ -56,33 +48,6 @@ export function Hero() {
             <span className="italic font-light">с&nbsp;телом</span>
           </h1>
 
-          {/* Chips — pushed lower (desktop only) */}
-          <div className="mt-[72vh] hidden md:flex flex-wrap items-center justify-center gap-2.5">
-            {chips.map((c) => (
-              <span
-                key={c}
-                className="px-4 py-2 rounded-full text-[12px] tracking-wide text-sand bg-sand/10 border border-sand/25 backdrop-blur-md"
-              >
-                {c}
-              </span>
-            ))}
-          </div>
-
-          {/* Circular CTA (desktop only) */}
-          <div className="mt-8 hidden md:flex flex-col items-center gap-4">
-
-            <BookingButton
-              ariaLabel="Записаться на занятие"
-              className="group relative size-32 lg:size-36 rounded-full bg-cream text-foreground flex items-center justify-center font-serif italic text-2xl lg:text-3xl shadow-[0_30px_80px_-20px_oklch(0.2_0.02_60/0.6)] hover:bg-sand transition-all hover:scale-[1.03]"
-            >
-              <span className="absolute inset-2 rounded-full border border-walnut/20" />
-              Запись
-              <ArrowRight className="absolute bottom-6 size-4 opacity-60 group-hover:translate-x-0.5 transition-transform" />
-            </BookingButton>
-            <span className="text-[11px] tracking-[0.3em] uppercase text-sand/70">
-              студия фитнеса и пилатеса на реформерах "НОГИ ВВЕРХ"
-            </span>
-          </div>
         </div>
       </div>
 
