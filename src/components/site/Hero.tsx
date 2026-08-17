@@ -40,7 +40,7 @@ export function Hero() {
         <div className="text-center max-w-4xl animate-fade-up [text-shadow:0_2px_30px_oklch(0.2_0.02_60/0.5)]">
           {/* Headline — position controlled by HERO_HEADLINE_TOP above */}
           <h1
-            className="hero-headline absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(92vw,760px)] text-sand text-3xl sm:text-4xl md:text-5xl lg:text-[46px] leading-[0.98]"
+            className="hero-headline absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(92vw,760px)] text-sand text-3xl sm:text-4xl md:text-5xl lg:text-[46px] leading-[0.98] md:hidden"
             style={{ top: HERO_HEADLINE_TOP }}
           >
             Искусство работы
