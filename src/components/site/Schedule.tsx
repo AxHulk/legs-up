@@ -87,23 +87,41 @@ export function Schedule() {
             </h2>
           </div>
           <div className="lg:col-span-5 flex flex-wrap gap-2">
-            {filters.map((f) => (
-              <button
-                key={f}
-                onClick={() => setActive(f)}
-                className={`px-4 py-2 rounded-full text-xs uppercase tracking-[0.18em] border transition-colors ${
-                  active === f
-                    ? "bg-olive text-sand border-olive"
-                    : "bg-transparent border-border text-foreground/70 hover:border-olive/50 hover:text-olive"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
+            <button
+              onClick={() => setView(view === "widget" ? "list" : "widget")}
+              className="px-4 py-2 rounded-full text-xs uppercase tracking-[0.18em] border border-olive bg-olive text-sand transition-colors"
+            >
+              {view === "widget" ? "Список занятий" : "Сетка недели"}
+            </button>
+            {view === "list" &&
+              filters.map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setActive(f)}
+                  className={`px-4 py-2 rounded-full text-xs uppercase tracking-[0.18em] border transition-colors ${
+                    active === f
+                      ? "bg-olive text-sand border-olive"
+                      : "bg-transparent border-border text-foreground/70 hover:border-olive/50 hover:text-olive"
+                  }`}
+                >
+                  {f}
+                </button>
+              ))}
           </div>
         </div>
 
-        {hasData ? (
+        {view === "widget" ? (
+          <div className="rounded-3xl bg-cream border border-border/60 overflow-hidden">
+            <iframe
+              src="https://n2043963.yclients.com/group-events-widget"
+              title="Расписание групповых занятий YClients"
+              className="w-full border-0 h-[720px] lg:h-[820px]"
+              loading="lazy"
+              allow="payment; clipboard-write"
+            />
+          </div>
+        ) : hasData ? (
+
           <div className="rounded-3xl bg-cream border border-border/60 overflow-hidden">
             {list.map((s, i) => {
               const d = new Date(s.starts_at);
