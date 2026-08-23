@@ -19,6 +19,8 @@ type Klass = {
 
 export function Schedule() {
   const [active, setActive] = useState("Все");
+  const [view, setView] = useState<"widget" | "list">("widget");
+
   const [bookingUrl, setBookingUrl] = useState<string | null>(null);
   const baseUrl = useBookingUrl();
 
