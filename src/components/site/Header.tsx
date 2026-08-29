@@ -56,7 +56,7 @@ export function Header() {
 
 
         <BookingButton className="btn-primary !py-2.5 !px-5 text-[13px]">
-          Записаться
+          Расписание и запись
         </BookingButton>
       </div>
     </header>

@@ -71,9 +71,9 @@ export function Directions() {
                   <p className="mt-4 text-sm text-foreground/70 leading-relaxed flex-1">{c.description}</p>
                   <BookingButton
                     className="mt-7 inline-flex w-full items-center justify-between text-sm font-medium text-olive border-t border-border/70 pt-5 group-hover:text-olive-deep transition-colors"
-                    ariaLabel={`Записаться на ${c.title}`}
+                    ariaLabel={`Смотреть расписание — `}
                   >
-                    <span>Записаться</span>
+                    <span>Смотреть расписание</span>
                     <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </BookingButton>
                 </div>
