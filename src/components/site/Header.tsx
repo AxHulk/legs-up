@@ -4,9 +4,10 @@ import { BookingButton } from "@/components/site/BookingButton";
 
 const nav = [
   { href: "#about", label: "О студии" },
-  { href: "#directions", label: "Направления" },
+  { href: "#programs", label: "Направления" },
   { href: "#team", label: "Инструкторы" },
   { href: "#schedule", label: "Расписание" },
+  { href: "#memberships", label: "Абонементы" },
   { href: "#contacts", label: "Контакты" },
 ];
 
@@ -56,7 +57,7 @@ export function Header() {
 
 
         <BookingButton className="btn-primary !py-2.5 !px-5 text-[13px]">
-          Записаться
+          Расписание и запись
         </BookingButton>
       </div>
     </header>

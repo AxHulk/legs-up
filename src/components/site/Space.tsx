@@ -73,7 +73,7 @@ export function Space() {
           </div>
           <div className="lg:col-span-4 flex lg:justify-end">
             <BookingButton className="inline-flex items-center justify-center rounded-full bg-sand text-olive px-8 py-4 text-sm uppercase tracking-[0.2em] font-medium hover:bg-sand/90 transition-colors">
-              Записаться
+              Смотреть расписание
             </BookingButton>
           </div>
         </div>
