@@ -1,21 +1,20 @@
 import { Check } from "lucide-react";
 import { BookingButton } from "@/components/site/BookingButton";
 
-type AssetPointer = { url: string };
 
-import glutes from "@/assets/programs/glutes-3d.webp.asset.json";
-import trx from "@/assets/programs/trx-tonus.webp.asset.json";
-import flexible from "@/assets/programs/flexible-body.webp.asset.json";
-import yogaPower from "@/assets/programs/yoga-power.webp.asset.json";
-import yogaHammock from "@/assets/programs/yoga-stretch-hammock.webp.asset.json";
-import posture from "@/assets/programs/posture.webp.asset.json";
-import mobility from "@/assets/programs/mobility.webp.asset.json";
-import pilates from "@/assets/programs/pilates.webp.asset.json";
-import stretchHammock from "@/assets/programs/stretch-hammock.webp.asset.json";
-import reformerPro from "@/assets/programs/reformer-pro.webp.asset.json";
-import reformerBase from "@/assets/programs/reformer-base.png.asset.json";
-import strengthStretch from "@/assets/programs/strength-stretch.png.asset.json";
-import powerDrive from "@/assets/programs/power-drive.png.asset.json";
+import glutes from "@/assets/programs/glutes-3d.webp";
+import trx from "@/assets/programs/trx-tonus.webp";
+import flexible from "@/assets/programs/flexible-body.webp";
+import yogaPower from "@/assets/programs/yoga-power.webp";
+import yogaHammock from "@/assets/programs/yoga-stretch-hammock.webp";
+import posture from "@/assets/programs/posture.webp";
+import mobility from "@/assets/programs/mobility.webp";
+import pilates from "@/assets/programs/pilates.webp";
+import stretchHammock from "@/assets/programs/stretch-hammock.webp";
+import reformerPro from "@/assets/programs/reformer-pro.webp";
+import reformerBase from "@/assets/programs/reformer-base.png";
+import strengthStretch from "@/assets/programs/strength-stretch.png";
+import powerDrive from "@/assets/programs/power-drive.png";
 
 type Program = {
   title: string;
@@ -37,7 +36,7 @@ const programs: Program[] = [
       "Классический пилатес без модификаций",
       "Идеально для новичков",
     ],
-    image: (reformerBase as AssetPointer).url,
+    image: reformerBase,
   },
   {
     title: "Реформер PRO",
@@ -50,7 +49,7 @@ const programs: Program[] = [
       "Развитие баланса и контроля",
       "Для тех, кто прошёл уровень БАЗА",
     ],
-    image: (reformerPro as AssetPointer).url,
+    image: reformerPro,
   },
   {
     title: "Пилатес",
@@ -63,7 +62,7 @@ const programs: Program[] = [
       "Безопасно для позвоночника и суставов",
       "Подходит для любого возраста и уровня",
     ],
-    image: (pilates as AssetPointer).url,
+    image: pilates,
   },
   {
     title: "Красивая осанка",
@@ -76,7 +75,7 @@ const programs: Program[] = [
       "Уменьшение болей в спине",
       "Улучшение общего самочувствия",
     ],
-    image: (posture as AssetPointer).url,
+    image: posture,
   },
   {
     title: "3D Ягодицы",
@@ -89,7 +88,7 @@ const programs: Program[] = [
       "Красивая округлая форма",
       "Улучшение функциональности тела",
     ],
-    image: (glutes as AssetPointer).url,
+    image: glutes,
   },
   {
     title: "TRX Тонус",
@@ -102,7 +101,7 @@ const programs: Program[] = [
       "Укрепление глубоких мышц кора",
       "Подходит для любого уровня подготовки",
     ],
-    image: (trx as AssetPointer).url,
+    image: trx,
   },
   {
     title: "Силовой драйв",
@@ -115,7 +114,7 @@ const programs: Program[] = [
       "Сжигание калорий и рельеф мышц",
       "Заряд энергии и уверенности",
     ],
-    image: (powerDrive as AssetPointer).url,
+    image: powerDrive,
   },
   {
     title: "Сила & Стретч",
@@ -128,7 +127,7 @@ const programs: Program[] = [
       "Развитие силы и гибкости одновременно",
       "Экономия времени — всё в одной тренировке",
     ],
-    image: (strengthStretch as AssetPointer).url,
+    image: strengthStretch,
   },
   {
     title: "Йога-сила",
@@ -141,7 +140,7 @@ const programs: Program[] = [
       "Баланс, координация и гибкость одновременно",
       "Спокойствие ума при физической нагрузке",
     ],
-    image: (yogaPower as AssetPointer).url,
+    image: yogaPower,
   },
   {
     title: "Мобилити",
@@ -154,7 +153,7 @@ const programs: Program[] = [
       "Профилактика травм и болей",
       "Подходит для любого уровня и возраста",
     ],
-    image: (mobility as AssetPointer).url,
+    image: mobility,
   },
   {
     title: "Гибкое тело",
@@ -167,7 +166,7 @@ const programs: Program[] = [
       "Снятие мышечных зажимов и напряжения",
       "Подходит с любым уровнем гибкости",
     ],
-    image: (flexible as AssetPointer).url,
+    image: flexible,
   },
   {
     title: "Йога-стретч в гамаках",
@@ -180,7 +179,7 @@ const programs: Program[] = [
       "Медитация и глубокое расслабление",
       "Эффект полёта и обновления",
     ],
-    image: (yogaHammock as AssetPointer).url,
+    image: yogaHammock,
   },
   {
     title: "Растяжка в гамаках",
@@ -193,7 +192,7 @@ const programs: Program[] = [
       "Снятие стресса и напряжения",
       "Ощущение полёта и лёгкости",
     ],
-    image: (stretchHammock as AssetPointer).url,
+    image: stretchHammock,
   },
 ];
 
