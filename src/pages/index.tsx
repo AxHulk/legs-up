@@ -31,9 +31,11 @@ function Index() {
         <Hero />
         <About />
         <Directions />
+        <Programs />
         <Team />
         <Space />
         <Schedule />
+        <Memberships />
         {/* <Pricing /> */}
         {/* <Reviews /> */}
         <Faq />
