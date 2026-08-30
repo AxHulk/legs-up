@@ -234,13 +234,13 @@ export function Programs() {
                 />
               </div>
 
-              <div className="p-7 lg:p-8 flex-1 flex flex-col">
+              <div className="p-7 lg:p-8 flex-1 flex flex-col text-center">
                 <h3 className="font-serif text-3xl">{p.title}</h3>
                 <p className="mt-3 text-[13px] uppercase tracking-[0.14em] text-walnut leading-relaxed">
                   {p.forWhom}
                 </p>
-                <p className="mt-5 text-sm text-foreground/70 leading-relaxed">{p.what}</p>
-                <ul className="mt-5 space-y-2 flex-1">
+                <p className="mt-5 text-sm text-foreground/70 leading-relaxed flex-1 flex items-center justify-center">{p.what}</p>
+                <ul className="mt-auto space-y-2 text-left">
                   {p.points.map((pt) => (
                     <li key={pt} className="flex gap-2.5 text-sm text-foreground/80">
                       <Check className="size-4 shrink-0 mt-0.5 text-olive" />
