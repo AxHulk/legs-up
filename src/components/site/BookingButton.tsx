@@ -4,20 +4,13 @@ import { X, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-const DEFAULT_YCLIENTS_URL = "https://n2043963.yclients.com";
+const DEFAULT_YCLIENTS_URL = "https://n2043963.yclients.com/group-events-widget";
 
 export function useBookingUrl(override?: string | null) {
-  const { data } = useQuery({
-    queryKey: ["app-settings"],
-    queryFn: async () => {
-      const { data, error } = await supabase.rpc("get_public_yclients_url");
-      if (error) throw error;
-      return (data as string | null) || DEFAULT_YCLIENTS_URL;
-    },
-    staleTime: 5 * 60_000,
-  });
-  return (override && override.trim()) || data || DEFAULT_YCLIENTS_URL;
+  // Везде используем новый виджет групповых занятий.
+  return (override && override.trim()) || DEFAULT_YCLIENTS_URL;
 }
+
 
 export function BookingDialog({ url, onClose, title = "Онлайн-запись" }: { url: string; onClose: () => void; title?: string }) {
   useEffect(() => {
