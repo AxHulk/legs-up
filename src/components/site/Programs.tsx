@@ -22,6 +22,8 @@ type Program = {
   what: string;
   points: string[];
   image: string;
+  imageClass?: string;
+
 };
 
 const programs: Program[] = [
