@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { X, ExternalLink } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 
 const DEFAULT_YCLIENTS_URL = "https://n2043963.yclients.com/group-events-widget";
 
