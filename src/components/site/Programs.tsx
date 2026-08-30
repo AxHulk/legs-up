@@ -22,6 +22,8 @@ type Program = {
   what: string;
   points: string[];
   image: string;
+  imageClass?: string;
+
 };
 
 const programs: Program[] = [
@@ -89,6 +91,8 @@ const programs: Program[] = [
       "Улучшение функциональности тела",
     ],
     image: glutes,
+    imageClass: "object-[50%_15%]",
+
   },
   {
     title: "TRX Тонус",
@@ -226,7 +230,7 @@ export function Programs() {
                   src={p.image}
                   alt={`Тренировка «${p.title}» в студии НОГИ ВВЕРХ`}
                   loading="lazy"
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover ${(p as { imageClass?: string }).imageClass ?? ""}`}
                 />
               </div>
 
