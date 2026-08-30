@@ -240,7 +240,7 @@ export function Programs() {
                   {p.forWhom}
                 </p>
                 <p className="mt-5 text-sm text-foreground/70 leading-relaxed flex-1 flex items-center justify-center">{p.what}</p>
-                <ul className="mt-5 space-y-2 mt-auto text-left">
+                <ul className="mt-auto space-y-2 text-left">
                   {p.points.map((pt) => (
                     <li key={pt} className="flex gap-2.5 text-sm text-foreground/80">
                       <Check className="size-4 shrink-0 mt-0.5 text-olive" />
