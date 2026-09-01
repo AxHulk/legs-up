@@ -1,40 +1,53 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CreditCard, CalendarDays } from "lucide-react";
+import { CreditCard, CalendarDays, Sparkles } from "lucide-react";
 import { BookingDialog, useBookingUrl } from "@/components/site/BookingButton";
 
 const SUBSCRIPTIONS_URL = "https://o18441.yclients.com/subscriptions";
 
 const singles = [
-  { name: "Пилатес на реформере — индивидуально", price: "3 000 ₽" },
-  { name: "Пилатес на реформере — сплит (на 2 человека)", price: "4 000 ₽" },
-  { name: "Пилатес на реформере — группа", price: "2 000 ₽" },
-  { name: "Пилатес на мате", price: "1 100 ₽" },
-  { name: "TRX Тонус", price: "1 100 ₽" },
-  { name: "Йога-стретч и растяжка в гамаках", price: "1 100 ₽" },
-  { name: "Красивая осанка", price: "1 000 ₽" },
-  { name: "3D Ягодицы", price: "1 000 ₽" },
-  { name: "Силовой драйв / Сила & Стретч", price: "1 000 ₽" },
-  { name: "Йога-сила, Мобилити, Гибкое тело", price: "1 000 ₽" },
+  { name: "Группа", price: "1 200 ₽" },
+  { name: "Группа реформер", price: "2 100 ₽" },
+  { name: "Персональное занятие", price: "3 100 ₽" },
+  { name: "Занятие вдвоём (сплит)", price: "4 200 ₽" },
+];
+
+const trials = [
+  { name: "Пробное занятие в группе", price: "650 ₽" },
+  { name: "Пробное занятие группа реформер", price: "1 000 ₽" },
 ];
 
 const packs = [
   {
-    kicker: "Реформер · индивидуально",
+    kicker: "Групповые занятия",
+    title: "4 занятия",
+    term: "4 недели",
+    price: "3 800 ₽",
+    per: "950 ₽ за занятие",
+  },
+  {
+    kicker: "Групповые занятия",
     title: "8 занятий",
     term: "8 недель",
-    price: "22 400 ₽",
-    per: "2 800 ₽ за занятие",
+    price: "7 200 ₽",
+    per: "900 ₽ за занятие",
   },
   {
-    kicker: "Реформер · индивидуально",
+    kicker: "Групповые занятия",
+    title: "12 занятий",
+    term: "8 недель",
+    price: "10 200 ₽",
+    per: "850 ₽ за занятие",
+  },
+  {
+    kicker: "Групповые реформер",
     title: "4 занятия",
-    term: "5 недель",
-    price: "11 600 ₽",
-    per: "2 900 ₽ за занятие",
+    term: "4 недели",
+    price: "7 600 ₽",
+    per: "1 900 ₽ за занятие",
   },
   {
-    kicker: "Реформер · группа",
+    kicker: "Групповые реформер",
     title: "8 занятий",
     term: "8 недель",
     price: "14 400 ₽",
@@ -42,25 +55,32 @@ const packs = [
     featured: true,
   },
   {
-    kicker: "Реформер · группа",
-    title: "4 занятия",
-    term: "5 недель",
-    price: "7 900 ₽",
-    per: "1 975 ₽ за занятие",
+    kicker: "Групповые реформер",
+    title: "12 занятий",
+    term: "8 недель",
+    price: "20 400 ₽",
+    per: "1 700 ₽ за занятие",
   },
   {
-    kicker: "Групповые (кроме реформера)",
+    kicker: "Персональные",
+    title: "4 занятия",
+    term: "4 недели",
+    price: "11 600 ₽",
+    per: "2 900 ₽ за занятие",
+  },
+  {
+    kicker: "Персональные",
     title: "8 занятий",
     term: "8 недель",
-    price: "7 600 ₽",
-    per: "950 ₽ за занятие",
+    price: "22 400 ₽",
+    per: "2 800 ₽ за занятие",
   },
   {
-    kicker: "Групповые (кроме реформера)",
-    title: "4 занятия",
-    term: "5 недель",
-    price: "3 900 ₽",
-    per: "975 ₽ за занятие",
+    kicker: "Персональные",
+    title: "12 занятий",
+    term: "8 недель",
+    price: "31 200 ₽",
+    per: "2 600 ₽ за занятие",
   },
 ];
 
@@ -84,6 +104,35 @@ export function Memberships() {
             Абонемент выгоднее разовых визитов: чем больше занятий, тем ниже цена одного.
             Оплата онлайн — картой, через виджет покупки абонементов.
           </p>
+        </div>
+
+        {/* Пробные занятия */}
+        <div className="mb-10 rounded-3xl bg-olive text-sand p-8 lg:p-10 flex flex-col lg:flex-row lg:items-center gap-8 justify-between">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.22em] text-sand/70">
+              Первый визит
+            </div>
+            <h3 className="mt-3 font-serif text-3xl">Пробное занятие</h3>
+            <div className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
+              {trials.map((t) => (
+                <div key={t.name}>
+                  <div className="text-sm text-sand/80">{t.name}</div>
+                  <div className="font-serif text-3xl">{t.price}</div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-xs text-sand/70 max-w-md">
+              Пробные занятия только групповые. Персональных пробных тренировок нет.
+              Пробные не переносятся и не возвращаются.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setModal("booking")}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-sand text-olive px-7 py-4 text-[13px] uppercase tracking-[0.16em] hover:bg-sand/90 transition-colors whitespace-nowrap"
+          >
+            <Sparkles className="size-4" /> Попробовать — онлайн-запись
+          </button>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -130,7 +179,7 @@ export function Memberships() {
           <div className="rounded-3xl bg-sand border border-border/60 p-8 lg:p-10">
             <h3 className="font-serif text-3xl">Разовые занятия</h3>
             <p className="mt-3 text-sm text-foreground/65">
-              Пробное занятие на любое направление — по цене разового.
+              Оплата за одно посещение — без абонемента.
             </p>
             <ul className="mt-7 divide-y divide-border/50">
               {singles.map((s) => (
@@ -149,12 +198,16 @@ export function Memberships() {
           </div>
 
           <div className="rounded-3xl bg-olive/10 border border-border/60 p-8 lg:p-10 flex flex-col justify-center">
-            <h3 className="font-serif text-3xl">Как начать заниматься</h3>
-            <ol className="mt-6 space-y-3 text-sm text-foreground/75 list-decimal pl-5">
-              <li>Выберите направление и удобное время в расписании.</li>
-              <li>Купите абонемент онлайн или оплатите разовое занятие в студии.</li>
-              <li>Приходите за 10 минут до начала — форма и носки с собой.</li>
-            </ol>
+            <h3 className="font-serif text-3xl">Условия</h3>
+            <ul className="mt-6 space-y-2.5 text-sm text-foreground/75 list-disc pl-5">
+              <li>Отмена без списания — за 8 часов до начала занятия.</li>
+              <li>
+                При покупке от 8 тренировок 1 раз за абонемент можно перенести или отменить
+                занятие через администратора: группы — за 3 часа (если останется ≥3 чел),
+                реформер — за 4 часа (если останется ≥2 чел), персональная — за 5 часов.
+              </li>
+              <li>Заморозки нет. Пробные не переносятся и не возвращаются.</li>
+            </ul>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <button
                 type="button"
