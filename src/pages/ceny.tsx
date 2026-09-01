@@ -132,14 +132,33 @@ export default function CenyPage() {
           <div className="mx-auto max-w-[1100px] px-6 lg:px-12 space-y-16">
             <article>
               <h2 className="font-serif text-3xl md:text-4xl text-foreground">
+                Пробные занятия
+              </h2>
+              <p className="mt-4 text-foreground/75 max-w-2xl">
+                Первый визит в студию — по специальной цене. Пробные занятия только
+                групповые, персональных пробных тренировок нет.
+              </p>
+              <PriceTable
+                headers={["Формат", "Длительность", "Стоимость"]}
+                rows={trialRows}
+              />
+              <p className="mt-2 text-sm text-foreground/60">
+                Пробные занятия не переносятся и не возвращаются.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-4">
+                <BookingButton className="btn-primary">Попробовать — записаться онлайн</BookingButton>
+              </div>
+            </article>
+
+            <article>
+              <h2 className="font-serif text-3xl md:text-4xl text-foreground">
                 Разовые занятия
               </h2>
               <p className="mt-4 text-foreground/75 max-w-2xl">
-                Цена одного занятия в студии. Пробное занятие оплачивается по цене разового
-                по выбранному направлению.
+                Стоимость одного посещения без абонемента.
               </p>
               <PriceTable
-                headers={["Направление", "Длительность", "Стоимость"]}
+                headers={["Формат", "Длительность", "Стоимость"]}
                 rows={singleRows}
               />
             </article>
@@ -170,17 +189,21 @@ export default function CenyPage() {
 
             <article className="rounded-[var(--radius-2xl)] bg-cream border border-border/60 p-8 md:p-12">
               <h2 className="font-serif text-2xl md:text-3xl text-foreground">
-                Скидки и спецпредложения
+                Условия посещения
               </h2>
               <ul className="mt-5 space-y-2.5 text-foreground/80 list-disc pl-5">
-                <li>Скидки для детей и пенсионеров — уточняйте у администратора.</li>
-                <li>Пробное занятие на любое направление — по цене разового.</li>
+                <li>Отмена без списания занятия — за 8 часов до начала.</li>
                 <li>
-                  Сплит-формат на реформере (мини-группа на 2 человека) — выгоднее, чем две
-                  индивидуальные тренировки.
+                  При покупке абонемента от 8 тренировок 1 раз за абонемент можно
+                  перенести или отменить занятие через администратора: группы — за 3 часа
+                  (если останется ≥3 человек), реформер — за 4 часа (если останется ≥2
+                  человек), персональная тренировка — за 5 часов.
                 </li>
+                <li>Заморозка абонемента не предусмотрена.</li>
+                <li>Пробные занятия не переносятся и не возвращаются.</li>
               </ul>
             </article>
+
 
             <article>
               <h2 className="font-serif text-3xl md:text-4xl text-foreground">
