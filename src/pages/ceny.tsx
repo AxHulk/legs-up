@@ -104,8 +104,9 @@ export default function CenyPage() {
           "@type": "PriceSpecification",
           name: "Цены на пилатес на реформерах в Балашихе",
           priceCurrency: "RUB",
-          minPrice: 1000,
-          maxPrice: 22400,
+          minPrice: 650,
+          maxPrice: 31200,
+
         })}</script>
       </Helmet>
       <Header />
