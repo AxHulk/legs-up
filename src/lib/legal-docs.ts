@@ -1,9 +1,11 @@
+import offerAsset from "@/assets/docs/oferta.pdf.asset.json";
+
 export const LEGAL_DOCS = {
   privacyPolicy: "/docs/politika-obrabotki-personalnyh-dannyh.pdf",
   personalDataConsent: "/docs/soglasie-na-obrabotku-personalnyh-dannyh.pdf",
   cookiesConsent: "/docs/soglasie-na-cookies.pdf",
   marketingConsent: "/docs/soglasie-na-reklamnuyu-rassylku.pdf",
-  offer: "/docs/oferta.pdf",
+  offer: offerAsset.url,
 } as const;
 
 export const LEGAL_LINKS = [
