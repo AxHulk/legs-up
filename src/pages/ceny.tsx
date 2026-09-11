@@ -56,8 +56,8 @@ const singleRows: (string | React.ReactNode)[][] = [
 ];
 
 const trialRows: (string | React.ReactNode)[][] = [
-  ["Пробное занятие в группе", "55 мин", <strong>650 ₽</strong>],
-  ["Пробное занятие группа реформер", "55 мин", <strong>1 000 ₽</strong>],
+  ["Пробное занятие в группе", "55 мин", <strong>850 ₽</strong>],
+  ["Пробное занятие группа реформер", "55 мин", <strong>1 500 ₽</strong>],
 ];
 
 const packRows: (string | React.ReactNode)[][] = [
@@ -80,7 +80,7 @@ export default function CenyPage() {
         <title>Цены на пилатес на реформерах в Балашихе — НОГИ ВВЕРХ</title>
         <meta
           name="description"
-          content="Цены на пилатес на реформерах и персональные занятия в Балашихе и Железнодорожном. Пробное в группе 650 ₽, пробный реформер 1 000 ₽, абонементы от 3 800 ₽."
+          content="Цены на пилатес на реформерах и персональные занятия в Балашихе и Железнодорожном. Пробное в группе 850 ₽, пробный реформер 1 500 ₽, абонементы от 3 800 ₽."
         />
 
         <link rel="canonical" href={URL} />
@@ -104,7 +104,7 @@ export default function CenyPage() {
           "@type": "PriceSpecification",
           name: "Цены на пилатес на реформерах в Балашихе",
           priceCurrency: "RUB",
-          minPrice: 650,
+          minPrice: 850,
           maxPrice: 31200,
 
         })}</script>
@@ -121,8 +121,8 @@ export default function CenyPage() {
             <p className="mt-8 text-lg leading-relaxed text-foreground/75 max-w-2xl">
               Студия «НОГИ ВВЕРХ» в Железнодорожном (ул. Автозаводская, 5). Разовые
               посещения и абонементы на пилатес на реформерах, персональные тренировки,
-              аэройогу и групповые занятия. Пробное занятие в группе — 650 ₽, пробный
-              групповой реформер — 1 000 ₽.
+              аэройогу и групповые занятия. Пробное занятие в группе — 850 ₽, пробный
+              групповой реформер — 1 500 ₽.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
