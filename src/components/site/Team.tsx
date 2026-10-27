@@ -135,6 +135,23 @@ export function Team() {
   );
 }
 
+// Разбивает список инструкторов на ряды по `size` карточек, чтобы на странице
+// помещались все опубликованные тренеры, сколько бы их ни было.
+function chunkRows<T>(items: T[], size: number): T[][] {
+  const rows: T[][] = [];
+  for (let i = 0; i < items.length; i += size) rows.push(items.slice(i, i + size));
+  return rows;
+}
+
+// Число колонок ряда зависит от количества карточек в нём: неполный последний
+// ряд центрируется и остаётся такой же ширины, что и карточки выше.
+function rowClass(length: number): string {
+  if (length >= 4) return "md:grid-cols-4";
+  if (length === 3) return "md:grid-cols-3 lg:max-w-[75%] lg:mx-auto";
+  if (length === 2) return "md:grid-cols-2 lg:max-w-[50%] lg:mx-auto";
+  return "md:grid-cols-1 lg:max-w-[25%] lg:mx-auto";
+}
+
 // Индивидуальная подгонка кадрирования по конкретным фото инструкторов,
 // чтобы лица были на одном уровне и головы не обрезались.
 const PHOTO_FRAMING: Record<string, { scale?: number; objectPosition?: string }> = {
