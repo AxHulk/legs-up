@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { PHOTO_FRAMING, chunkRows, rowClass } from "./team-layout";
 
 type Instructor = {
   id: string;
