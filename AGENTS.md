@@ -1,0 +1,5 @@
+# AGENTS.md
+
+- The site is deployed to the user's own hosting (reg.ru), not Lovable hosting. Any file the site serves (PDFs, images) must ship inside the repository — `public/` or a bundled import — never a Lovable CDN asset pointer, because those `/__l5e/...` URLs 404 on the user's host.
+- The instructor section renders every published instructor returned by the query, chunked into rows of four. Never cap the list with `slice()`: a hard-coded cap silently hid a trainer from the page.
+- Non-component helpers used by a page component (grid row splitting, per-photo framing data) live in a sibling module such as `src/components/site/team-layout.ts` and are imported — never declared below the component in the same file, because a hot module update can run the component without them and blank the screen. Instructor portraits live in `public/instructors/` and are keyed by trainer name in `PHOTO_FRAMING`; framing per photo (scale, object position, transform origin) is tuned visually, so add an entry whenever a new portrait is added.

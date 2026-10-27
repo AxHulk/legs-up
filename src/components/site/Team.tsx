@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { PHOTO_FRAMING, chunkRows, rowClass } from "./team-layout";
 
 type Instructor = {
   id: string;
@@ -52,18 +53,18 @@ export function Team() {
 
         {hasData ? (
           <div className="space-y-14 md:space-y-16">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-14 md:gap-x-10">
-              {team.slice(0, 4).map((m) => (
-                <InstructorCard key={m.id} m={m} onOpen={() => setActive(m)} />
-              ))}
-            </div>
-            {team.length > 4 && (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-14 md:gap-x-10 lg:max-w-[75%] lg:mx-auto">
-                {team.slice(4, 7).map((m) => (
+            {chunkRows(team, 4).map((row, i) => (
+              <div
+                key={i}
+                className={
+                  "grid grid-cols-2 gap-x-6 gap-y-14 md:gap-x-10 " + rowClass(row.length)
+                }
+              >
+                {row.map((m) => (
                   <InstructorCard key={m.id} m={m} onOpen={() => setActive(m)} />
                 ))}
               </div>
-            )}
+            ))}
           </div>
         ) : isError ? (
           <p className="text-foreground/60 text-sm">
@@ -107,6 +108,7 @@ export function Team() {
                     name={active.name}
                     scale={(PHOTO_FRAMING[active.name] ?? {}).scale}
                     objectPosition={(PHOTO_FRAMING[active.name] ?? {}).objectPosition}
+                    origin={(PHOTO_FRAMING[active.name] ?? {}).origin}
                   />
                 </div>
               </div>
@@ -135,17 +137,6 @@ export function Team() {
   );
 }
 
-// Индивидуальная подгонка кадрирования по конкретным фото инструкторов,
-// чтобы лица были на одном уровне и головы не обрезались.
-const PHOTO_FRAMING: Record<string, { scale?: number; objectPosition?: string }> = {
-  "Валентина Рудич": { scale: 1.35, objectPosition: "50% 8%" },
-  "Мария Козлова": { scale: 1, objectPosition: "50% 15%" },
-  "Наталья Чеботарева": { scale: 1, objectPosition: "50% 15%" },
-  "Мария Эрькина": { scale: 1, objectPosition: "50% 15%" },
-  "Лилия Романова": { scale: 1, objectPosition: "50% 15%" },
-  "Елизавета Кечина": { scale: 1, objectPosition: "50% 15%" },
-  "Анастасия Петрова": { scale: 1, objectPosition: "50% 15%" },
-};
 
 function InstructorCard({ m, onOpen }: { m: Instructor; onOpen: () => void }) {
   return (
@@ -179,12 +170,14 @@ function OvalPortrait({
   name,
   scale = 1,
   objectPosition = "50% 10%",
+  origin = "center top",
 }: {
   photo?: string;
   name: string;
   tinted?: boolean;
   scale?: number;
   objectPosition?: string;
+  origin?: string;
 }) {
   return (
     <div className="relative mx-auto w-full max-w-[320px] aspect-[4/5]">
@@ -197,7 +190,7 @@ function OvalPortrait({
             style={{
               objectPosition,
               transform: scale !== 1 ? `scale(${scale})` : undefined,
-              transformOrigin: "center top",
+              transformOrigin: origin,
             }}
           />
         ) : (
