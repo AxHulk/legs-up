@@ -107,6 +107,7 @@ export function Team() {
                     name={active.name}
                     scale={(PHOTO_FRAMING[active.name] ?? {}).scale}
                     objectPosition={(PHOTO_FRAMING[active.name] ?? {}).objectPosition}
+                    origin={(PHOTO_FRAMING[active.name] ?? {}).origin}
                   />
                 </div>
               </div>
@@ -154,7 +155,10 @@ function rowClass(length: number): string {
 
 // Индивидуальная подгонка кадрирования по конкретным фото инструкторов,
 // чтобы лица были на одном уровне и головы не обрезались.
-const PHOTO_FRAMING: Record<string, { scale?: number; objectPosition?: string }> = {
+const PHOTO_FRAMING: Record<
+  string,
+  { scale?: number; objectPosition?: string; origin?: string }
+> = {
   "Валентина Рудич": { scale: 1.35, objectPosition: "50% 8%" },
   "Мария Козлова": { scale: 1, objectPosition: "50% 15%" },
   "Наталья Чеботарева": { scale: 1, objectPosition: "50% 15%" },
@@ -162,6 +166,10 @@ const PHOTO_FRAMING: Record<string, { scale?: number; objectPosition?: string }>
   "Лилия Романова": { scale: 1, objectPosition: "50% 15%" },
   "Елизавета Кечина": { scale: 1, objectPosition: "50% 15%" },
   "Анастасия Петрова": { scale: 1, objectPosition: "50% 15%" },
+  // На этих фото человек снят низко, сверху много стены с вывеской —
+  // приближаем кadirуем снизу, чтобы лицо встало в верхней трети.
+  "Елена Федотова": { scale: 1.5, objectPosition: "50% 100%", origin: "center bottom" },
+  "Наталья Звягинцева": { scale: 1.5, objectPosition: "50% 100%", origin: "center bottom" },
 };
 
 function InstructorCard({ m, onOpen }: { m: Instructor; onOpen: () => void }) {
@@ -196,12 +204,14 @@ function OvalPortrait({
   name,
   scale = 1,
   objectPosition = "50% 10%",
+  origin = "center top",
 }: {
   photo?: string;
   name: string;
   tinted?: boolean;
   scale?: number;
   objectPosition?: string;
+  origin?: string;
 }) {
   return (
     <div className="relative mx-auto w-full max-w-[320px] aspect-[4/5]">
@@ -214,7 +224,7 @@ function OvalPortrait({
             style={{
               objectPosition,
               transform: scale !== 1 ? `scale(${scale})` : undefined,
-              transformOrigin: "center top",
+              transformOrigin: origin,
             }}
           />
         ) : (
