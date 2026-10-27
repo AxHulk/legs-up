@@ -168,7 +168,7 @@ const PHOTO_FRAMING: Record<
   "Анастасия Петрова": { scale: 1, objectPosition: "50% 15%" },
   // На этих фото человек снят низко, сверху много стены с вывеской —
   // приближаем кадр снизу, чтобы лицо встало в верхней трети.
-  "Елена Федотова": { scale: 1.5, objectPosition: "50% 100%", origin: "center bottom" },
+  "Елена Федотова": { scale: 1.44, objectPosition: "50% 100%", origin: "center bottom" },
   "Наталья Звягинцева": { scale: 1.5, objectPosition: "50% 100%", origin: "center bottom" },
 };
 
