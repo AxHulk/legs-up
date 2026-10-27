@@ -52,18 +52,18 @@ export function Team() {
 
         {hasData ? (
           <div className="space-y-14 md:space-y-16">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-14 md:gap-x-10">
-              {team.slice(0, 4).map((m) => (
-                <InstructorCard key={m.id} m={m} onOpen={() => setActive(m)} />
-              ))}
-            </div>
-            {team.length > 4 && (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-14 md:gap-x-10 lg:max-w-[75%] lg:mx-auto">
-                {team.slice(4, 7).map((m) => (
+            {chunkRows(team, 4).map((row, i) => (
+              <div
+                key={i}
+                className={
+                  "grid grid-cols-2 gap-x-6 gap-y-14 md:gap-x-10 " + rowClass(row.length)
+                }
+              >
+                {row.map((m) => (
                   <InstructorCard key={m.id} m={m} onOpen={() => setActive(m)} />
                 ))}
               </div>
-            )}
+            ))}
           </div>
         ) : isError ? (
           <p className="text-foreground/60 text-sm">
